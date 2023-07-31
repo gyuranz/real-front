@@ -49,15 +49,13 @@ const JoinRoomContent = (props) => {
 
     const handleJoinRoom = async () => {
         setIdentityAction(nameValue);
-        if (isRoomHost) {
-            createRoom();
-        } else {
-            await joinRoom();
-        }
+
+        await joinRoom();
     };
 
     const joinRoom = async () => {
         const responseMessage = await getRoomExists(roomIdValue);
+        console.log(roomIdValue);
 
         const { roomExists, full } = responseMessage;
 
@@ -74,10 +72,6 @@ const JoinRoomContent = (props) => {
         } else {
             setErrorMessage("Meeting not found. Check your meeting id.");
         }
-    };
-
-    const createRoom = () => {
-        navigate(`/room/${roomIdValue}`);
     };
 
     return (

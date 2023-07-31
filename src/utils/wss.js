@@ -20,6 +20,7 @@ export const connectWithSocketIOServer = () => {
 
     socket.on("room-id", (data) => {
         const { roomId } = data;
+        console.log(roomId, "a");
         store.dispatch(setRoomId(roomId));
     });
 
@@ -55,11 +56,12 @@ export const connectWithSocketIOServer = () => {
     // });
 };
 
-export const createNewRoom = (identity, onlyAudio) => {
+export const createNewRoom = (identity, onlyAudio, sixRoomId) => {
     // emit an event to server that we would like to create new room
     const data = {
         identity,
         onlyAudio,
+        sixRoomId,
     };
 
     socket.emit("create-new-room", data);

@@ -77,7 +77,7 @@ function Main() {
 
     useEffect(() => {
         //! 임시 코드
-        /*
+
         if (storedData && uid === storedData.userId) {
             console.log("hello, you are right user");
             console.log(userState.userJoinedRoomList);
@@ -120,8 +120,8 @@ function Main() {
                 console.log(err);
             }
         };
-        
-        sendRequest(); */
+
+        sendRequest();
     }, []);
 
     return (
@@ -135,7 +135,7 @@ function Main() {
                 <MainContainer>
                     <h1>{storedData && storedData.userNickname}</h1>
                 </MainContainer>
-                <VerticalLine />
+                {/* <VerticalLine /> */}
 
                 <RoomList>
                     <Tabs>

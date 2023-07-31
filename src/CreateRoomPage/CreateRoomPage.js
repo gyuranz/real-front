@@ -9,14 +9,7 @@ const CreateRoomPage = (props) => {
 
     setIsRoomHostAction(true);
 
-    return (
-        // <div className="join_room_page_container">
-        // <div className="join_room_page_panel">
-        // <p className="join_room_title">"Host meeting"</p>
-        <CreateRoomContent />
-        // </div>
-        // </div>
-    );
+    return <CreateRoomContent />;
 };
 
 const mapStoreStateToProps = (state) => {

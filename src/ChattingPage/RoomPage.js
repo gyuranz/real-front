@@ -6,6 +6,8 @@ import Overlay from "./Overlay";
 
 import "./RoomPage.css";
 import VideoButtons from "./VideoSection/VideoButtons";
+import { useRecoilState } from "recoil";
+import { AuthLogin } from "../atoms";
 
 const RoomPage = ({
     roomId,
@@ -14,7 +16,16 @@ const RoomPage = ({
     showOverlay,
     connectOnlyWithAudio,
 }) => {
+    const [userState, setUserState] = useRecoilState(AuthLogin);
     useEffect(() => {
+        setUserState({
+            ...userState,
+            currentRoom: {
+                room_id: roomId,
+            },
+        });
+        const sixRoomId = userState.currentRoom.room_id;
+
         if (!isRoomHost && !roomId) {
             const siteUrl = window.location.origin;
             window.location.href = siteUrl;
@@ -24,7 +35,8 @@ const RoomPage = ({
                 isRoomHost,
                 identity,
                 roomId,
-                connectOnlyWithAudio
+                connectOnlyWithAudio,
+                sixRoomId
             );
         }
     }, []);

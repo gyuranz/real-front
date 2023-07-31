@@ -9,5 +9,6 @@ export const getRoomExists = async (roomId) => {
 
 export const getTURNCredentials = async () => {
     const response = await axios.get(`${serverApi}/get-turn-credentials`);
+    console.log(response.data);
     return response.data;
 };

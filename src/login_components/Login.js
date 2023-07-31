@@ -74,10 +74,10 @@ function Login() {
     //url 이동을 위한 useHistory? useNavigate
     const onValid = async ({ user_id, user_password }) => {
         //! 임시 코드
-        navigate(`/${user_id}`);
+        // navigate(`/${user_id}`);
         // setValue("user_id", "");
         // setValue("user_password", "");
-        /*
+
         try {
             setIsLoaging(true);
             const response = await fetch(
@@ -127,7 +127,7 @@ function Login() {
             navigate(`/${user_id}`);
         } catch (err) {
             console.log(err);
-        } */
+        }
     };
 
     return (

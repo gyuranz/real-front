@@ -78,14 +78,19 @@ a {
     color: inherit;
 }
 .videos_portal_styles {
-  margin-left: 20%;
-  width: 60%;
-  height: calc(100vh - 10%);
-  left: 0;
-  top: 0;
-  position: absolute;
-  display: flex;
-  flex-wrap: wrap;
+    /* margin-left: 20%; */
+    /* height: calc(100vh - 10%); */
+    /* flex-wrap: wrap; */
+    width: 60vw;
+    left: 5vw;
+    top: 20vh;
+    position: absolute;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+video {
+    border-radius: 10px;
 }
 
 #dummy_video_canvas {

@@ -24,7 +24,7 @@ function App() {
                 <Route path=":uid/*" element={<Main />} />
 
                 {/* <Route path="/room" element={<RoomPage />}></Route> */}
-                <Route path="/room" element={<Room />}></Route>
+                <Route path="/room/*" element={<Room />}></Route>
                 {/* <Route path="room/:room_id/*" element={<Room />} /> */}
                 <Route path="*" element={<PageRoute />} />
             </Routes>

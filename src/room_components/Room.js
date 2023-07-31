@@ -98,6 +98,7 @@ const ChatArea = styled.div`
     height: 80vh;
     margin-top: 4vh;
     overflow-y: auto;
+    background-color: rgba(0, 0, 0, 0.5);
 `;
 
 const ChattingBox = styled(motion.div)`
@@ -207,14 +208,14 @@ function Room() {
     // let socket = io(`${process.env.REACT_APP_BACKEND_URL}/room`);
     //! message event listener
     useEffect(() => {
-        // socket = io(`${process.env.REACT_APP_BACKEND_URL}/room`);
-        // const messageHandler = (chat) => {
-        //     setChats((prevChats) => [...prevChats, chat]);
-        // };
-        // socket.on("message", messageHandler);
-        //     return () => {
-        //         socket.off("message", messageHandler);
-        //     };
+        socket = io(`${process.env.REACT_APP_BACKEND_URL}/room`);
+        const messageHandler = (chat) => {
+            setChats((prevChats) => [...prevChats, chat]);
+        };
+        socket.on("message", messageHandler);
+        return () => {
+            socket.off("message", messageHandler);
+        };
     }, []);
     // console.log(chats);
     // ! STT
@@ -382,12 +383,6 @@ function Room() {
     });
     //!
 
-    const volumeControl = () => {
-        setVolume((prev) => !prev);
-    };
-    const micControl = () => {
-        setMic((prev) => !prev);
-    };
     //! 룸 나가기를 하면 userState의 current room 을 {}로 설정
     const RoomOutHandler = () => {
         //! 소켓 룸에서도 나가는 기능 해야함
@@ -411,18 +406,18 @@ function Room() {
     };
     // console.log(userState);
     //! 현재 접속한 방이 유저가(db) 들어온 방에 있는지 확인
-    const current_room = useParams();
+    // const current_room = useParams();
 
-    const room = userState.userJoinedRoomList.filter(
-        (room) => room.room_id === current_room.room_id
-    );
-    // console.log(room[0]);
-    useEffect(() => {
-        setUserState({
-            ...userState,
-            currentRoom: room[0],
-        });
-    }, []);
+    // const room = userState.userJoinedRoomList.filter(
+    //     (room) => room.room_id === current_room.room_id
+    // );
+    // // console.log(room[0]);
+    // useEffect(() => {
+    //     setUserState({
+    //         ...userState,
+    //         currentRoom: room[0],
+    //     });
+    // }, []);
     // console.log(userState);
 
     return (
@@ -503,7 +498,7 @@ function Room() {
                 <RoomList>
                     <ChatArea ref={chatContainerEl}>
                         {/*//! text 메세지 나오는 부분 */}
-                        {/* {chats.map((chat, index) => (
+                        {chats.map((chat, index) => (
                             <ChattingBox key={index}>
                                 <span style={{ color: `#00d2d3` }}>
                                     {chat.user_nickname !==
@@ -513,7 +508,7 @@ function Room() {
                                 </span>
                                 <Message>{chat.message}</Message>
                             </ChattingBox>
-                        ))} */}
+                        ))}
                         {/*//! STT 메세지 나오는 부분 */}
                         {/* {STTMessage.map((message, idx) => (
                             <ChattingBox key={idx}>
@@ -524,7 +519,7 @@ function Room() {
                         {/* <p>{currentRecognition}</p> */}
                     </ChatArea>
 
-                    {/* <form onSubmit={onSendMessage}>
+                    <form onSubmit={onSendMessage}>
                         <InputTextStyle>
                             <TextInput
                                 type="text"
@@ -534,7 +529,7 @@ function Room() {
                                 SEND
                             </TextInputButton>
                         </InputTextStyle>
-                    </form> */}
+                    </form>
                 </RoomList>
             </BaseContainer>
         </>
