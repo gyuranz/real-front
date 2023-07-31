@@ -24,6 +24,7 @@ const RoomPage = ({
                 room_id: roomId,
             },
         });
+        //! 룸 아이디 소켓으로 보내줌
         const sixRoomId = userState.currentRoom.room_id;
 
         if (!isRoomHost && !roomId) {

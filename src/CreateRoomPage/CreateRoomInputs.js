@@ -25,16 +25,16 @@ const CreateRoomInputs = (props) => {
     const handleRoomName = (event) => {
         setRoomNameValue(event.target.value);
     };
-    useEffect(() => {
-        setUserState({
-            ...userState,
-            currentRoom: {
-                ...userState.currentRoom,
-                room_name: roomNameValue,
-            },
-        });
-        console.log(userState);
-    }, [roomNameValue]);
+    // useEffect(() => {
+    //     setUserState({
+    //         ...userState,
+    //         currentRoom: {
+    //             ...userState.currentRoom,
+    //             room_name: roomNameValue,
+    //         },
+    //     });
+    //     console.log(userState);
+    // }, [roomNameValue]);
 
     return (
         // <div className="join_room_inputs_container">

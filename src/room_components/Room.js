@@ -32,6 +32,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import Quiz from "./Quiz";
 import { useForm } from "react-hook-form";
 import RoomPage from "../ChattingPage/RoomPage";
+import * as wss from "../utils/wss";
 
 //! STT
 const sampleRate = 16000;
@@ -170,7 +171,7 @@ const RoomOutButton = styled(motion.div)`
 // const socket = io(`${process.env.REACT_APP_BACKEND_URL}/room`, {
 //     query: { user: JSON.stringify(storedData.userNickname) },
 // });
-let socket;
+// let socket;
 const current_room_id = window.location.pathname.split("/")[2];
 const storedData = JSON.parse(localStorage.getItem("userData"));
 // socket = io(`${process.env.REACT_APP_BACKEND_URL}/room`, {
@@ -207,16 +208,20 @@ function Room() {
     // }, [`${window.location.host}`]);
     // let socket = io(`${process.env.REACT_APP_BACKEND_URL}/room`);
     //! message event listener
+    const messageHandler = (chat) => {
+        setChats((prevChats) => [...prevChats, chat]);
+    };
+
     useEffect(() => {
-        socket = io(`${process.env.REACT_APP_BACKEND_URL}/room`);
-        const messageHandler = (chat) => {
-            setChats((prevChats) => [...prevChats, chat]);
-        };
-        socket.on("message", messageHandler);
+        // socket = io(`${process.env.REACT_APP_BACKEND_URL}/room`);
+        wss.socket.on("message", messageHandler);
         return () => {
-            socket.off("message", messageHandler);
+            wss.socket.off("message", messageHandler);
         };
     }, []);
+    // setChats((prevChats) => [...prevChats, chat]);
+    // wss.textMessageSender(chat)
+
     // console.log(chats);
     // ! STT
 
@@ -364,19 +369,27 @@ function Room() {
     const onSendMessage = handleSubmit((data) => {
         const { message } = data;
         if (!message) return alert("메시지를 입력해 주세요.");
-
-        socket.emit(
-            "message",
-            {
-                user_nickname: storedData.userNickname,
-                message: message,
-                room_id: current_room_id,
-            },
-            (chat) => {
-                setChats((prevChats) => [...prevChats, chat]);
-                console.log(chats);
-            }
-        );
+        const chatTextMessage = {
+            user_nickname: storedData.userNickname,
+            message: message,
+            // room_id: current_room_id,
+            room_id: userState.currentRoom.room_id,
+        };
+        wss.textMessageSender(chatTextMessage);
+        setChats((prevChats) => [...prevChats, chatTextMessage]);
+        console.log(chats);
+        // socket.emit(
+        //     "message",
+        //     {
+        //         user_nickname: storedData.userNickname,
+        //         message: message,
+        //         room_id: current_room_id,
+        //     },
+        //     (chat) => {
+        //         setChats((prevChats) => [...prevChats, chat]);
+        //         console.log(chats);
+        //     }
+        // );
 
         // 폼 데이터 전송 후 폼 리셋
         setValue("message", "");
@@ -384,26 +397,26 @@ function Room() {
     //!
 
     //! 룸 나가기를 하면 userState의 current room 을 {}로 설정
-    const RoomOutHandler = () => {
-        //! 소켓 룸에서도 나가는 기능 해야함
-        socket.emit("leave-room", { room_id: current_room_id }, () => {
-            console.log(
-                `${storedData.userNickname} 님이 ${current_room_id}에서 나가셨습니다.`
-            );
-        });
-        setUserState({
-            ...userState,
-            currentRoom: {
-                room_id: "",
-                room_name: "",
-                room_summary: "",
-                room_password: "",
-            },
-        });
+    // const RoomOutHandler = () => {
+    //! 소켓 룸에서도 나가는 기능 해야함
+    // socket.emit("leave-room", { room_id: current_room_id }, () => {
+    //     console.log(
+    //         `${storedData.userNickname} 님이 ${current_room_id}에서 나가셨습니다.`
+    //     );
+    // });
+    // setUserState({
+    //     ...userState,
+    //     currentRoom: {
+    //         room_id: "",
+    //         room_name: "",
+    //         room_summary: "",
+    //         room_password: "",
+    //     },
+    // });
 
-        // console.log(userState);
-        navigate(`/${userState.userId}`);
-    };
+    // console.log(userState);
+    // navigate(`/${userState.userId}`);
+    // };
     // console.log(userState);
     //! 현재 접속한 방이 유저가(db) 들어온 방에 있는지 확인
     // const current_room = useParams();
@@ -422,7 +435,7 @@ function Room() {
 
     return (
         <>
-            <RoomOutButton onClick={RoomOutHandler}>FINISH</RoomOutButton>
+            {/* <RoomOutButton onClick={RoomOutHandler}>FINISH</RoomOutButton> */}
             <BaseContainer
                 variants={containerVariants}
                 initial="start"

@@ -18,13 +18,9 @@ const JoinRoomPage = (props) => {
     }, []);
 
     return (
-        // <div className="join_room_page_container">
-        // <div className="join_room_page_panel">
         <>
             <JoinRoomContent />
         </>
-        // </div>
-        // </div>
     );
 };
 

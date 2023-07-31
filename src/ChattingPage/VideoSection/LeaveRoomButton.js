@@ -2,6 +2,8 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 import { buttonStyle, reverseColor } from "../../components/Styles";
+import { useRecoilState } from "recoil";
+import { AuthLogin } from "../../atoms";
 
 const VideoButtonEnd = styled.button`
     ${buttonStyle}
@@ -22,7 +24,18 @@ const VideoButtonEnd = styled.button`
 
 const LeaveRoomButton = () => {
     const navigate = useNavigate();
+    const [userState, setUserState] = useRecoilState(AuthLogin);
+
     const handleRoomDisconnection = () => {
+        setUserState({
+            ...userState,
+            currentRoom: {
+                room_id: "",
+                room_name: "",
+                room_summary: "",
+                room_password: "",
+            },
+        });
         const siteUrl = window.location.origin;
         window.location.href = `${siteUrl}`;
         // navigate(-1);

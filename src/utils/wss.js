@@ -6,7 +6,7 @@ import { appendNewMessageToChatHistory } from "./directMessages";
 
 // const SERVER = process.env.REACT_APP_BACKEND_URL;
 
-let socket = null;
+export let socket = null;
 
 export const connectWithSocketIOServer = () => {
     // socket = io(`${process.env.REACT_APP_BACKEND_URL}/room`);
@@ -51,9 +51,20 @@ export const connectWithSocketIOServer = () => {
         webRTCHandler.removePeerConnection(data);
     });
 
+    socket.on("message", (data) => {
+        // setChats((prevChats) => [...prevChats, chat]);
+    });
     // socket.on("direct-message", (data) => {
     //     appendNewMessageToChatHistory(data);
     // });
+};
+
+export const textMessageSender = ({ user_nickname, message, room_id }) => {
+    socket.emit("message", {
+        user_nickname,
+        message,
+        room_id,
+    });
 };
 
 export const createNewRoom = (identity, onlyAudio, sixRoomId) => {

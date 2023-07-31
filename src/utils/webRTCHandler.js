@@ -3,8 +3,6 @@ import store from "../store/store";
 import * as wss from "./wss";
 import Peer from "simple-peer";
 import { fetchTURNCredentials, getTurnIceServers } from "./turn";
-import { AuthLogin } from "../atoms";
-import { useRecoilValue } from "recoil";
 
 const defaultConstraints = {
     audio: true,

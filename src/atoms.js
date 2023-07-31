@@ -17,6 +17,15 @@ export const AuthLogin = atom({
     },
 });
 
+export const Chats = atom({
+    key: "Chats",
+    default: {
+        user_nickname: "",
+        message: "",
+        room_id: "",
+    },
+});
+
 export const VolumeContidion = atom({
     key: "volume",
     default: false,

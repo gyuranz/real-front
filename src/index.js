@@ -82,6 +82,8 @@ a {
     /* height: calc(100vh - 10%); */
     /* flex-wrap: wrap; */
     width: 60vw;
+    max-width: 60vw;
+    max-height: 70vh;
     left: 5vw;
     top: 20vh;
     position: absolute;
