@@ -18,12 +18,13 @@ const RoomPage = ({
 }) => {
     const [userState, setUserState] = useRecoilState(AuthLogin);
     useEffect(() => {
-        setUserState({
-            ...userState,
-            currentRoom: {
-                room_id: roomId,
-            },
-        });
+        //! room ID 바꾸는 것
+        // setUserState({
+        //     ...userState,
+        //     currentRoom: {
+        //         room_id: roomId,
+        //     },
+        // });
         //! 룸 아이디 소켓으로 보내줌
         const sixRoomId = userState.currentRoom.room_id;
 

@@ -12,7 +12,10 @@ import { useNavigate } from "react-router-dom";
 import { getRoomExists } from "../utils/api";
 import { styled } from "styled-components";
 import { motion } from "framer-motion/dist/framer-motion";
-import { buttonStyle, mainBgColor } from "../components/Styles";
+import { buttonStyle, inputVariants, mainBgColor } from "../components/Styles";
+import { useRecoilState } from "recoil";
+import { AuthLogin } from "../atoms";
+import { useForm } from "react-hook-form";
 
 const Container = styled.div`
     height: 80%;
@@ -20,6 +23,15 @@ const Container = styled.div`
     justify-content: center;
     align-items: center;
     flex-direction: column;
+`;
+
+const JoinForm = styled.form`
+    height: "60vh";
+    justify-content: "center";
+    display: "flex";
+    flex-direction: "column";
+    align-items: "center";
+    width: 90%;
 `;
 
 const RoomJoinButton = styled(motion.button)`
@@ -31,64 +43,134 @@ const RoomJoinButton = styled(motion.button)`
     cursor: pointer;
     color: white;
 `;
+const RoomJoinInput = styled(motion.input)`
+    ${buttonStyle}
+    max-width: 400px;
+    margin-bottom: 10px;
+    font-size: 1rem;
+    width: 90%;
+`;
+const LoginWarning = styled.span`
+    color: red;
+    font-size: 14px;
+`;
 
 const JoinRoomContent = (props) => {
-    const {
-        isRoomHost,
-        setConnectOnlyWithAudio,
-        connectOnlyWithAudio,
-        setIdentityAction,
-        setRoomIdAction,
-    } = props;
+    const { setIdentityAction, setRoomIdAction } = props;
 
-    const [roomIdValue, setRoomIdValue] = useState("");
-    const [nameValue, setNameValue] = useState("");
-    const [errorMessage, setErrorMessage] = useState(null);
+    const [userState, setUserState] = useRecoilState(AuthLogin);
+
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+        setValue,
+    } = useForm();
 
     const navigate = useNavigate();
 
-    const handleJoinRoom = async () => {
-        setIdentityAction(nameValue);
+    // const handleJoinRoom = async () => {
+    //     setIdentityAction(nameValue);
 
-        await joinRoom();
-    };
+    //     await joinRoom();
+    // };
 
-    const joinRoom = async () => {
-        const responseMessage = await getRoomExists(roomIdValue);
-        console.log(roomIdValue);
+    // const joinRoom = async () => {
+    //     const responseMessage = await getRoomExists(roomIdValue);
+    //     console.log(roomIdValue);
 
-        const { roomExists, full } = responseMessage;
+    //     const { roomExists, full } = responseMessage;
 
-        if (roomExists) {
-            if (full) {
-                setErrorMessage("Meeting is full. Please try again later.");
-            } else {
-                // join a room !
-                setRoomIdAction(roomIdValue);
-                //! Create에서 roomId 먼저 해결하고 시작
-                // navigate(`/room/${roomIdValue}`);
-                navigate("/room");
+    //     if (roomExists) {
+    //         if (full) {
+    //             setErrorMessage("Meeting is full. Please try again later.");
+    //         } else {
+    //             // join a room !
+    //             setRoomIdAction(roomIdValue);
+    //             //! Create에서 roomId 먼저 해결하고 시작
+    //             // navigate(`/room/${roomIdValue}`);
+    //             navigate(`/room/${roomId}`);
+    //         }
+    //     } else {
+    //         setErrorMessage("Meeting not found. Check your meeting id.");
+    //     }
+    // };
+    const onValid = async (room) => {
+        try {
+            const response = await fetch(
+                `${process.env.REACT_APP_BACKEND_URL}/${userState.userId}/join`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: " Bearer " + userState.token,
+                    },
+                    body: JSON.stringify({
+                        room_id: room.room_id,
+                        room_password: room.room_password,
+                    }),
+                }
+            );
+            const responseData = await response.json();
+
+            setRoomIdAction(responseData.room_id);
+            setIdentityAction(userState.userId);
+            if (!response.ok) {
+                throw new Error(responseData.message);
             }
-        } else {
-            setErrorMessage("Meeting not found. Check your meeting id.");
+
+            setUserState({
+                ...userState,
+                currentRoom: {
+                    room_id: responseData.room_id,
+                    room_name: responseData.room_name,
+                    room_summary: responseData.room_summary,
+                    room_password: responseData.room_password,
+                },
+            });
+
+            navigate(`/room/${responseData.room_id}`);
+        } catch (err) {
+            console.log(err);
         }
     };
 
     return (
         <Container>
-            <JoinRoomInputs
-                roomIdValue={roomIdValue}
-                setRoomIdValue={setRoomIdValue}
-                nameValue={nameValue}
-                setNameValue={setNameValue}
-                isRoomHost={isRoomHost}
-            />
-            <OnlyWithAudioCheckbox
-                setConnectOnlyWithAudio={setConnectOnlyWithAudio}
-                connectOnlyWithAudio={connectOnlyWithAudio}
-            />
-            <ErrorMessage errorMessage={errorMessage} />
-            <RoomJoinButton onClick={handleJoinRoom}>JOIN</RoomJoinButton>
+            <JoinForm
+                onSubmit={handleSubmit(onValid)}
+                style={{
+                    height: "60vh",
+                    justifyContent: "center",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                }}
+            >
+                <RoomJoinInput
+                    type="text"
+                    variants={inputVariants}
+                    {...register("room_id", {
+                        required: "ROOM ID is required",
+                        minLength: {
+                            value: 6,
+                            message: "please write at least 6 numbers",
+                        },
+                    })}
+                    placeholder="ROOM ID"
+                />
+                <LoginWarning>{errors?.room_id?.message}</LoginWarning>
+
+                <RoomJoinInput
+                    type="text"
+                    variants={inputVariants}
+                    {...register("room_password")}
+                    placeholder="PASSWORD: NOT required"
+                />
+                <LoginWarning>{errors?.room_password?.message}</LoginWarning>
+
+                <RoomJoinButton variants={inputVariants}>JOIN</RoomJoinButton>
+            </JoinForm>
         </Container>
     );
 };

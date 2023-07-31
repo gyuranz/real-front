@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 // import CreateRoomInputs from "./CreateRoomInputs";
 import { connect } from "react-redux";
 import OnlyWithAudioCheckbox from "../JoinRoomPage/OnlyWithAudioCheckbox";
@@ -10,7 +10,6 @@ import {
 import ErrorMessage from "../JoinRoomPage/ErrorMessage";
 
 import { useNavigate } from "react-router-dom";
-import { getRoomExists } from "../utils/api";
 import { styled } from "styled-components";
 import { motion } from "framer-motion/dist/framer-motion";
 import { buttonStyle, inputVariants, mainBgColor } from "../components/Styles";
@@ -58,22 +57,12 @@ const LoginWarning = styled.span`
 `;
 
 const CreateRoomContent = (props) => {
-    const {
-        isRoomHost,
-        setConnectOnlyWithAudio,
-        connectOnlyWithAudio,
-        setIdentityAction,
-        setRoomIdAction,
-    } = props;
+    const { setConnectOnlyWithAudio, connectOnlyWithAudio, setIdentityAction } =
+        props;
 
-    const [nameValue, setNameValue] = useState("");
     const [errorMessage, setErrorMessage] = useState(null);
 
     const [userState, setUserState] = useRecoilState(AuthLogin);
-
-    const handleNameValueChange = (event) => {
-        setNameValue(event.target.value);
-    };
 
     const {
         register,
@@ -106,43 +95,27 @@ const CreateRoomContent = (props) => {
             if (!response.ok) {
                 throw new Error(responseData.message);
             }
-            const { room_id, room_name, room_summary, room_password } =
-                responseData;
+
+            setIdentityAction(userState.userId);
             setUserState({
                 ...userState,
                 currentRoom: {
-                    room_id,
-                    room_name,
-                    room_summary,
-                    room_password,
+                    room_id: responseData.room_id,
+                    room_name: responseData.room_name,
+                    room_summary: responseData.room_summary,
+                    room_password: responseData.room_password,
                 },
             });
 
-            navigate(`/room/${room_id}`);
-            // navigate(`/room`);
+            navigate(`/room/${responseData.room_id}`);
         } catch (err) {
             console.log(err);
         }
     };
-    console.log(userState.userJoinedRoomList, "create");
+    console.log(userState, "✅");
 
     return (
         <Container>
-            {/* <RoomCreateInput
-                placeholder="Enter Room Name"
-                value={roomNameValue}
-                onChange={handleRoomName}
-            />
-            <RoomCreateInput
-                placeholder="Enter your nickName"
-                value={nameValue}
-                onChange={handleNameValueChange}
-            />
-            
-            <RoomCreateButton onClick={handleCreateRoom}>
-            CREATE
-        </RoomCreateButton> */}
-
             <CreateForm onSubmit={handleSubmit(onValid)}>
                 <RoomCreateInput
                     type="text"
@@ -162,7 +135,7 @@ const CreateRoomContent = (props) => {
                     type="text"
                     variants={inputVariants}
                     {...register("room_password")}
-                    placeholder="닉네임"
+                    placeholder="PASSWORD: NOT required"
                 />
                 <LoginWarning>{errors?.room_password?.message}</LoginWarning>
                 <ErrorMessage errorMessage={errorMessage} />

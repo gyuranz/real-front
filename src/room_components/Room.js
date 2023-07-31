@@ -33,6 +33,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useForm } from "react-hook-form";
 import RoomPage from "../ChattingPage/RoomPage";
 import * as wss from "../utils/wss";
+import Playground from "./Playground";
+import Summary from "./Summary";
+import Question from "./Question";
+import Quiz from "./Quiz";
 
 //! STT
 const sampleRate = 16000;
@@ -167,12 +171,8 @@ const RoomOutButton = styled(motion.div)`
     transition: all 0.3s ease-in-out;
 `;
 //! 소켓 api 꼭 같이 수정해주기
-// const socket = io(`http://15.164.100.230:8080/room`);
-// const socket = io(`${process.env.REACT_APP_BACKEND_URL}/room`, {
-//     query: { user: JSON.stringify(storedData.userNickname) },
-// });
-// let socket;
-const current_room_id = window.location.pathname.split("/")[2];
+
+// const current_room_id = window.location.pathname.split("/")[2];
 const storedData = JSON.parse(localStorage.getItem("userData"));
 // socket = io(`${process.env.REACT_APP_BACKEND_URL}/room`, {
 //     query: { user: JSON.stringify(storedData.userNickname) },
@@ -197,50 +197,37 @@ function Room() {
     const chatContainerEl = useRef(null);
 
     const [STTMessage, setSTTMessage] = useState([]);
-    // useEffect(() => {
-    //     // console.log(current_room_id);
 
-    //     socket.emit("join-room", current_room_id);
-    //     // return () => {
-    //     //     socket.emit("disconnect");
-    //     //     socket.off();
-    //     // };
-    // }, [`${window.location.host}`]);
-    // let socket = io(`${process.env.REACT_APP_BACKEND_URL}/room`);
     //! message event listener
     const messageHandler = (chat) => {
         setChats((prevChats) => [...prevChats, chat]);
     };
 
     useEffect(() => {
-        // socket = io(`${process.env.REACT_APP_BACKEND_URL}/room`);
         wss.socket.on("message", messageHandler);
         return () => {
             wss.socket.off("message", messageHandler);
         };
     }, []);
-    // setChats((prevChats) => [...prevChats, chat]);
-    // wss.textMessageSender(chat)
 
-    // console.log(chats);
     // ! STT
 
     //! STT
     // * 서버로 부터 받은 음성 인식 결과를 처리하는 함수
-    // const speechRecognized = useCallback((data) => {
-    //     if (data.isFinal) {
-    //         setCurrentRecognition("...");
-    //         //*
-    //         setRecognitionHistory((old) => [...old, data.text]);
-    //         setSTTMessage((prev) => [...prev, data.text]);
-    //     } else setCurrentRecognition(data.text + "...");
+    const speechRecognized = useCallback((data) => {
+        if (data.isFinal) {
+            setCurrentRecognition("...");
+            //*
+            setRecognitionHistory((old) => [...old, data.text]);
+            setSTTMessage((prev) => [...prev, data.text]);
+        } else setCurrentRecognition(data.text + "...");
 
-    //     socket.on("broadcastAudio", (audioData) => {
-    //         // Handle received audio data and play it back using the Web Audio API or Audio element
-    //         // For simplicity, this example doesn't include the playback implementation.
-    //         console.log("Received audio data:", audioData);
-    //     });
-    // }, []);
+        wss.socket.on("broadcastAudio", (audioData) => {
+            // Handle received audio data and play it back using the Web Audio API or Audio element
+            // For simplicity, this example doesn't include the playback implementation.
+            console.log("Received audio data:", audioData);
+        });
+    }, []);
 
     //! audio
 
@@ -251,30 +238,34 @@ function Room() {
     }, [recognitionHistory]);
 
     //* 서버와의 연결을 설정하고, 음성 녹음 및 전송을 위한 준비를 한다.
-    // const connect = () => {
-    //     if (!connection) {
-    //         setConnection(socket);
-    //     }
+    const connect = () => {
+        if (!connection) {
+            setConnection(wss.socket);
+        }
 
-    //     socket.emit("send_message", "hello world");
+        wss.socket.emit("send_message", "hello world");
 
-    //     socket.emit("startGoogleCloudStream");
+        wss.socket.emit("startGoogleCloudStream", {
+            user_nickname: storedData.userNickname,
+            message: message,
+            room_id: userState.currentRoom.room_id,
+        });
 
-    //     socket.on("disconnect", () => {
-    //         console.log("disconnected", socket.id);
-    //     });
-    // };
+        wss.socket.on("disconnect", () => {
+            console.log("disconnected", wss.socket.id);
+        });
+    };
 
-    // useEffect(() => {
-    //     // 이벤트 핸들러 등록
-    //     socket.on("receive_audio_text", speechRecognized);
+    useEffect(() => {
+        // 이벤트 핸들러 등록
+        wss.socket.on("receive_audio_text", speechRecognized);
 
-    //     // cleanup function: 컴포넌트가 언마운트 될 때 실행됩니다.
-    //     return () => {
-    //         // 이벤트 핸들러 해제
-    //         socket.off("receive_audio_text", speechRecognized);
-    //     };
-    // }, [connection, isRecording, speechRecognized]);
+        // cleanup function: 컴포넌트가 언마운트 될 때 실행됩니다.
+        return () => {
+            // 이벤트 핸들러 해제
+            wss.socket.off("receive_audio_text", speechRecognized);
+        };
+    }, [connection, isRecording, speechRecognized]);
 
     //* 서버와의 연결의 해제하는 함수, 녹음과 관련된 상태와 객체들을 초기화하고 연결을 해제
     const disconnect = () => {
@@ -378,18 +369,6 @@ function Room() {
         wss.textMessageSender(chatTextMessage);
         setChats((prevChats) => [...prevChats, chatTextMessage]);
         console.log(chats);
-        // socket.emit(
-        //     "message",
-        //     {
-        //         user_nickname: storedData.userNickname,
-        //         message: message,
-        //         room_id: current_room_id,
-        //     },
-        //     (chat) => {
-        //         setChats((prevChats) => [...prevChats, chat]);
-        //         console.log(chats);
-        //     }
-        // );
 
         // 폼 데이터 전송 후 폼 리셋
         setValue("message", "");
@@ -442,8 +421,8 @@ function Room() {
                 animate="end"
             >
                 <MainContainer>
-                    {/* <SideOpenToolBox variants={leftSideBoxVariants}>
-                        <IOButton onClick={volumeControl}>
+                    <SideOpenToolBox variants={leftSideBoxVariants}>
+                        {/* <IOButton onClick={volumeControl}>
                             {volume ? (
                                 <FontAwesomeIcon icon={faVolumeHigh} />
                             ) : (
@@ -456,14 +435,14 @@ function Room() {
                             ) : (
                                 <FontAwesomeIcon icon={faMicrophoneSlash} />
                             )}
-                        </IOButton>
+                        </IOButton> */}
                         <IOButton
                             className={
                                 isRecording ? "btn-danger" : "btn-outline-light"
                             }
                             onClick={connect}
                             disabled={isRecording}
-                            style={{ left: "80px" }}
+                            style={{ left: "480px" }}
                         >
                             Start
                         </IOButton>
@@ -471,11 +450,11 @@ function Room() {
                             className="btn-outline-light"
                             onClick={disconnect}
                             disabled={!isRecording}
-                            style={{ left: "120px" }}
+                            style={{ left: "520px" }}
                         >
                             Stop
                         </IOButton>
-                    </SideOpenToolBox> */}
+                    </SideOpenToolBox>
 
                     <Tabs style={{ margin: "0" }}>
                         <Tab style={{ borderRadius: "30px 0 0 0" }}>
@@ -497,12 +476,13 @@ function Room() {
 
                     <Container>
                         <Routes>
-                            {/* <Route path="playground" element={<Playground />} />
+                            <Route path="playground" element={<Playground />} />
                             <Route path="summary" element={<Summary />} />
                             <Route path="question" element={<Question />} />
-                            <Route path="quiz" element={<Quiz />} /> */}
+                            <Route path="quiz" element={<Quiz />} />
                         </Routes>
                     </Container>
+                    {/* //! 영상 및 스크린쉐어 페이지 */}
                     <RoomPage />
                     {/* <Dictaphone /> */}
                 </MainContainer>
@@ -523,12 +503,12 @@ function Room() {
                             </ChattingBox>
                         ))}
                         {/*//! STT 메세지 나오는 부분 */}
-                        {/* {STTMessage.map((message, idx) => (
+                        {STTMessage.map((message, idx) => (
                             <ChattingBox key={idx}>
                                 <span style={{ color: `#00d2d3` }}>발표자</span>
                                 <Message>{message}</Message>
                             </ChattingBox>
-                        ))} */}
+                        ))}
                         {/* <p>{currentRecognition}</p> */}
                     </ChatArea>
 

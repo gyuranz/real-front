@@ -83,13 +83,13 @@ a {
     /* flex-wrap: wrap; */
     width: 60vw;
     max-width: 60vw;
-    max-height: 70vh;
+    height: 80vh;
     left: 5vw;
-    top: 20vh;
+    top: 10vh;
     position: absolute;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 10px;
+    gap: 5px;
 }
 video {
     border-radius: 10px;

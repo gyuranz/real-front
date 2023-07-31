@@ -12,8 +12,7 @@ const RoomJoinInput = styled(motion.input)`
 `;
 
 const JoinRoomInputs = (props) => {
-    const { roomIdValue, setRoomIdValue, nameValue, setNameValue, isRoomHost } =
-        props;
+    const { roomIdValue, setRoomIdValue, nameValue, setNameValue } = props;
 
     const handleRoomIdValueChange = (event) => {
         setRoomIdValue(event.target.value);
