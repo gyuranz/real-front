@@ -14,7 +14,7 @@ import {
 const Room = styled(motion.div)`
     ${buttonStyle}
     box-shadow: none;
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: rgba(0, 0, 0, 0.2);
     margin: 10px auto;
     font-size: 1rem;
     width: 90%;
@@ -36,8 +36,47 @@ function Finished({ userData }) {
         // response로 룸 클릭한 룸 정보를 받아옴
         //! 그 정보를 기준으로 userState에 current room을 설정
 
-        navigate(`/room/${e.target.id}`);
+        // navigate(`/room/${e.target.id}`);
     };
+    // const onValid = async (e) => {
+    //     try {
+    //         const response = await fetch(
+    //             `${process.env.REACT_APP_BACKEND_URL}/${userState.userId}/join`,
+    //             {
+    //                 method: "POST",
+    //                 headers: {
+    //                     "Content-Type": "application/json",
+    //                     Authorization: " Bearer " + userState.token,
+    //                 },
+    //                 body: JSON.stringify({
+    //                     room_id: room.room_id,
+    //                     room_password: room.room_password,
+    //                 }),
+    //             }
+    //         );
+    //         const responseData = await response.json();
+
+    //         setRoomIdAction(responseData.room_id);
+    //         setIdentityAction(userState.userId);
+    //         if (!response.ok) {
+    //             throw new Error(responseData.message);
+    //         }
+
+    //         setUserState({
+    //             ...userState,
+    //             currentRoom: {
+    //                 room_id: responseData.room_id,
+    //                 room_name: responseData.room_name,
+    //                 room_summary: responseData.room_summary,
+    //                 room_password: responseData.room_password,
+    //             },
+    //         });
+
+    //         navigate(`/room/${responseData.room_id}`);
+    //     } catch (err) {
+    //         console.log(err);
+    //     }
+    // };
 
     // console.log(userState.userJoinedRoomList);
     return (

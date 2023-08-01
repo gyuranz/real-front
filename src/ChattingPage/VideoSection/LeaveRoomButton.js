@@ -24,6 +24,7 @@ const VideoButtonEnd = styled.button`
 `;
 
 const LeaveRoomButton = () => {
+    const storedData = JSON.parse(localStorage.getItem("userData"));
     const navigate = useNavigate();
     const [userState, setUserState] = useRecoilState(AuthLogin);
 
@@ -37,9 +38,13 @@ const LeaveRoomButton = () => {
                 room_password: "",
             },
         });
+        if (storedData.token) {
+            navigate(-1);
+            // navigate(`/${storedData.userId}`);
+        } else {
+        }
         const siteUrl = window.location.origin;
         window.location.href = `${siteUrl}`;
-        // navigate(-1);
     };
     console.log(window.location.origin);
 

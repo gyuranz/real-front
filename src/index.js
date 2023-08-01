@@ -63,7 +63,13 @@ body {
     font-weight: 300;
     font-family: 'Source Sans 3', sans-serif;
     background:linear-gradient(135deg,#00d2d3,#5f27cd);
-    color: black;
+
+    /* background: linear-gradient(90deg, rgba(106,0,255,0.7) 0%, rgba(77,108,207,0.7) 69%, rgba(255,130,219,0.5) 100%); */
+    /* background: linear-gradient(90deg, rgba(106,0,255,0.7) 0%, rgba(77,108,207,0.7) 67%, rgba(95,89,208,0.7) 70%, rgba(220,130,255,0.7) 100%); */
+    /* background: linear-gradient(90deg, rgba(126,180,58,1) 0%, rgba(29,253,187,1) 4%, rgba(69,140,252,1) 100%); */
+    background-color: white;
+
+    color: white;
     line-height: 1.2;
     display: flex;
     justify-content: center;

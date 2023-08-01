@@ -66,6 +66,7 @@ const LogoutButton = styled(motion.div)`
 `;
 
 function Main() {
+    const [click, setClick] = useState("finished");
     const { uid } = useParams();
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
@@ -147,19 +148,55 @@ function Main() {
                 <RoomList>
                     <Tabs>
                         <Tab>
-                            <Link to={"finished"}>FINISHED</Link>
+                            <Link
+                                to={"finished"}
+                                onClick={() => {
+                                    setClick("finished");
+                                }}
+                            >
+                                {click === "finished" ? (
+                                    <span style={{ color: "#00d2d3" }}>
+                                        FINISHED
+                                    </span>
+                                ) : (
+                                    <span>FINISHED</span>
+                                )}
+                            </Link>
                         </Tab>
-                        {/* <VerticalLine /> */}
                         <Tab>
-                            <Link to={"join"}>JOIN</Link>
+                            <Link
+                                to={"join"}
+                                onClick={() => {
+                                    setClick("join");
+                                }}
+                            >
+                                {click === "join" ? (
+                                    <span style={{ color: "#00d2d3" }}>
+                                        JOIN
+                                    </span>
+                                ) : (
+                                    <span>JOIN</span>
+                                )}
+                            </Link>
                         </Tab>
-                        {/* <VerticalLine /> */}
-                        <Tab style={{ borderRadius: "0 30px 0 0" }}>
-                            <Link to={"create"}>CREATE</Link>
+                        <Tab
+                            style={{ borderRadius: "0 30px 0 0" }}
+                            onClick={() => {
+                                setClick("create");
+                            }}
+                        >
+                            <Link to={"create"}>
+                                {click === "create" ? (
+                                    <span style={{ color: "#00d2d3" }}>
+                                        CREATE
+                                    </span>
+                                ) : (
+                                    <span>CREATE</span>
+                                )}
+                            </Link>
                         </Tab>
                     </Tabs>
 
-                    {/* <Outlet /> */}
                     <Routes>
                         <Route path="finished" element={<Finished />} />
                         <Route path="join" element={<JoinRoomPage />} />

@@ -70,9 +70,9 @@ const InputTextStyle = styled.div`
 
 const TextInput = styled(motion.input)`
     ${buttonStyle}
-    width: 23.5vw;
+    width: 23vw;
     height: 6vh;
-    border-radius: 0;
+
     font-size: 1.2rem;
     border-radius: 30px 0 0 30px;
 `;
@@ -101,10 +101,12 @@ const TextInputButton = styled(motion.button)`
 `;
 
 const ChatArea = styled.div`
-    width: 100%;
+    width: 28vw;
     height: 80vh;
-    margin-top: 4vh;
+    margin: 1vh 1vh 2vh 0;
     overflow-y: auto;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
 `;
 
 const ChattingBox = styled(motion.div)`
@@ -114,6 +116,8 @@ const ChattingBox = styled(motion.div)`
 const Message = styled.div`
     margin-bottom: 0.5rem;
     background: rgba(0, 0, 0, 0.1);
+    font-size: 20px;
+    font-weight: 600;
     color: white;
     /* max-width: 100%; */
     padding: 5px;
@@ -482,7 +486,7 @@ function Room() {
                             <Route path="question" element={<Question />} />
                             <Route path="quiz" element={<Quiz />} />
                         </Routes>
-                        <RoomPage />
+
                         {/* //! 영상 및 스크린쉐어 페이지 */}
                     </Container>
                 </MainContainer>
