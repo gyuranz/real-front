@@ -124,7 +124,7 @@ function Login() {
             );
             // authFunc.login(responseData.userId, responseData.token);
 
-            navigate(`/${user_id}`);
+            navigate(`/${user_id}/finished`);
         } catch (err) {
             console.log(err);
         }

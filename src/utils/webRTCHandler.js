@@ -155,10 +155,18 @@ const showLocalVideoPreview = (stream) => {
     videoElement.autoplay = true;
     videoElement.muted = true;
     videoElement.srcObject = stream;
+    videoElement.id = "room_host";
 
     videoElement.onloadedmetadata = () => {
         videoElement.play();
     };
+    videoElement.addEventListener("contextmenu", function (event) {
+        event.preventDefault();
+        console.log(event);
+
+        alert(`${videoElement.id}`);
+    });
+    console.log("abc2");
 
     videoContainer.appendChild(videoElement);
 
@@ -185,6 +193,18 @@ const addStream = (stream, connUserSocketId) => {
     videoElement.onloadedmetadata = () => {
         videoElement.play();
     };
+
+    //! capture ~ alt(18) + a(65)
+    const track = stream.getVideoTracks()[0];
+    let imageCapture = new ImageCapture(track);
+    console.log("abc1");
+    videoElement.addEventListener("contextmenu", function (event) {
+        event.preventDefault();
+        console.log(event);
+
+        alert(`${videoElement.id}`);
+    });
+    console.log("abc2");
 
     videoElement.addEventListener("click", () => {
         if (videoElement.classList.contains("full_screen")) {
@@ -296,3 +316,12 @@ export const sendMessageUsingDataChannel = (messageContent) => {
         peers[socketId].send(stringifiedMessageData);
     }
 };
+
+// 스냅샷을 찍는 함수
+// async function takeSnapshot() {
+//     const track = videoElement.srcObject.getVideoTracks()[0]
+//     const imageCapture = new ImageCapture(track)
+//     const image = await imageCapture.grabFrame()
+//     // ...
+
+//   }

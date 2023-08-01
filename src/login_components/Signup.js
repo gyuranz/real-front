@@ -123,7 +123,7 @@ function Signup() {
                     token: responseData.token,
                 })
             );
-            navigate(`/${user_id}`);
+            navigate(`/${user_id}/finished`);
         } catch (err) {
             console.log(err);
         }

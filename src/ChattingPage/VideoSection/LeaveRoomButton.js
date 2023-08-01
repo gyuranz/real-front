@@ -9,7 +9,7 @@ const VideoButtonEnd = styled.button`
     ${buttonStyle}
     ${reverseColor}
     position: absolute;
-    top: 0;
+    top: -5px;
     right: 0;
     margin: 10px 10px 0 0;
     padding: 10px;
@@ -42,9 +42,9 @@ const LeaveRoomButton = () => {
             navigate(-1);
             // navigate(`/${storedData.userId}`);
         } else {
+            const siteUrl = window.location.origin;
+            window.location.href = `${siteUrl}`;
         }
-        const siteUrl = window.location.origin;
-        window.location.href = `${siteUrl}`;
     };
     console.log(window.location.origin);
 

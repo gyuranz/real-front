@@ -18,9 +18,10 @@ function PageRoute() {
 
     const goToMain = () => {
         storedData
-            ? navigate(`/${storedData.userId}`)
+            ? navigate(`/${storedData.userId}/finished`)
             : navigate("/auth/login");
     };
+    goToMain();
     return <MainButton onClick={goToMain}> move to MAIN</MainButton>;
 }
 

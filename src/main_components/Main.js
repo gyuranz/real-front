@@ -65,6 +65,10 @@ const LogoutButton = styled(motion.div)`
     }
 `;
 
+const HelloUser = styled(motion.div)`
+    font-size: 32px;
+`;
+
 function Main() {
     const [click, setClick] = useState("finished");
     const { uid } = useParams();
@@ -141,7 +145,9 @@ function Main() {
                 animate="end"
             >
                 <MainContainer>
-                    <h1>{storedData && storedData.userNickname}</h1>
+                    <HelloUser>
+                        {storedData && storedData.userNickname}님, 반가워요!
+                    </HelloUser>
                 </MainContainer>
                 {/* <VerticalLine /> */}
 
@@ -179,13 +185,13 @@ function Main() {
                                 )}
                             </Link>
                         </Tab>
-                        <Tab
-                            style={{ borderRadius: "0 30px 0 0" }}
-                            onClick={() => {
-                                setClick("create");
-                            }}
-                        >
-                            <Link to={"create"}>
+                        <Tab style={{ borderRadius: "0 30px 0 0" }}>
+                            <Link
+                                to={"create"}
+                                onClick={() => {
+                                    setClick("create");
+                                }}
+                            >
                                 {click === "create" ? (
                                     <span style={{ color: "#00d2d3" }}>
                                         CREATE
