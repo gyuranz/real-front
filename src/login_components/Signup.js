@@ -33,12 +33,14 @@ const OneLineTwoButton = styled.div`
 const JoinButton = styled(motion.button)`
     ${buttonStyle}
     ${mainBgColor}
+    color: white;
     cursor: pointer;
 `;
 
 const CancelButton = styled(motion.button)`
     ${buttonStyle}
-    background-color: rgba(255,0,0,0.7);
+    background-color: #fe3411;
+    color: white;
     cursor: pointer;
 `;
 

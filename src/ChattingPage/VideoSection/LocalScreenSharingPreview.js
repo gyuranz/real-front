@@ -1,4 +1,11 @@
 import React, { useRef, useEffect } from "react";
+import { styled } from "styled-components";
+
+const ScreenShare = styled.video`
+    width: 80px;
+    position: absolute;
+    left: 180px;
+`;
 
 const LocalScreenSharingPreview = ({ stream }) => {
     const localPreviewRef = useRef();
@@ -15,7 +22,7 @@ const LocalScreenSharingPreview = ({ stream }) => {
 
     return (
         // <div className="local_screen_share_preview">
-        <video muted ref={localPreviewRef}></video>
+        <ScreenShare muted ref={localPreviewRef}></ScreenShare>
         // </div>
     );
 };

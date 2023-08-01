@@ -70,7 +70,7 @@
     justify-content: center;
     position: absolute;
     left: 0;
-    top: 0;
+    top: -5px;
 }
 
 .video_button_container {
@@ -159,9 +159,10 @@ video {
     padding: 15px;
     border-radius: 20px;
     position: absolute;
-    font-weight: 400;
-    top: 0;
-    left: 200px;
+    font-weight: 600;
+    font-size: 1.5em;
+    top: -10px;
+    left: 250px;
 }
 
 .video_track_container {
@@ -171,64 +172,6 @@ video {
     max-height: 40vh;
     max-width: 40vw;
 }
-/* 
-.video_track_container:first-child:nth-last-child(1) {
-    width: 100%;
-    height: 100%;
-    position: relative;
-}
-
-.video_track_container:first-child:nth-last-child(2),
-.video_track_container:first-child:nth-last-child(2) ~ .video_track_container {
-    width: 50%;
-    height: 50%;
-    position: relative;
-}
-
-.video_track_container:first-child:nth-last-child(3),
-.video_track_container:first-child:nth-last-child(3) ~ .video_track_container {
-    width: 50%;
-    height: 50%;
-    position: relative;
-}
-
-.video_track_container:first-child:nth-last-child(4),
-.video_track_container:first-child:nth-last-child(4) ~ .video_track_container {
-    width: 50%;
-    height: 50%;
-    position: relative;
-}
-
-.video_track_container:first-child:nth-last-child(5),
-.video_track_container:first-child:nth-last-child(5) ~ .video_track_container {
-    width: 33%;
-    height: 33%;
-    position: relative;
-}
-
-.video_track_container:first-child:nth-last-child(6),
-.video_track_container:first-child:nth-last-child(6) ~ .video_track_container {
-    width: 33%;
-    height: 33%;
-}
-
-.video_track_container:first-child:nth-last-child(7),
-.video_track_container:first-child:nth-last-child(7) ~ .video_track_container {
-    width: 33%;
-    height: 33%;
-}
-
-.video_track_container:first-child:nth-last-child(8),
-.video_track_container:first-child:nth-last-child(8) ~ .video_track_container {
-    width: 33%;
-    height: 33%;
-}
-
-.video_track_container:first-child:nth-last-child(9),
-.video_track_container:first-child:nth-last-child(9) ~ .video_track_container {
-    width: 33%;
-    height: 33%;
-} */
 
 .video_section_container {
     height: 100%;

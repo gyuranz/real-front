@@ -64,6 +64,7 @@ export const buttonStyle = css`
     font-size: 24px;
     font-weight: 600;
     border-radius: 20px;
+
     border: none;
 `;
 
