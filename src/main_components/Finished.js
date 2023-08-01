@@ -4,7 +4,12 @@ import { useRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 import { motion } from "framer-motion/dist/framer-motion";
-import { buttonStyle, inputVariants, mainBgColor } from "../components/Styles";
+import {
+    buttonStyle,
+    inputVariants,
+    mainBgColor,
+    scrollVariants,
+} from "../components/Styles";
 
 const Room = styled(motion.div)`
     ${buttonStyle}
@@ -40,7 +45,7 @@ function Finished({ userData }) {
             {userState.userJoinedRoomList.map(
                 ({ room_id, room_name, room_summary }) => (
                     <Room
-                        variants={inputVariants}
+                        variants={scrollVariants}
                         key={room_id}
                         onClick={moveToRoom}
                         id={room_id}

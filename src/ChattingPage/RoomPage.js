@@ -44,7 +44,7 @@ const RoomPage = ({
     }, []);
 
     return (
-        <div className="room_container">
+        <div className="room_container" id="videos_portal">
             <VideoButtons />
             <div className="room_label">ID: {roomId}</div>
             {showOverlay && <Overlay />}

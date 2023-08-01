@@ -45,17 +45,24 @@ const RoomList = styled(motion.div)`
     height: 90vh;
     display: block;
     border-radius: 0 30px 30px 0;
+    overflow: auto;
 `;
 
 const LogoutButton = styled(motion.div)`
     ${buttonStyle}
     ${reverseColor}
+    padding: 10px;
     font-size: 1rem;
     color: white;
+    font-weight: 600;
     z-index: 999;
     position: absolute;
     top: 5vh;
     cursor: pointer;
+    transition: 0.3s ease-in-out;
+    &:hover {
+        scale: 1.1;
+    }
 `;
 
 function Main() {
@@ -142,11 +149,11 @@ function Main() {
                         <Tab>
                             <Link to={"finished"}>FINISHED</Link>
                         </Tab>
-                        <VerticalLine />
+                        {/* <VerticalLine /> */}
                         <Tab>
                             <Link to={"join"}>JOIN</Link>
                         </Tab>
-                        <VerticalLine />
+                        {/* <VerticalLine /> */}
                         <Tab style={{ borderRadius: "0 30px 0 0" }}>
                             <Link to={"create"}>CREATE</Link>
                         </Tab>

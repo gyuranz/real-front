@@ -81,15 +81,16 @@ a {
     /* margin-left: 20%; */
     /* height: calc(100vh - 10%); */
     /* flex-wrap: wrap; */
-    width: 60vw;
-    max-width: 60vw;
-    height: 80vh;
-    left: 5vw;
-    top: 10vh;
-    position: absolute;
+    /* width: 60vw; */
+    /* max-width: 60vw; */
+    /* height: 80vh; */
+    /* left: 5vw; */
+    /* top: 10vh; */
+    /* position: absolute; */
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 5px;
+    padding-top: 3vh;
 }
 video {
     border-radius: 10px;

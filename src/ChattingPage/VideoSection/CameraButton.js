@@ -5,23 +5,25 @@ import CameraButtonImgOff from "../../resources/images/cameraOff.svg";
 import * as webRTCHandler from "../../utils/webRTCHandler";
 
 const CameraButton = () => {
-  const [isLocalVideoDisabled, setIsLocalVideoDisabled] = useState(false);
+    const [isLocalVideoDisabled, setIsLocalVideoDisabled] = useState(true);
 
-  const handleCameraButtonPressed = () => {
-    webRTCHandler.toggleCamera(isLocalVideoDisabled);
+    const handleCameraButtonPressed = () => {
+        webRTCHandler.toggleCamera(isLocalVideoDisabled);
 
-    setIsLocalVideoDisabled(!isLocalVideoDisabled);
-  };
+        setIsLocalVideoDisabled(!isLocalVideoDisabled);
+    };
 
-  return (
-    <div className="video_button_container">
-      <img
-        src={isLocalVideoDisabled ? CameraButtonImgOff : CameraButtonImg}
-        className="video_button_image"
-        onClick={handleCameraButtonPressed}
-      />
-    </div>
-  );
+    return (
+        <div className="video_button_container">
+            <img
+                src={
+                    isLocalVideoDisabled ? CameraButtonImgOff : CameraButtonImg
+                }
+                className="video_button_image"
+                onClick={handleCameraButtonPressed}
+            />
+        </div>
+    );
 };
 
 export default CameraButton;

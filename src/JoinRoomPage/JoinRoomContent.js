@@ -27,10 +27,7 @@ const Container = styled.div`
 
 const JoinForm = styled.form`
     height: "60vh";
-    justify-content: "center";
-    display: "flex";
-    flex-direction: "column";
-    align-items: "center";
+    text-align: center;
     width: 90%;
 `;
 
@@ -56,7 +53,12 @@ const LoginWarning = styled.span`
 `;
 
 const JoinRoomContent = (props) => {
-    const { setIdentityAction, setRoomIdAction } = props;
+    const {
+        setIdentityAction,
+        setRoomIdAction,
+        setConnectOnlyWithAudio,
+        connectOnlyWithAudio,
+    } = props;
 
     const [userState, setUserState] = useRecoilState(AuthLogin);
 
@@ -137,16 +139,7 @@ const JoinRoomContent = (props) => {
 
     return (
         <Container>
-            <JoinForm
-                onSubmit={handleSubmit(onValid)}
-                style={{
-                    height: "60vh",
-                    justifyContent: "center",
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                }}
-            >
+            <JoinForm onSubmit={handleSubmit(onValid)}>
                 <RoomJoinInput
                     type="text"
                     variants={inputVariants}
@@ -168,7 +161,10 @@ const JoinRoomContent = (props) => {
                     placeholder="PASSWORD: NOT required"
                 />
                 <LoginWarning>{errors?.room_password?.message}</LoginWarning>
-
+                <OnlyWithAudioCheckbox
+                    setConnectOnlyWithAudio={setConnectOnlyWithAudio}
+                    connectOnlyWithAudio={connectOnlyWithAudio}
+                />
                 <RoomJoinButton variants={inputVariants}>JOIN</RoomJoinButton>
             </JoinForm>
         </Container>

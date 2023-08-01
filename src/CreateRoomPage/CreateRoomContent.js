@@ -27,10 +27,7 @@ const Container = styled.div`
 
 const CreateForm = styled.form`
     height: "60vh";
-    justify-content: "center";
-    display: "flex";
-    flex-direction: "column";
-    align-items: "center";
+    text-align: center;
     width: 90%;
 `;
 

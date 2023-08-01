@@ -35,6 +35,9 @@ export const getLocalPreviewAndInitRoomConnection = async (
         .then((stream) => {
             console.log("successfuly received local stream");
             localStream = stream;
+            //!
+            localStream.getVideoTracks()[0].enabled = false;
+            localStream.getAudioTracks()[0].enabled = false;
             showLocalVideoPreview(localStream);
 
             // dispatch an action to hide overlay
@@ -175,6 +178,7 @@ const addStream = (stream, connUserSocketId) => {
     videoContainer.classList.add("video_track_container");
     const videoElement = document.createElement("video");
     videoElement.autoplay = true;
+    // videoElement.muted = true;
     videoElement.srcObject = stream;
     videoElement.id = `${connUserSocketId}-video`;
 
@@ -224,10 +228,13 @@ const getAudioOnlyLabel = (identity = "") => {
 
 export const toggleMic = (isMuted) => {
     localStream.getAudioTracks()[0].enabled = isMuted ? true : false;
+    // localStream.getAudioTracks()[0].enabled = isMuted ? false : true;
 };
 
 export const toggleCamera = (isDisabled) => {
     localStream.getVideoTracks()[0].enabled = isDisabled ? true : false;
+    // localStream.getVideoTracks()[0].enabled = isDisabled ? false : true;
+    // localStream.getVideoTracks()[0].enabled = true;
 };
 
 export const toggleScreenShare = (

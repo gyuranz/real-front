@@ -60,6 +60,7 @@ const Container = styled.div`
     padding: 10px;
     //! MVP 끝나고 overflow 삭제
     /* overflow: auto; */
+    position: relative;
 `;
 
 const InputTextStyle = styled.div`
@@ -73,6 +74,7 @@ const TextInput = styled(motion.input)`
     height: 6vh;
     border-radius: 0;
     font-size: 1.2rem;
+    border-radius: 30px 0 0 30px;
 `;
 const IOButton = styled.button`
     border: none;
@@ -89,7 +91,7 @@ const SideOpenToolBox = styled(motion.div)`
 const TextInputButton = styled(motion.button)`
     ${buttonStyle}
     ${mainBgColor}
-    border-radius: 0 0 30px 0;
+    border-radius: 0 30px 30px 0;
     font-size: 1.2rem;
     /* line-height: 1.2rem; */
     width: 5vw;
@@ -103,7 +105,6 @@ const ChatArea = styled.div`
     height: 80vh;
     margin-top: 4vh;
     overflow-y: auto;
-    background-color: rgba(0, 0, 0, 0.5);
 `;
 
 const ChattingBox = styled(motion.div)`
@@ -460,15 +461,15 @@ function Room() {
                         <Tab style={{ borderRadius: "30px 0 0 0" }}>
                             <Link to={"playground"}>PLAYGROUND</Link>
                         </Tab>
-                        <VerticalLine />
+                        {/* <VerticalLine /> */}
                         <Tab>
                             <Link to={"summary"}>SUMMARY</Link>
                         </Tab>
-                        <VerticalLine />
+                        {/* <VerticalLine /> */}
                         <Tab>
                             <Link to={"question"}>QUESTION</Link>
                         </Tab>
-                        <VerticalLine />
+                        {/* <VerticalLine /> */}
                         <Tab>
                             <Link to={"quiz"}>QUIZ</Link>
                         </Tab>
@@ -481,12 +482,10 @@ function Room() {
                             <Route path="question" element={<Question />} />
                             <Route path="quiz" element={<Quiz />} />
                         </Routes>
+                        <RoomPage />
+                        {/* //! 영상 및 스크린쉐어 페이지 */}
                     </Container>
-                    {/* //! 영상 및 스크린쉐어 페이지 */}
-                    <RoomPage />
-                    {/* <Dictaphone /> */}
                 </MainContainer>
-                {/* <VerticalLine /> */}
 
                 <RoomList>
                     <ChatArea ref={chatContainerEl}>

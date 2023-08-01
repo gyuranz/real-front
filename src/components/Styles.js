@@ -39,6 +39,14 @@ export const inputVariants = {
         y: 0,
     },
 };
+export const scrollVariants = {
+    start: {
+        opacity: 0,
+    },
+    end: {
+        opacity: 1,
+    },
+};
 export const leftSideBoxVariants = {
     start: {
         opacity: 0,
@@ -54,6 +62,7 @@ export const buttonStyle = css`
     box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2), 0 10px 20px rgba(0, 0, 0, 0.2);
     padding: 20px 10px;
     font-size: 24px;
+    font-weight: 600;
     border-radius: 20px;
     border: none;
 `;
@@ -91,15 +100,19 @@ export const Tab = styled.div`
     height: 50px;
     width: 100%;
     transition: 0.3s all ease-in-out;
+    font-weight: 600;
+    font-size: 1.2em;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     &:hover {
         box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2), 0 10px 20px rgba(0, 0, 0, 0.2);
+        font-size: 1.4em;
     }
     a {
-        display: block;
-        width: inherit;
-        height: 100%;
-        text-align: center;
-        line-height: 300%;
+        padding: 20px;
     }
 `;
 export const VerticalLine = styled.div`

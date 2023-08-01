@@ -11,12 +11,13 @@ const VideoButtonEnd = styled.button`
     position: absolute;
     top: 0;
     right: 0;
-    margin: 20px;
+    margin: 10px 10px 0 0;
     padding: 10px;
     font-weight: 400;
     font-size: 16px;
     color: white;
     transition: 0.4s;
+    cursor: pointer;
     &:hover {
         background-color: #ff7b00;
     }
