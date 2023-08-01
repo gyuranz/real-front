@@ -166,7 +166,6 @@ const showLocalVideoPreview = (stream) => {
 
         alert(`${videoElement.id}`);
     });
-    console.log("abc2");
 
     videoContainer.appendChild(videoElement);
 

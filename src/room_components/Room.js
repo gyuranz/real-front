@@ -183,6 +183,7 @@ const storedData = JSON.parse(localStorage.getItem("userData"));
 //     query: { user: JSON.stringify(storedData.userNickname) },
 // });
 function Room() {
+    const [click, setClick] = useState("playground");
     const [connection, setConnection] = useState();
     const [currentRecognition, setCurrentRecognition] = useState();
     const [recognitionHistory, setRecognitionHistory] = useState([]);
@@ -463,19 +464,71 @@ function Room() {
 
                     <Tabs style={{ margin: "0" }}>
                         <Tab style={{ borderRadius: "30px 0 0 0" }}>
-                            <Link to={"playground"}>PLAYGROUND</Link>
+                            <Link
+                                to={"playground"}
+                                onClick={() => {
+                                    setClick("playground");
+                                }}
+                            >
+                                {click === "playground" ? (
+                                    <span style={{ color: "#00d2d3" }}>
+                                        PLAYGROUND
+                                    </span>
+                                ) : (
+                                    <span>PLAYGROUND</span>
+                                )}
+                            </Link>
                         </Tab>
-                        {/* <VerticalLine /> */}
+
                         <Tab>
-                            <Link to={"summary"}>SUMMARY</Link>
+                            <Link
+                                to={"summary"}
+                                onClick={() => {
+                                    setClick("summary");
+                                }}
+                            >
+                                {click === "summary" ? (
+                                    <span style={{ color: "#00d2d3" }}>
+                                        SUMMARY
+                                    </span>
+                                ) : (
+                                    <span>SUMMARY</span>
+                                )}
+                            </Link>
                         </Tab>
-                        {/* <VerticalLine /> */}
+
                         <Tab>
-                            <Link to={"question"}>QUESTION</Link>
+                            <Link
+                                to={"question"}
+                                onClick={() => {
+                                    setClick("question");
+                                }}
+                            >
+                                {click === "question" ? (
+                                    <span style={{ color: "#00d2d3" }}>
+                                        QUESTION
+                                    </span>
+                                ) : (
+                                    <span>QUESTION</span>
+                                )}
+                            </Link>
                         </Tab>
-                        {/* <VerticalLine /> */}
+
                         <Tab>
-                            <Link to={"quiz"}>QUIZ</Link>
+                            <Link
+                                to={"quiz"}
+                                onClick={() => {
+                                    setClick("quiz");
+                                }}
+                            >
+                                {click === "quiz" ? (
+                                    <span style={{ color: "#00d2d3" }}>
+                                        QUIZ
+                                    </span>
+                                ) : (
+                                    <span>QUIZ</span>
+                                )}
+                            </Link>
                         </Tab>
                     </Tabs>
 

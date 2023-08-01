@@ -71,7 +71,7 @@ const HelloUser = styled(motion.div)`
 
 function Main() {
     const abc = useParams();
-    console.log(abc);
+    console.log(abc.way);
     const [click, setClick] = useState("finished");
     const { uid } = useParams();
     const navigate = useNavigate();
@@ -157,7 +157,7 @@ function Main() {
                     <Tabs>
                         <Tab>
                             <Link
-                                to={"finished"}
+                                to={`/${userState.userId}/finished`}
                                 onClick={() => {
                                     setClick("finished");
                                 }}
@@ -173,7 +173,7 @@ function Main() {
                         </Tab>
                         <Tab>
                             <Link
-                                to={"join"}
+                                to={`/${userState.userId}/join`}
                                 onClick={() => {
                                     setClick("join");
                                 }}
@@ -189,7 +189,7 @@ function Main() {
                         </Tab>
                         <Tab style={{ borderRadius: "0 30px 0 0" }}>
                             <Link
-                                to={"create"}
+                                to={`/${userState.userId}/create`}
                                 onClick={() => {
                                     setClick("create");
                                 }}

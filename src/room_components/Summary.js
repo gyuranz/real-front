@@ -41,11 +41,14 @@ function Summary() {
                 const response = await fetch(
                     `${process.env.REACT_APP_BACKEND_URL}/room/${userState.currentRoom.room_id}/summary`,
                     {
-                        method: "GET",
+                        method: "POST",
                         headers: {
                             "Content-Type": "application/json",
                             Authorization: " Bearer " + userState.token,
                         },
+                        body: JSON.stringify({
+                            user_nickname: userState.userId,
+                        }),
                     }
                 );
 
@@ -53,10 +56,10 @@ function Summary() {
                 if (!response.ok) {
                     throw new Error(responseData.message);
                 }
-                console.log(responseData.summary);
+                console.log(responseData.summaryfromDB);
                 setSummaryArraySet((prev) => {
-                    prev = [...responseData.summary];
-                    return responseData.summary;
+                    prev = [...responseData.summaryfromDB];
+                    return responseData.summaryfromDB;
                 });
             } catch (err) {
                 console.log(err);
