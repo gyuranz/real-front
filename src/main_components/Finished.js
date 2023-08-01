@@ -39,6 +39,7 @@ function Finished(props) {
         // navigate(`/room/${e.target.id}`);
     };
     const onValid = async (e) => {
+        console.log(e.target.id);
         try {
             const response = await fetch(
                 `${process.env.REACT_APP_BACKEND_URL}/${userState.userId}/finished`,
@@ -49,7 +50,7 @@ function Finished(props) {
                         Authorization: " Bearer " + userState.token,
                     },
                     body: JSON.stringify({
-                        room_id: e.room_id,
+                        room_id: e.target.id,
                     }),
                 }
             );
