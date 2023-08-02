@@ -80,8 +80,9 @@ const IOButton = styled.button`
     border: none;
     background-color: transparent;
     position: absolute;
-    top: -33px;
+    top: -35px;
     padding: 10px;
+    font-size: 1.2em;
     cursor: pointer;
 `;
 const SideOpenToolBox = styled(motion.div)`
@@ -105,7 +106,7 @@ const ChatArea = styled.div`
     height: 80vh;
     margin: 1vh 1vh 2vh 0;
     overflow-y: auto;
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: rgba(255, 255, 255, 0.1);
     border-radius: 20px;
 `;
 
@@ -439,7 +440,6 @@ function Room() {
                             }
                             onClick={connect}
                             disabled={isRecording}
-                            style={{ left: "480px" }}
                         >
                             Start
                         </IOButton>
@@ -447,7 +447,7 @@ function Room() {
                             className="btn-outline-light"
                             onClick={disconnect}
                             disabled={!isRecording}
-                            style={{ left: "520px" }}
+                            style={{ left: "60px" }}
                         >
                             Stop
                         </IOButton>
@@ -501,7 +501,9 @@ function Room() {
                                     onClick={() => {
                                         setClick("question");
                                     }}
-                                    className={completeStudy || "disabled-link"}
+                                    className={
+                                        completeStudy ? "" : "disabled-link"
+                                    }
                                 >
                                     {click === "question" ? (
                                         <span style={{ color: "#00d2d3" }}>
@@ -525,7 +527,9 @@ function Room() {
                                     onClick={() => {
                                         setClick("quiz");
                                     }}
-                                    className={completeStudy || "disabled-link"}
+                                    className={
+                                        completeStudy ? "" : "disabled-link"
+                                    }
                                 >
                                     {click === "quiz" ? (
                                         <span style={{ color: "#00d2d3" }}>

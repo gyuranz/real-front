@@ -47,7 +47,7 @@ function Summary() {
                             Authorization: " Bearer " + userState.token,
                         },
                         body: JSON.stringify({
-                            user_nickname: userState.userId,
+                            user_nickname: userState.userNickname,
                         }),
                     }
                 );
@@ -56,10 +56,12 @@ function Summary() {
                 if (!response.ok) {
                     throw new Error(responseData.message);
                 }
-                console.log(responseData.summaryfromDB);
+                console.log(responseData.summaryfromDB[0].img_url);
+                const summayArray =
+                    responseData.summaryfromDB[0].message_summary;
                 setSummaryArraySet((prev) => {
-                    prev = [...responseData.summaryfromDB];
-                    return responseData.summaryfromDB;
+                    prev = [...summayArray];
+                    return summayArray;
                 });
             } catch (err) {
                 console.log(err);

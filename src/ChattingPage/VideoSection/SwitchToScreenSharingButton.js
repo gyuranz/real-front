@@ -46,7 +46,7 @@ const SwitchToScreenSharingButton = () => {
                 const imageCapture = new ImageCapture(track);
                 // console.log(imageCapture);
                 const bitmap = await imageCapture.grabFrame();
-                track.stop();
+                // track.stop();
                 const canvas = document.getElementById("screenshot");
 
                 canvas.width = bitmap.width;
@@ -67,7 +67,7 @@ const SwitchToScreenSharingButton = () => {
                 console.log(userState, "❌");
                 console.log(buff, "❌");
                 const file = new FormData();
-                file.append("file", jpg); // 파일, 파일 이름 추가
+                file.append("file", jpg[0]); // 파일, 파일 이름 추가
                 console.log(file, "❌❌❌");
                 postScreenShot(userState.currentRoom.room_id, file);
             });

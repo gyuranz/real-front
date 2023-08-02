@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
-import RoomPage from "./ChattingPage/RoomPage";
 import { connectWithSocketIOServer } from "./utils/wss";
 import Main from "./main_components/Main";
 import Login from "./login_components/Login";

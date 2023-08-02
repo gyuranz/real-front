@@ -5,12 +5,14 @@ import { motion } from "framer-motion/dist/framer-motion";
 import { buttonStyle, mainBgColor } from "../components/Styles";
 import { useRecoilState } from "recoil";
 import { AuthLogin } from "../atoms";
+import { postQuestion } from "../utils/api";
 
 const Board = styled.div`
-    height: 75.4vh;
+    height: 74.3vh;
     overflow-y: auto;
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: rgba(255, 255, 255, 0.1);
     border-radius: 10px;
+    margin: 1vh 1vh 2vh 0;
 `;
 
 const InputTextStyle = styled.div`
@@ -20,7 +22,7 @@ const InputTextStyle = styled.div`
 
 const QuestionInput = styled(motion.input)`
     ${buttonStyle}
-    width: 60.5vw;
+    width: 60vw;
     height: 6vh;
     font-size: 1.2rem;
     border-radius: 10px 0 0 10px;
@@ -54,11 +56,27 @@ const Message = styled.div`
 
 function Question() {
     const [userState, setUserState] = useRecoilState(AuthLogin);
-    const [qna, setqna] = useState([]);
+    const [qna, setQna] = useState([]);
     const { register, handleSubmit, setValue } = useForm();
 
-    function onSendMessage(e) {
-        console.log(e);
+    //! 답변이 오기 전에 질문을 또하면 터지기 때문에
+    //! 글을 쓰면 답변올떄까지 전송버튼 막아놓기
+    async function onSendQuestion({ question }) {
+        const userQuestion = {
+            user_nickname: userState.userNickname,
+            message: question,
+        };
+        setQna((prev) => [...prev, userQuestion]);
+        setValue("question", "");
+
+        const res = await postQuestion(userState.currentRoom.room_id, question);
+        // res =  { result: "answer" }
+        console.log(res);
+        const answer = {
+            user_nickname: "토란이",
+            message: res.data.result,
+        };
+        setQna((prev) => [...prev, answer]);
     }
     return (
         <>
@@ -66,16 +84,14 @@ function Question() {
                 {qna.map((reply, index) => (
                     <ChattingBox key={index}>
                         <span style={{ color: `#00d2d3` }}>
-                            {reply.user_nickname === userState.userNickname
-                                ? reply.user_nickname
-                                : "토란이"}
+                            {reply.user_nickname}
                         </span>
                         <Message>{reply.message}</Message>
                     </ChattingBox>
                 ))}
             </Board>
-            ;
-            <form onSubmit={handleSubmit(onSendMessage)}>
+
+            <form onSubmit={handleSubmit(onSendQuestion)}>
                 <InputTextStyle>
                     <QuestionInput
                         type="text"

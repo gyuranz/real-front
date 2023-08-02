@@ -28,3 +28,24 @@ export const postScreenShot = async (room_id, file) => {
     console.log(response.data);
     return response.data;
 };
+
+export const postQuestion = async (room_id, question) => {
+    try {
+        const response = await axios.post(
+            `${serverApi}/room/${room_id}/question`,
+            {
+                uesr_request: question.message,
+            }
+        );
+        return response;
+    } catch (e) {
+        console.log(e);
+        alert(`${e} 발생, 질문하지 못했습니다.`);
+    }
+};
+
+export const getQuiz = async (roomId) => {
+    const response = await axios.get(`${serverApi}/room/${roomId}/quiz`);
+    console.log(response, "😅");
+    return response;
+};
