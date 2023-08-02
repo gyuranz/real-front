@@ -14,6 +14,7 @@ export const getTURNCredentials = async () => {
 };
 
 export const postScreenShot = async (room_id, file) => {
+    console.log(room_id, file, "💪");
     const response = await axios.post(
         `${serverApi}/room/${room_id}/upload`,
         file,
@@ -21,6 +22,9 @@ export const postScreenShot = async (room_id, file) => {
             headers: {
                 "Content-Type": "multipart/form-data",
                 charset: "utf-8",
+            },
+            body: {
+                file,
             },
         }
     );
