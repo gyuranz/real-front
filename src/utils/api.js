@@ -23,9 +23,6 @@ export const postScreenShot = async (room_id, file) => {
                 "Content-Type": "multipart/form-data",
                 charset: "utf-8",
             },
-            body: {
-                file,
-            },
         }
     );
     console.log(response.data);

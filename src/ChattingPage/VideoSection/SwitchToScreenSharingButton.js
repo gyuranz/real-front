@@ -59,16 +59,16 @@ const SwitchToScreenSharingButton = () => {
                 const res = await fetch(image);
                 const buff = await res.arrayBuffer();
 
-                // const file = [
-                //     new File([buff], `photo_${new Date()}.jpg`, {
-                //         type: "image/jpeg",
-                //     }),
-                // ];
-                // console.log(userState, "❌");
+                const file = [
+                    new File([buff], `photo_${new Date()}.jpg`, {
+                        type: "image/jpeg",
+                    }),
+                ];
+                console.log(userState, "❌");
                 console.log(buff, "❌");
-                const file = new FormData();
-                file.append("file", buff); // 파일, 파일 이름 추가
-                console.log(file, "❌❌❌");
+                // const file = new FormData();
+                // file.append("file", buff); // 파일, 파일 이름 추가
+                // console.log(file, "❌❌❌");
                 postScreenShot(userState.currentRoom.room_id, file);
             });
         } else {
