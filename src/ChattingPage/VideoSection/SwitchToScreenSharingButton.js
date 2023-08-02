@@ -40,6 +40,7 @@ const SwitchToScreenSharingButton = () => {
             const sharedVideo = document.querySelectorAll("#room_host")[0];
 
             sharedVideo.addEventListener("contextmenu", async function (event) {
+                event.preventDefault();
                 // console.log(stream.getVideoTracks());
                 const track = await stream.getVideoTracks()[0];
                 const imageCapture = new ImageCapture(track);
