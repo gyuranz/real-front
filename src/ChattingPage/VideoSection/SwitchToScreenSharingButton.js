@@ -66,7 +66,7 @@ const SwitchToScreenSharingButton = () => {
                 // ];
                 console.log(userState, "❌");
                 const file = new FormData();
-                file.append("file", image); // 파일, 파일 이름 추가
+                file.append("file", buff); // 파일, 파일 이름 추가
                 postScreenShot(userState.currentRoom.room_id, file);
             });
         } else {
