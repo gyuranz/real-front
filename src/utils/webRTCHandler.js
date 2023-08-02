@@ -160,12 +160,6 @@ const showLocalVideoPreview = (stream) => {
     videoElement.onloadedmetadata = () => {
         videoElement.play();
     };
-    videoElement.addEventListener("contextmenu", function (event) {
-        event.preventDefault();
-        console.log(event);
-
-        alert(`${videoElement.id}`);
-    });
 
     videoContainer.appendChild(videoElement);
 

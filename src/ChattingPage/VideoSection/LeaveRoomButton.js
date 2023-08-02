@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 import { buttonStyle, reverseColor } from "../../components/Styles";
@@ -68,4 +68,4 @@ const LeaveRoomButton = () => {
     return <VideoButtonEnd onClick={handleRoomFinished}>FINISH</VideoButtonEnd>;
 };
 
-export default LeaveRoomButton;
+export default memo(LeaveRoomButton);

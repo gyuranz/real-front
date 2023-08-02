@@ -1,6 +1,6 @@
 import { io } from "socket.io-client";
 
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { memo, useCallback, useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 import { AuthLogin, CompleteStudy } from "../atoms";
 import { motion } from "framer-motion/dist/framer-motion";
@@ -598,4 +598,4 @@ function Room() {
     );
 }
 
-export default Room;
+export default memo(Room);
