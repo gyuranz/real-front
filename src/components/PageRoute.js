@@ -2,7 +2,7 @@ import { motion } from "framer-motion/dist/framer-motion";
 import React from "react";
 import { styled } from "styled-components";
 import { buttonStyle, reverseColor } from "./Styles";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
 
 const MainButton = styled(motion.button)`
     ${buttonStyle}
@@ -22,7 +22,10 @@ function PageRoute() {
             : navigate("/auth/login");
     };
     goToMain();
-    return <MainButton onClick={goToMain}> move to MAIN</MainButton>;
+    // return <MainButton onClick={goToMain}> move to MAIN</MainButton>;
+    return (
+        <>{storedData && <Navigate to={`/${storedData.userId}/finished`} />}</>
+    );
 }
 
 export default PageRoute;
