@@ -113,20 +113,22 @@ const JoinRoomContent = (props) => {
                 }
             );
             const responseData = await response.json();
+            const { room_id, room_name, room_summary } = responseData;
 
-            setRoomIdAction(responseData.room_id);
+            setRoomIdAction(room_id);
             setIdentityAction(userState.userId);
             if (!response.ok) {
                 throw new Error(responseData.message);
             }
+            console.log(room_id, room_name, "✅");
 
             setUserState({
                 ...userState,
                 currentRoom: {
-                    room_id: responseData.room_id,
-                    room_name: responseData.room_name,
-                    room_summary: responseData.room_summary,
-                    room_password: responseData.room_password,
+                    room_id,
+                    room_name,
+                    room_summary,
+                    room_password: "",
                 },
             });
 

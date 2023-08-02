@@ -193,18 +193,6 @@ const addStream = (stream, connUserSocketId) => {
         videoElement.play();
     };
 
-    //! capture ~ alt(18) + a(65)
-    const track = stream.getVideoTracks()[0];
-    let imageCapture = new ImageCapture(track);
-    console.log("abc1");
-    videoElement.addEventListener("contextmenu", function (event) {
-        event.preventDefault();
-        console.log(event);
-
-        alert(`${videoElement.id}`);
-    });
-    console.log("abc2");
-
     videoElement.addEventListener("click", () => {
         if (videoElement.classList.contains("full_screen")) {
             videoElement.classList.remove("full_screen");

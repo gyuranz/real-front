@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import RoomPage from "../ChattingPage/RoomPage";
 
-function Playground() {
+function Playground(sttConnect, sttDisconnect) {
     const [currentRecognition, setCurrentRecognition] = useState();
     const [STTMessage, setSTTMessage] = useState([]);
     useEffect(() => {
@@ -10,7 +10,7 @@ function Playground() {
     }, [setSTTMessage, currentRecognition]);
     return (
         <>
-            <RoomPage />
+            <RoomPage sttConnect={sttConnect} sttDisconnect={sttDisconnect} />
         </>
     );
 }

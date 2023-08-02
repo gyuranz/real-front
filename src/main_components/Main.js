@@ -70,8 +70,6 @@ const HelloUser = styled(motion.div)`
 `;
 
 function Main() {
-    const abc = useParams();
-    console.log(abc.way);
     const [click, setClick] = useState("finished");
     const { uid } = useParams();
     const navigate = useNavigate();

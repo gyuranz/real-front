@@ -26,13 +26,8 @@ export const Chats = atom({
     },
 });
 
-export const VolumeContidion = atom({
-    key: "volume",
-    default: false,
-});
-
-export const MicCondition = atom({
-    key: "mic",
+export const CompleteStudy = atom({
+    key: "ComplateStudy",
     default: false,
 });
 

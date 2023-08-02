@@ -2,7 +2,7 @@ import { io } from "socket.io-client";
 
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
-import { AuthLogin, MicCondition, VolumeContidion } from "../atoms";
+import { AuthLogin, CompleteStudy } from "../atoms";
 import { motion } from "framer-motion/dist/framer-motion";
 import { styled } from "styled-components";
 import {
@@ -161,9 +161,9 @@ const RoomOutButton = styled(motion.div)`
     ${buttonStyle}
     ${reverseColor}
     color:white;
-    padding: 5px;
-    border-radius: 3px;
-    font-size: 1rem;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 1.2rem;
     z-index: 999;
     position: absolute;
     top: 5vh;
@@ -183,6 +183,7 @@ const storedData = JSON.parse(localStorage.getItem("userData"));
 //     query: { user: JSON.stringify(storedData.userNickname) },
 // });
 function Room() {
+    const [completeStudy, setCompleteStudy] = useRecoilState(CompleteStudy);
     const [click, setClick] = useState("playground");
     const [connection, setConnection] = useState();
     const [currentRecognition, setCurrentRecognition] = useState();
@@ -195,8 +196,7 @@ function Room() {
     const { register, handleSubmit, setValue } = useForm();
     //! STT
     const navigate = useNavigate();
-    const [mic, setMic] = useRecoilState(MicCondition);
-    const [volume, setVolume] = useRecoilState(VolumeContidion);
+
     const [userState, setUserState] = useRecoilState(AuthLogin);
     const [chats, setChats] = useState([]);
     const [message, setMessage] = useState("");
@@ -215,6 +215,7 @@ function Room() {
             wss.socket.off("message", messageHandler);
         };
     }, []);
+    console.log(userState);
 
     // ! STT
 
@@ -266,7 +267,7 @@ function Room() {
         // 이벤트 핸들러 등록
         wss.socket.on("receive_audio_text", speechRecognized);
 
-        // cleanup function: 컴포넌트가 언마운트 될 때 실행됩니다.
+        // cleanup function: 컴포넌트가 언마운트 될 때 실행
         return () => {
             // 이벤트 핸들러 해제
             wss.socket.off("receive_audio_text", speechRecognized);
@@ -351,7 +352,7 @@ function Room() {
         };
     }, [connection, isRecording, recorder]);
 
-    //! 채팅이 길어지면(chats.length) 스크롤이 생성되므로, 스크롤의 위치를 최근 메시지에 위치시키기 위함
+    //! 스크롤의 위치를 최근 메시지에 위치
     useEffect(() => {
         if (!chatContainerEl.current) return;
 
@@ -361,7 +362,7 @@ function Room() {
         if (scrollHeight > clientHeight) {
             chatContainer.scrollTop = scrollHeight - clientHeight;
         }
-    }, [chats.length]);
+    }, [chats.length, STTMessage.length]);
 
     const onSendMessage = handleSubmit((data) => {
         const { message } = data;
@@ -382,26 +383,30 @@ function Room() {
     //!
 
     //! 룸 나가기를 하면 userState의 current room 을 {}로 설정
-    // const RoomOutHandler = () => {
-    //! 소켓 룸에서도 나가는 기능 해야함
-    // socket.emit("leave-room", { room_id: current_room_id }, () => {
-    //     console.log(
-    //         `${storedData.userNickname} 님이 ${current_room_id}에서 나가셨습니다.`
-    //     );
-    // });
-    // setUserState({
-    //     ...userState,
-    //     currentRoom: {
-    //         room_id: "",
-    //         room_name: "",
-    //         room_summary: "",
-    //         room_password: "",
-    //     },
-    // });
+    const RoomOutHandler = () => {
+        // ! 소켓 룸에서도 나가는 기능 해야함
+        wss.socket.emit(
+            "leave-room",
+            { room_id: userState.currentRoom.room_id },
+            () => {
+                console.log(
+                    `${storedData.userNickname} 님이 ${userState.currentRoom.room_id}에서 나가셨습니다.`
+                );
+            }
+        );
+        setUserState({
+            ...userState,
+            currentRoom: {
+                room_id: "",
+                room_name: "",
+                room_summary: "",
+                room_password: "",
+            },
+        });
 
-    // console.log(userState);
-    // navigate(`/${userState.userId}`);
-    // };
+        console.log(userState);
+        navigate(`/${userState.userId}`);
+    };
     // console.log(userState);
     //! 현재 접속한 방이 유저가(db) 들어온 방에 있는지 확인
     // const current_room = useParams();
@@ -420,7 +425,7 @@ function Room() {
 
     return (
         <>
-            {/* <RoomOutButton onClick={RoomOutHandler}>FINISH</RoomOutButton> */}
+            <RoomOutButton onClick={RoomOutHandler}>QUIT</RoomOutButton>
             <BaseContainer
                 variants={containerVariants}
                 initial="start"
@@ -428,20 +433,6 @@ function Room() {
             >
                 <MainContainer>
                     <SideOpenToolBox variants={leftSideBoxVariants}>
-                        {/* <IOButton onClick={volumeControl}>
-                            {volume ? (
-                                <FontAwesomeIcon icon={faVolumeHigh} />
-                            ) : (
-                                <FontAwesomeIcon icon={faVolumeXmark} />
-                            )}
-                        </IOButton>
-                        <IOButton onClick={micControl} style={{ left: "30px" }}>
-                            {mic ? (
-                                <FontAwesomeIcon icon={faMicrophone} />
-                            ) : (
-                                <FontAwesomeIcon icon={faMicrophoneSlash} />
-                            )}
-                        </IOButton> */}
                         <IOButton
                             className={
                                 isRecording ? "btn-danger" : "btn-outline-light"
@@ -481,54 +472,72 @@ function Room() {
                         </Tab>
 
                         <Tab>
-                            <Link
-                                to={"summary"}
-                                onClick={() => {
-                                    setClick("summary");
-                                }}
-                            >
-                                {click === "summary" ? (
-                                    <span style={{ color: "#00d2d3" }}>
-                                        SUMMARY
-                                    </span>
-                                ) : (
-                                    <span>SUMMARY</span>
-                                )}
-                            </Link>
+                            {completeStudy ? (
+                                <Link
+                                    to={"summary"}
+                                    onClick={() => {
+                                        setClick("summary");
+                                    }}
+                                >
+                                    {click === "summary" ? (
+                                        <span style={{ color: "#00d2d3" }}>
+                                            SUMMARY
+                                        </span>
+                                    ) : (
+                                        <span>SUMMARY</span>
+                                    )}
+                                </Link>
+                            ) : (
+                                <span style={{ color: "#828282" }}>
+                                    SUMMARY
+                                </span>
+                            )}
                         </Tab>
 
                         <Tab>
-                            <Link
-                                to={"question"}
-                                onClick={() => {
-                                    setClick("question");
-                                }}
-                            >
-                                {click === "question" ? (
-                                    <span style={{ color: "#00d2d3" }}>
-                                        QUESTION
-                                    </span>
-                                ) : (
-                                    <span>QUESTION</span>
-                                )}
-                            </Link>
+                            {completeStudy ? (
+                                <Link
+                                    to={"question"}
+                                    onClick={() => {
+                                        setClick("question");
+                                    }}
+                                    className={completeStudy || "disabled-link"}
+                                >
+                                    {click === "question" ? (
+                                        <span style={{ color: "#00d2d3" }}>
+                                            QUESTION
+                                        </span>
+                                    ) : (
+                                        <span>QUESTION</span>
+                                    )}
+                                </Link>
+                            ) : (
+                                <span style={{ color: "#828282" }}>
+                                    QUESTION
+                                </span>
+                            )}
                         </Tab>
 
                         <Tab>
-                            <Link
-                                to={"quiz"}
-                                onClick={() => {
-                                    setClick("quiz");
-                                }}
-                            >
-                                {click === "quiz" ? (
-                                    <span style={{ color: "#00d2d3" }}>
-                                        QUIZ
-                                    </span>
-                                ) : (
-                                    <span>QUIZ</span>
-                                )}
-                            </Link>
+                            {completeStudy ? (
+                                <Link
+                                    to={"quiz"}
+                                    onClick={() => {
+                                        setClick("quiz");
+                                    }}
+                                    className={completeStudy || "disabled-link"}
+                                >
+                                    {click === "quiz" ? (
+                                        <span style={{ color: "#00d2d3" }}>
+                                            QUIZ
+                                        </span>
+                                    ) : (
+                                        <span>QUIZ</span>
+                                    )}
+                                </Link>
+                            ) : (
+                                <span style={{ color: "#828282" }}>QUIZ</span>
+                            )}
                         </Tab>
                     </Tabs>
 

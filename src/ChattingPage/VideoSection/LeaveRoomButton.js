@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 import { buttonStyle, reverseColor } from "../../components/Styles";
 import { useRecoilState } from "recoil";
-import { AuthLogin } from "../../atoms";
+import { AuthLogin, CompleteStudy } from "../../atoms";
+import axios from "axios";
 
 const VideoButtonEnd = styled.button`
     ${buttonStyle}
@@ -23,36 +24,48 @@ const VideoButtonEnd = styled.button`
     }
 `;
 
+const studyFinished = async (room_id, setCompleteStudy) => {
+    try {
+        const response = await axios.get(
+            `${process.env.REACT_APP_BACKEND_URL}/room/${room_id}/finished`
+        );
+        console.log(response.data);
+        setCompleteStudy(true);
+        return response.data;
+    } catch (e) {
+        alert(`스터디 종료 중 ${e.data.message} 문제가 발생했습니다.`);
+    }
+};
+
 const LeaveRoomButton = () => {
+    const [completeStudy, setCompleteStudy] = useRecoilState(CompleteStudy);
     const storedData = JSON.parse(localStorage.getItem("userData"));
     const navigate = useNavigate();
     const [userState, setUserState] = useRecoilState(AuthLogin);
 
-    const handleRoomDisconnection = () => {
-        setUserState({
-            ...userState,
-            currentRoom: {
-                room_id: "",
-                room_name: "",
-                room_summary: "",
-                room_password: "",
-            },
-        });
-        if (storedData.token) {
-            navigate(-1);
-            // navigate(`/${storedData.userId}`);
-        } else {
-            const siteUrl = window.location.origin;
-            window.location.href = `${siteUrl}`;
-        }
+    const handleRoomFinished = () => {
+        // setUserState({
+        //     ...userState,
+        //     currentRoom: {
+        //         room_id: "",
+        //         room_name: "",
+        //         room_summary: "",
+        //         room_password: "",
+        //     },
+        // });
+        // if (storedData.token) {
+        //     navigate(-1);
+        //     // navigate(`/${storedData.userId}`);
+        // } else {
+        //     const siteUrl = window.location.origin;
+        //     window.location.href = `${siteUrl}`;
+        // }
+
+        studyFinished(userState.currentRoom.room_id, setCompleteStudy);
     };
     console.log(window.location.origin);
 
-    return (
-        <VideoButtonEnd onClick={handleRoomDisconnection}>
-            FINISH
-        </VideoButtonEnd>
-    );
+    return <VideoButtonEnd onClick={handleRoomFinished}>FINISH</VideoButtonEnd>;
 };
 
 export default LeaveRoomButton;
