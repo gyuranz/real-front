@@ -73,8 +73,9 @@ function Finished(props) {
             });
 
             navigate(`/room/${responseData.room_id}/playground`);
-        } catch (err) {
-            console.log(err);
+        } catch (error) {
+            console.log("❌", error);
+            // console.log("❌", error.data.message);
         }
     };
 

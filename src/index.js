@@ -109,13 +109,11 @@ video {
 `;
 
 ReactDOM.render(
-    <React.StrictMode>
-        <RecoilRoot>
-            <Provider store={store}>
-                <GlobalStyle />
-                <App />
-            </Provider>
-        </RecoilRoot>
-    </React.StrictMode>,
+    <RecoilRoot>
+        <Provider store={store}>
+            <GlobalStyle />
+            <App />
+        </Provider>
+    </RecoilRoot>,
     document.getElementById("root")
 );

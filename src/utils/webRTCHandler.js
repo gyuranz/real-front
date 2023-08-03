@@ -36,7 +36,7 @@ export const getLocalPreviewAndInitRoomConnection = async (
             console.log("successfuly received local stream");
             localStream = stream;
             //!
-            localStream.getVideoTracks()[0].enabled = false;
+            // localStream.getVideoTracks()[0].enabled = false;
             localStream.getAudioTracks()[0].enabled = false;
             showLocalVideoPreview(localStream);
 

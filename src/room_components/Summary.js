@@ -63,8 +63,9 @@ function Summary() {
                     prev = [...summayArray];
                     return summayArray;
                 });
-            } catch (err) {
-                console.log(err);
+            } catch (error) {
+                console.log("❌", error);
+                // console.log("❌", error.data.message);
             }
         };
         sendRequest();

@@ -125,8 +125,9 @@ function Signup() {
                 })
             );
             navigate(`/${user_id}/finished`);
-        } catch (err) {
-            console.log(err);
+        } catch (error) {
+            console.log("❌", error);
+            // console.log("❌", error.data.message);
         }
     };
 

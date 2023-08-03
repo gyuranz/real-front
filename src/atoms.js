@@ -28,7 +28,7 @@ export const Chats = atom({
 
 export const CompleteStudy = atom({
     key: "ComplateStudy",
-    default: false,
+    default: true,
 });
 
 export const SummaryAtom = atom({

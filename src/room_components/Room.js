@@ -37,6 +37,7 @@ import Playground from "./Playground";
 import Summary from "./Summary";
 import Question from "./Question";
 import Quiz from "./Quiz";
+import { localStream } from "../utils/webRTCHandler";
 
 //! STT
 const sampleRate = 16000;
@@ -51,6 +52,7 @@ const getMediaStream = () =>
         },
         video: false,
     });
+// const getMediaStream = localStream;
 
 //! STT
 
@@ -228,8 +230,9 @@ function Room() {
             //*
             setRecognitionHistory((old) => [...old, data.text]);
             setSTTMessage((prev) => [...prev, data.text]);
+            console.log(recognitionHistory);
         } else setCurrentRecognition(data.text + "...");
-
+        console.log(currentRecognition);
         wss.socket.on("broadcastAudio", (audioData) => {
             // Handle received audio data and play it back using the Web Audio API or Audio element
             // For simplicity, this example doesn't include the playback implementation.
@@ -298,6 +301,7 @@ function Room() {
                 }
                 //* 브라우져의 미디어 스트림을 가져옴, 사용자의 마이크에서 오디오 데이터를 제공
                 const stream = await getMediaStream();
+                // const stream = getMediaStream;
                 //* 오디오 스트림을 처리하고 녹음 작업을 진행
                 audioContextRef.current = new window.AudioContext();
                 //* audioWorklet을 사용하여 워크렛(worklet)을 추가합니다.

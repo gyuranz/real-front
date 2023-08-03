@@ -128,8 +128,9 @@ function Main() {
                 } else {
                     navigate("/auth/login");
                 }
-            } catch (err) {
-                console.log(err);
+            } catch (error) {
+                console.log("❌", error);
+                // console.log("❌", error.data.message);
             }
         };
 

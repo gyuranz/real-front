@@ -32,8 +32,8 @@ const studyFinished = async (room_id, setCompleteStudy) => {
         console.log(response.data);
         setCompleteStudy(true);
         return response.data;
-    } catch (e) {
-        alert(`스터디 종료 중 ${e.data.message} 문제가 발생했습니다.`);
+    } catch (error) {
+        alert(`스터디 종료 중 ${error} 문제가 발생했습니다.`);
     }
 };
 

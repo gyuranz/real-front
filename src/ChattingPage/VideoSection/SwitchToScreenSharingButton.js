@@ -73,7 +73,8 @@ const SwitchToScreenSharingButton = () => {
 
                     postScreenShot(userState.currentRoom.room_id, file);
                 } catch (error) {
-                    console.log(error);
+                    console.log("❌", error);
+                    // console.log("❌", error.data.message);
                 }
             });
         } else {

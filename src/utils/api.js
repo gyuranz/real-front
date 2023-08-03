@@ -42,12 +42,15 @@ export const postScreenShot = async (room_id, file) => {
 };
 
 export const postQuestion = async (room_id, question) => {
+    console.log(question);
+    const user_request = {
+        user_request: question,
+    };
+    console.log(user_request);
     try {
         const response = await axios.post(
             `${serverApi}/room/${room_id}/question`,
-            {
-                uesr_request: question.message,
-            }
+            user_request
         );
         return response;
     } catch (error) {

@@ -125,8 +125,9 @@ function Login() {
             // authFunc.login(responseData.userId, responseData.token);
 
             navigate(`/${user_id}/finished`);
-        } catch (err) {
-            console.log(err);
+        } catch (error) {
+            console.log("❌", error);
+            // console.log("❌", error.data.message);
         }
     };
 
