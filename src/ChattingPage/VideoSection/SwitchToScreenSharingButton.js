@@ -41,35 +41,40 @@ const SwitchToScreenSharingButton = () => {
 
             sharedVideo.addEventListener("contextmenu", async function (event) {
                 event.preventDefault();
-                // console.log(stream.getVideoTracks());
                 const track = await stream.getVideoTracks()[0];
-                const imageCapture = new ImageCapture(track);
-                // console.log(imageCapture);
-                const bitmap = await imageCapture.grabFrame();
-                // track.stop();
-                const canvas = document.getElementById("screenshot");
+                const imageCapture = new ImageCapture(track.clone());
+                try {
+                    const bitmap = await imageCapture.grabFrame();
+                    await track.clone().stop();
+                    const canvas = document.getElementById("screenshot");
 
-                canvas.width = bitmap.width;
-                canvas.height = bitmap.height;
+                    canvas.width = bitmap.width;
+                    canvas.height = bitmap.height;
 
-                const context = canvas.getContext("2d");
-                context.drawImage(bitmap, 0, 0, bitmap.width, bitmap.height);
-                const image = canvas.toDataURL();
+                    const context = canvas.getContext("2d");
+                    context.drawImage(
+                        bitmap,
+                        0,
+                        0,
+                        bitmap.width,
+                        bitmap.height
+                    );
+                    const image = canvas.toDataURL();
+                    const res = await fetch(image);
+                    const buff = await res.arrayBuffer();
 
-                const res = await fetch(image);
-                const buff = await res.arrayBuffer();
+                    const jpg = [
+                        new File([buff], `photo_${new Date()}.jpg`, {
+                            type: "image/jpeg",
+                        }),
+                    ];
+                    const file = new FormData();
+                    file.append("file", jpg[0]); // 파일, 파일 이름 추가
 
-                const jpg = [
-                    new File([buff], `photo_${new Date()}.jpg`, {
-                        type: "image/jpeg",
-                    }),
-                ];
-                console.log(userState, "❌");
-                console.log(buff, "❌");
-                const file = new FormData();
-                file.append("file", jpg[0]); // 파일, 파일 이름 추가
-                console.log(file, "❌❌❌");
-                postScreenShot(userState.currentRoom.room_id, file);
+                    postScreenShot(userState.currentRoom.room_id, file);
+                } catch (error) {
+                    console.log(error);
+                }
             });
         } else {
             webRTCHandler.toggleScreenShare(isScreenSharingActive);

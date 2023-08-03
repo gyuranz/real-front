@@ -7,6 +7,8 @@ import { useRecoilState } from "recoil";
 import { AuthLogin } from "../atoms";
 import { postQuestion } from "../utils/api";
 
+import Overlay from "../ChattingPage/Overlay";
+
 const Board = styled.div`
     height: 74.3vh;
     overflow-y: auto;
@@ -57,6 +59,7 @@ const Message = styled.div`
 function Question() {
     const [userState, setUserState] = useRecoilState(AuthLogin);
     const [qna, setQna] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
     const { register, handleSubmit, setValue } = useForm();
 
     //! 답변이 오기 전에 질문을 또하면 터지기 때문에
@@ -69,7 +72,9 @@ function Question() {
         setQna((prev) => [...prev, userQuestion]);
         setValue("question", "");
 
+        setIsLoading(true);
         const res = await postQuestion(userState.currentRoom.room_id, question);
+        setIsLoading(false);
         // res =  { result: "answer" }
         console.log(res);
         const answer = {
@@ -81,6 +86,7 @@ function Question() {
     return (
         <>
             <Board>
+                {isLoading && <Overlay />}
                 {qna.map((reply, index) => (
                     <ChattingBox key={index}>
                         <span style={{ color: `#00d2d3` }}>

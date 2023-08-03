@@ -3,6 +3,7 @@ import { styled } from "styled-components";
 import { getQuiz } from "../utils/api";
 import { AuthLogin } from "../atoms";
 import { useRecoilState } from "recoil";
+import Overlay from "../ChattingPage/Overlay";
 
 const fakeData = [
     "퀴즈 1: Amazon S3는 블록 수준의 영구 스토리지이다.",
@@ -67,10 +68,13 @@ const Answer = styled.div`
 
 function Quiz() {
     const [userState, setUserState] = useRecoilState(AuthLogin);
+    const [isLoading, setIsLoading] = useState(false);
     const [quiz, setQuiz] = useState([]);
     useEffect(() => {
         async function abc() {
+            setIsLoading(true);
             const quizData = await getQuiz(userState.currentRoom.room_id);
+            setIsLoading(false);
             const quizArray = quizData.data.result.split(/[.]\s+/g);
             console.log(quizArray);
             setQuiz((prev) => [...prev, ...quizArray]);
@@ -85,6 +89,7 @@ function Quiz() {
     return (
         <>
             <Board>
+                {isLoading && <Overlay />}
                 {quiz !== []
                     ? quiz.map((quiz, index) =>
                           index % 2 === 0 ? (

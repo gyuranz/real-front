@@ -16,6 +16,7 @@ const CameraButton = () => {
     return (
         <div className="video_button_container">
             <img
+                alt="VIDEO"
                 src={
                     isLocalVideoDisabled ? CameraButtonImgOff : CameraButtonImg
                 }

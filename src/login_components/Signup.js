@@ -12,6 +12,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { AuthAtom, AuthLogin } from "../atoms";
+import Overlay from "../ChattingPage/Overlay";
 
 const Container = styled(motion.div)`
     ${containerStyle}
@@ -134,6 +135,7 @@ function Signup() {
             <Container variants={boxVariants} initial="start" animate="end">
                 {/* 수정 필요!!! 로딩화면 */}
                 {/* {isLoading ? <h1>로딩 중...</h1> : null} */}
+                {isLoading && <Overlay />}
                 <form
                     style={{ display: "flex", flexDirection: "column" }}
                     onSubmit={handleSubmit(onValid)}
