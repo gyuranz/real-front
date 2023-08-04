@@ -69,7 +69,7 @@ export const buttonStyle = css`
 `;
 
 export const containerStyle = css`
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.2);
     width: 500px;
     border-radius: 30px;
     box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2), 0 10px 20px rgba(0, 0, 0, 0.2);
@@ -79,8 +79,8 @@ export const containerStyle = css`
 `;
 
 export const mainBgColor = css`
-    background-color: #00d2d3;
     background-color: #07dfb4;
+    background-color: #00d2d3;
 `;
 
 export const reverseColor = css`

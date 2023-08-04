@@ -18,6 +18,7 @@ import Finished from "./Finished";
 
 import JoinRoomPage from "../JoinRoomPage/JoinRoomPage";
 import CreateRoomPage from "../CreateRoomPage/CreateRoomPage";
+import PageRoute from "../components/PageRoute";
 
 const BaseContainer = styled(motion.div)`
     ${containerStyle}
@@ -208,6 +209,7 @@ function Main() {
                         <Route path="finished" element={<Finished />} />
                         <Route path="join" element={<JoinRoomPage />} />
                         <Route path="create" element={<CreateRoomPage />} />
+                        <Route path="*" element={<PageRoute />} />
                     </Routes>
                 </RoomList>
             </BaseContainer>

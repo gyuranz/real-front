@@ -16,6 +16,7 @@ import { AuthLogin } from "../atoms";
 
 const Container = styled(motion.div)`
     ${containerStyle}
+    box-shadow: none;
     height: 280px;
     position: relative;
     a {
@@ -23,7 +24,7 @@ const Container = styled(motion.div)`
         position: absolute;
         bottom: 15px;
         right: 110px;
-        color: white;
+        color: black;
         padding: 10px;
     }
 `;

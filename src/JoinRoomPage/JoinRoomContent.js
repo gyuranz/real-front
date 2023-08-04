@@ -135,6 +135,7 @@ const JoinRoomContent = (props) => {
             navigate(`/room/${responseData.room_id}/playground`);
         } catch (error) {
             console.log("❌", error);
+            navigate("/");
             // console.log("❌", error.data.message);
         }
     };

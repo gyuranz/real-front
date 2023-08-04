@@ -9,6 +9,7 @@ import { appendNewMessageToChatHistory } from "./directMessages";
 export let socket = null;
 
 export const connectWithSocketIOServer = () => {
+    // socket = io(`https://hyunsunghwang.shop`);
     // socket = io(`${process.env.REACT_APP_BACKEND_URL}/room`);
     socket = io(`${process.env.REACT_APP_BACKEND_URL}`);
 

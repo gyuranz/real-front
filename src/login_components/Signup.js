@@ -16,6 +16,7 @@ import Overlay from "../ChattingPage/Overlay";
 
 const Container = styled(motion.div)`
     ${containerStyle}
+    box-shadow: none;
     height: 480px;
 `;
 

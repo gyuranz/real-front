@@ -16,15 +16,21 @@ function PageRoute() {
     const storedData = JSON.parse(localStorage.getItem("userData"));
     console.log(storedData);
 
-    const goToMain = () => {
-        storedData
-            ? navigate(`/${storedData.userId}/finished`)
-            : navigate("/auth/login");
-    };
-    goToMain();
+    // const goToMain = () => {
+    //     storedData
+    //         ? navigate(`/${storedData.userId}/finished`)
+    //         : navigate("/auth/login");
+    // };
+    // goToMain();
     // return <MainButton onClick={goToMain}> move to MAIN</MainButton>;
     return (
-        <>{storedData && <Navigate to={`/${storedData.userId}/finished`} />}</>
+        <>
+            {storedData ? (
+                <Navigate to={`/${storedData.userId}/finished`} />
+            ) : (
+                <Navigate to={"/auth/login"} />
+            )}
+        </>
     );
 }
 

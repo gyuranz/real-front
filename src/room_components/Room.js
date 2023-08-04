@@ -38,6 +38,7 @@ import Summary from "./Summary";
 import Question from "./Question";
 import Quiz from "./Quiz";
 import { localStream } from "../utils/webRTCHandler";
+import PageRoute from "../components/PageRoute";
 
 //! STT
 const sampleRate = 16000;
@@ -555,6 +556,7 @@ function Room() {
                             <Route path="summary" element={<Summary />} />
                             <Route path="question" element={<Question />} />
                             <Route path="quiz" element={<Quiz />} />
+                            <Route path="*" element={<PageRoute />} />
                         </Routes>
 
                         {/* //! 영상 및 스크린쉐어 페이지 */}

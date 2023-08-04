@@ -5,6 +5,7 @@ import * as webRTCHandler from "../../utils/webRTCHandler";
 import { postScreenShot } from "../../utils/api";
 import { AuthLogin } from "../../atoms";
 import { useRecoilState } from "recoil";
+import { useNavigate } from "react-router-dom";
 
 const constraints = {
     audio: false,
@@ -16,6 +17,7 @@ const SwitchToScreenSharingButton = () => {
     const [isScreenSharingActive, setIsScreenSharingActive] = useState(false);
     const [screenSharingStream, setScreenSharingStream] = useState(null);
     const [userState, setUserState] = useRecoilState(AuthLogin);
+    const navigate = useNavigate();
 
     const handleScreenShareToggle = async () => {
         if (!isScreenSharingActive) {
@@ -74,6 +76,7 @@ const SwitchToScreenSharingButton = () => {
                     postScreenShot(userState.currentRoom.room_id, file);
                 } catch (error) {
                     console.log("❌", error);
+                    navigate("/");
                     // console.log("❌", error.data.message);
                 }
             });
