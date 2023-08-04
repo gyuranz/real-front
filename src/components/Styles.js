@@ -80,6 +80,7 @@ export const containerStyle = css`
 
 export const mainBgColor = css`
     background-color: #00d2d3;
+    background-color: #07dfb4;
 `;
 
 export const reverseColor = css`
