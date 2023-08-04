@@ -1,14 +1,11 @@
-import { io } from "socket.io-client";
-
 import React, { memo, useCallback, useEffect, useRef, useState } from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { AuthLogin, CompleteStudy } from "../atoms";
 import { motion } from "framer-motion/dist/framer-motion";
 import { styled } from "styled-components";
 import {
     Tab,
     Tabs,
-    VerticalLine,
     buttonStyle,
     containerStyle,
     containerVariants,
@@ -17,27 +14,22 @@ import {
     reverseColor,
     reverseTextColor,
 } from "../components/Styles";
-import { useNavigate, Link, useParams, Routes, Route } from "react-router-dom";
-import {
-    faMicrophone,
-    faMicrophoneSlash,
-    faVolumeHigh,
-    faVolumeLow,
-    faVolumeXmark,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import Playground from "./Playground";
-// import Question from "./Question";
-// import Summary from "./Summary";
-// import Quiz from "./Quiz";
+import { useNavigate, Link, Routes, Route } from "react-router-dom";
+// import {
+//     faMicrophone,
+//     faMicrophoneSlash,
+//     faVolumeHigh,
+//     faVolumeLow,
+//     faVolumeXmark,
+// } from "@fortawesome/free-solid-svg-icons";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import { useForm } from "react-hook-form";
-import RoomPage from "../ChattingPage/RoomPage";
 import * as wss from "../utils/wss";
 import Playground from "./Playground";
 import Summary from "./Summary";
 import Question from "./Question";
 import Quiz from "./Quiz";
-import { localStream } from "../utils/webRTCHandler";
 import PageRoute from "../components/PageRoute";
 
 //! STT
@@ -187,7 +179,7 @@ const storedData = JSON.parse(localStorage.getItem("userData"));
 //     query: { user: JSON.stringify(storedData.userNickname) },
 // });
 function Room() {
-    const [completeStudy, setCompleteStudy] = useRecoilState(CompleteStudy);
+    const completeStudy = useRecoilValue(CompleteStudy);
     const [click, setClick] = useState("playground");
     const [connection, setConnection] = useState();
     const [currentRecognition, setCurrentRecognition] = useState();

@@ -6,7 +6,7 @@ import Overlay from "./Overlay";
 
 import "./RoomPage.css";
 import VideoButtons from "./VideoSection/VideoButtons";
-import { useRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import { AuthLogin } from "../atoms";
 
 const RoomPage = ({
@@ -16,7 +16,7 @@ const RoomPage = ({
     showOverlay,
     connectOnlyWithAudio,
 }) => {
-    const [userState, setUserState] = useRecoilState(AuthLogin);
+    const userState = useRecoilValue(AuthLogin);
     useEffect(() => {
         //! room ID 바꾸는 것
         // setUserState({

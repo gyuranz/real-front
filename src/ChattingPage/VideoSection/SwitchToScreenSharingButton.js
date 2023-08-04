@@ -4,7 +4,7 @@ import LocalScreenSharingPreview from "./LocalScreenSharingPreview";
 import * as webRTCHandler from "../../utils/webRTCHandler";
 import { postScreenShot } from "../../utils/api";
 import { AuthLogin } from "../../atoms";
-import { useRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import { useNavigate } from "react-router-dom";
 
 const constraints = {
@@ -13,10 +13,10 @@ const constraints = {
 };
 
 const SwitchToScreenSharingButton = () => {
-    const storedData = JSON.parse(localStorage.getItem("userData"));
+    // const storedData = JSON.parse(localStorage.getItem("userData"));
     const [isScreenSharingActive, setIsScreenSharingActive] = useState(false);
     const [screenSharingStream, setScreenSharingStream] = useState(null);
-    const [userState, setUserState] = useRecoilState(AuthLogin);
+    const userState = useRecoilValue(AuthLogin);
     const navigate = useNavigate();
 
     const handleScreenShareToggle = async () => {
@@ -94,6 +94,7 @@ const SwitchToScreenSharingButton = () => {
         <>
             <div className="video_button_container">
                 <img
+                    alt="SCREEN SHARE"
                     src={SwitchImg}
                     onClick={handleScreenShareToggle}
                     className="video_button_image"

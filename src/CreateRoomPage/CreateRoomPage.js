@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import React from "react";
+// import { useLocation, useParams } from "react-router-dom";
 import { connect } from "react-redux";
 import { setIsRoomHost } from "../store/actions";
 import CreateRoomContent from "./CreateRoomContent";

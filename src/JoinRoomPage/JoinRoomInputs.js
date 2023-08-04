@@ -1,7 +1,7 @@
 import React from "react";
 import { styled } from "styled-components";
 import { motion } from "framer-motion/dist/framer-motion";
-import { buttonStyle, mainBgColor } from "../components/Styles";
+import { buttonStyle } from "../components/Styles";
 
 const RoomJoinInput = styled(motion.input)`
     ${buttonStyle}

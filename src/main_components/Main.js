@@ -2,7 +2,6 @@ import { styled } from "styled-components";
 import {
     Tab,
     Tabs,
-    VerticalLine,
     buttonStyle,
     containerStyle,
     containerVariants,
@@ -10,7 +9,7 @@ import {
 } from "../components/Styles";
 
 import { useRecoilState } from "recoil";
-import { AuthLogin, MicCondition, VolumeContidion } from "../atoms";
+import { AuthLogin } from "../atoms";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams, Link, Routes, Route } from "react-router-dom";
 import { motion } from "framer-motion/dist/framer-motion";
@@ -74,7 +73,7 @@ function Main() {
     const [click, setClick] = useState("finished");
     const { uid } = useParams();
     const navigate = useNavigate();
-    const [isLoading, setIsLoading] = useState(false);
+    // const [isLoading, setIsLoading] = useState(false);
     const [loadedUsers, setLoadedUsers] = useState([]);
     const storedData = JSON.parse(localStorage.getItem("userData"));
     const [userState, setUserState] = useRecoilState(AuthLogin);

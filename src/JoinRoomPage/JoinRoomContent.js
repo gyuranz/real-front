@@ -6,9 +6,9 @@ import {
     setIdentity,
     setRoomId,
 } from "../store/actions";
-import ErrorMessage from "./ErrorMessage";
+// import ErrorMessage from "./ErrorMessage";
 import { useNavigate } from "react-router-dom";
-import { getRoomExists } from "../utils/api";
+// import { getRoomExists } from "../utils/api";
 import { styled } from "styled-components";
 import { motion } from "framer-motion/dist/framer-motion";
 import { buttonStyle, inputVariants, mainBgColor } from "../components/Styles";
@@ -65,7 +65,7 @@ const JoinRoomContent = (props) => {
         register,
         handleSubmit,
         formState: { errors },
-        setValue,
+        // setValue,
     } = useForm();
 
     const navigate = useNavigate();

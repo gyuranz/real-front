@@ -65,7 +65,7 @@ const CreateRoomContent = (props) => {
         register,
         handleSubmit,
         formState: { errors },
-        setValue,
+        // setValue,
     } = useForm();
     console.log();
 

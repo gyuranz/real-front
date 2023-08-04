@@ -2,31 +2,8 @@ import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
 import { getQuiz } from "../utils/api";
 import { AuthLogin } from "../atoms";
-import { useRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import Overlay from "../ChattingPage/Overlay";
-
-const fakeData = [
-    "퀴즈 1: Amazon S3는 블록 수준의 영구 스토리지이다.",
-    "답: X",
-    "퀴즈 2: 아이스크림은 물체이다.",
-    "답: O",
-    "퀴즈 3: 서울은 한국의 수도이다.",
-    "답: O",
-    "퀴즈 4: 열대 우림은 한국에 존재하는 지형이다.",
-    "답: X",
-    "퀴즈 5: 버섯은 동물이다.",
-    "답: X",
-    "퀴즈 6: 대한민국은 한자로 작성된 국가명이다.",
-    "답: O",
-    "퀴즈 7: 1미터는 100센티미터이다.",
-    "답: O",
-    "퀴즈 8: 밤하늘에 별은 나비 같다.",
-    "답: X",
-    "퀴즈 9: 거북이는 느린 동물이다.",
-    "답: O",
-    "퀴즈 10: 하늘은 파란색이다.",
-    "답: O",
-];
 
 const Board = styled.div`
     height: 74.3vh;
@@ -67,7 +44,7 @@ const Answer = styled.div`
 `;
 
 function Quiz() {
-    const [userState, setUserState] = useRecoilState(AuthLogin);
+    const userState = useRecoilValue(AuthLogin);
     const [isLoading, setIsLoading] = useState(false);
     const [quiz, setQuiz] = useState([]);
     useEffect(() => {

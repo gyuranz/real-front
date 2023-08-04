@@ -30,14 +30,14 @@ function Finished(props) {
     const navigate = useNavigate();
     const [userState, setUserState] = useRecoilState(AuthLogin);
 
-    const moveToRoom = (e) => {
-        console.log(e.target.id);
-        // post로 정보 보내줌. 보내주는 것은 없고 url로 백에서 찾아줄 것으로 판단함
-        // response로 룸 클릭한 룸 정보를 받아옴
-        //! 그 정보를 기준으로 userState에 current room을 설정
+    // const moveToRoom = (e) => {
+    //     console.log(e.target.id);
+    //     // post로 정보 보내줌. 보내주는 것은 없고 url로 백에서 찾아줄 것으로 판단함
+    //     // response로 룸 클릭한 룸 정보를 받아옴
+    //     //! 그 정보를 기준으로 userState에 current room을 설정
 
-        // navigate(`/room/${e.target.id}`);
-    };
+    //     // navigate(`/room/${e.target.id}`);
+    // };
     const onValid = async (e) => {
         console.log(e.target.id);
         try {

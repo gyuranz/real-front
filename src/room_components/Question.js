@@ -3,7 +3,7 @@ import { styled } from "styled-components";
 import { useForm } from "react-hook-form";
 import { motion } from "framer-motion/dist/framer-motion";
 import { buttonStyle, mainBgColor } from "../components/Styles";
-import { useRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import { AuthLogin } from "../atoms";
 import { postQuestion } from "../utils/api";
 
@@ -57,7 +57,7 @@ const Message = styled.div`
 `;
 
 function Question() {
-    const [userState, setUserState] = useRecoilState(AuthLogin);
+    const userState = useRecoilValue(AuthLogin);
     const [qna, setQna] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const { register, handleSubmit, setValue } = useForm();

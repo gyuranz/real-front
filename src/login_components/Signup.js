@@ -10,8 +10,8 @@ import {
     mainBgColor,
 } from "../components/Styles";
 import { useNavigate } from "react-router-dom";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { AuthAtom, AuthLogin } from "../atoms";
+import { useRecoilState } from "recoil";
+import { AuthLogin } from "../atoms";
 import Overlay from "../ChattingPage/Overlay";
 
 const Container = styled(motion.div)`

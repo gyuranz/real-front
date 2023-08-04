@@ -1,18 +1,18 @@
-import { motion } from "framer-motion/dist/framer-motion";
+// import { motion } from "framer-motion/dist/framer-motion";
 import React from "react";
-import { styled } from "styled-components";
-import { buttonStyle, reverseColor } from "./Styles";
-import { useNavigate, Navigate } from "react-router-dom";
+// import { styled } from "styled-components";
+// import { buttonStyle, reverseColor } from "./Styles";
+import { Navigate } from "react-router-dom";
 
-const MainButton = styled(motion.button)`
-    ${buttonStyle}
-    ${reverseColor}
-    width: 300px;
-    cursor: pointer;
-`;
+// const MainButton = styled(motion.button)`
+//     ${buttonStyle}
+//     ${reverseColor}
+//     width: 300px;
+//     cursor: pointer;
+// `;
 
 function PageRoute() {
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     const storedData = JSON.parse(localStorage.getItem("userData"));
     console.log(storedData);
 

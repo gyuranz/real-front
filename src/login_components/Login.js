@@ -60,7 +60,7 @@ function Login() {
     const navigate = useNavigate();
 
     const [loginError, setLoginError] = useState("");
-    const [isLoading, setIsLoaging] = useState(false);
+    // const [isLoading, setIsLoaging] = useState(false);
     // const authFunc = useRecoilValue(AuthAtom);
     const [userState, setUserState] = useRecoilState(AuthLogin);
 
@@ -68,7 +68,7 @@ function Login() {
         register,
         handleSubmit,
         formState: { errors },
-        setValue,
+        // setValue,
     } = useForm();
     // console.log(userState);
 
@@ -80,7 +80,7 @@ function Login() {
         // setValue("user_password", "");
 
         try {
-            setIsLoaging(true);
+            // setIsLoaging(true);
             const response = await fetch(
                 `${process.env.REACT_APP_BACKEND_URL}/auth/login`,
                 {
@@ -97,7 +97,7 @@ function Login() {
             );
             const responseData = await response.json();
 
-            setIsLoaging(false);
+            // setIsLoaging(false);
             setLoginError(responseData.message);
             // responseData.message
             //     ? alert(responseData.message)

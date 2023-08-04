@@ -1,8 +1,8 @@
 import React, { memo } from "react";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 import { buttonStyle, reverseColor } from "../../components/Styles";
-import { useRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { AuthLogin, CompleteStudy } from "../../atoms";
 import axios from "axios";
 
@@ -38,10 +38,10 @@ const studyFinished = async (room_id, setCompleteStudy) => {
 };
 
 const LeaveRoomButton = () => {
-    const [completeStudy, setCompleteStudy] = useRecoilState(CompleteStudy);
-    const storedData = JSON.parse(localStorage.getItem("userData"));
-    const navigate = useNavigate();
-    const [userState, setUserState] = useRecoilState(AuthLogin);
+    const setCompleteStudy = useSetRecoilState(CompleteStudy);
+    // const storedData = JSON.parse(localStorage.getItem("userData"));
+    // const navigate = useNavigate();
+    const userState = useRecoilValue(AuthLogin);
 
     const handleRoomFinished = () => {
         // setUserState({

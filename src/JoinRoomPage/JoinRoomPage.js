@@ -6,7 +6,7 @@ import { setIsRoomHost } from "../store/actions";
 import JoinRoomContent from "./JoinRoomContent";
 
 const JoinRoomPage = (props) => {
-    const { setIsRoomHostAction, isRoomHost } = props;
+    const { setIsRoomHostAction } = props;
 
     const search = useLocation().search;
 

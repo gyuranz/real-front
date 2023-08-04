@@ -43,6 +43,7 @@ const SaveButton = styled.div`
 //! summay 클릭시 fetch로 summary 데이터를 가져옴.
 //! 가져온 데이터를 배열로 바꾼후 (. 기준 혹은 다른 기준을 정해야 할듯)
 function Summary() {
+    //! 추가 및 삭제는 summaryArray를 통해서 하자.
     const [userState, setUserState] = useRecoilState(AuthLogin);
     const [summaryArray, summaryArraySet] = useRecoilState(SummaryAtom);
     const navigate = useNavigate();
@@ -51,12 +52,17 @@ function Summary() {
         if (!destination) return;
         summaryArraySet((oneLine) => {
             const copySummary = [...oneLine];
+            const copyObject = copySummary[source.index];
             // 1. delete item in source.index
             copySummary.splice(source.index, 1);
             // 2. insert item in destination.index
-            copySummary.splice(destination?.index, 0, draggableId);
+            copySummary.splice(destination?.index, 0, copyObject);
+
             return copySummary;
         });
+    };
+    const modifyText = (event) => {
+        // console.log(event.target);
     };
     useEffect(() => {
         const sendRequest = async () => {
@@ -84,24 +90,32 @@ function Summary() {
                 if (responseData.summaryfromDB[0].img_url) {
                     const img_url = responseData.summaryfromDB[0].img_url;
                     console.log(img_url);
+                    const img_object = {
+                        id: Date.now().toString(),
+                        text: img_url,
+                    };
 
-                    summaryArraySet((prev) => [...prev, img_url]);
+                    summaryArraySet((prev) => [...prev, img_object]);
                 }
 
                 const summaryOneLine =
                     responseData.summaryfromDB[0].message_summary;
                 for (const item of summaryOneLine) {
-                    summaryArraySet((prev) => [...prev, item]);
+                    const item_object = {
+                        id: Date.now().toString(),
+                        text: item,
+                    };
+                    summaryArraySet((prev) => [...prev, item_object]);
                 }
             } catch (error) {
                 console.log("❌", error);
+
                 navigate("/");
                 // console.log("❌", error.data.message);
             }
         };
         sendRequest();
     }, []);
-    // useEffect;
     console.log("✅", summaryArray);
     return (
         <>
@@ -116,12 +130,11 @@ function Summary() {
                                 {summaryArray.map((oneLine, index) =>
                                     // draggable 에서 key와 draggableId는 동일해야함
                                     // 그렇지 않으면 버그 발생
-                                    oneLine === "" ? null : oneLine.slice(
-                                          -5
-                                      ) === "Hello" ? (
+                                    oneLine.text !== "" &&
+                                    oneLine.text.slice(-5) === "Hello" ? (
                                         <Draggable
-                                            key={index}
-                                            draggableId={index}
+                                            key={oneLine.id}
+                                            draggableId={oneLine.id}
                                             index={index}
                                         >
                                             {(provided) => (
@@ -129,18 +142,20 @@ function Summary() {
                                                     ref={provided.innerRef}
                                                     {...provided.draggableProps}
                                                     {...provided.dragHandleProps}
+                                                    id={oneLine.id}
+                                                    onDoubleClick={modifyText}
                                                 >
                                                     <Image
                                                         alt="image"
-                                                        src={`https://aitolearn.s3.ap-northeast-2.amazonaws.com/${oneLine}`}
+                                                        src={`https://aitolearn.s3.ap-northeast-2.amazonaws.com/${oneLine.text}`}
                                                     />
                                                 </Card>
                                             )}
                                         </Draggable>
                                     ) : (
                                         <Draggable
-                                            key={oneLine}
-                                            draggableId={oneLine}
+                                            key={oneLine.id}
+                                            draggableId={oneLine.id}
                                             index={index}
                                         >
                                             {(provided) => (
@@ -148,8 +163,10 @@ function Summary() {
                                                     ref={provided.innerRef}
                                                     {...provided.draggableProps}
                                                     {...provided.dragHandleProps}
+                                                    id={oneLine.id}
+                                                    onDoubleClick={modifyText}
                                                 >
-                                                    {oneLine}
+                                                    {oneLine.text}
                                                 </Card>
                                             )}
                                         </Draggable>
