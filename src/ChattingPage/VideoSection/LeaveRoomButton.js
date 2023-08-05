@@ -43,7 +43,7 @@ const LeaveRoomButton = () => {
     // const navigate = useNavigate();
     const userState = useRecoilValue(AuthLogin);
 
-    const handleRoomFinished = () => {
+    const handleRoomFinished = (event) => {
         // setUserState({
         //     ...userState,
         //     currentRoom: {

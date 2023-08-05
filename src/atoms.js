@@ -31,6 +31,11 @@ export const CompleteStudy = atom({
     default: true,
 });
 
+export const AlarmAtom = atom({
+    key: "Alarm",
+    default: false,
+});
+
 export const SummaryAtom = atom({
     key: "Summary",
     default: [

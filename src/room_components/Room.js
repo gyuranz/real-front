@@ -31,7 +31,9 @@ import Summary from "./Summary";
 import Question from "./Question";
 import Quiz from "./Quiz";
 import PageRoute from "../components/PageRoute";
-
+//!
+//! 룸 finish 상태를 서버로부터 받아와 종료방인지 아닌지 확인 후 처리작업 진행
+//!
 //! STT
 const sampleRate = 16000;
 
@@ -174,11 +176,11 @@ const RoomOutButton = styled(motion.div)`
 //! 소켓 api 꼭 같이 수정해주기
 
 // const current_room_id = window.location.pathname.split("/")[2];
-const storedData = JSON.parse(localStorage.getItem("userData"));
 // socket = io(`${process.env.REACT_APP_BACKEND_URL}/room`, {
 //     query: { user: JSON.stringify(storedData.userNickname) },
 // });
 function Room() {
+    const storedData = JSON.parse(localStorage.getItem("userData"));
     const completeStudy = useRecoilValue(CompleteStudy);
     const [click, setClick] = useState("playground");
     const [connection, setConnection] = useState();
