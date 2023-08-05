@@ -8,6 +8,9 @@ import "./RoomPage.css";
 import VideoButtons from "./VideoSection/VideoButtons";
 import { useRecoilValue } from "recoil";
 import { AuthLogin } from "../atoms";
+import { styled } from "styled-components";
+
+const CopyButton = styled.button``;
 
 const RoomPage = ({
     roomId,
@@ -42,11 +45,30 @@ const RoomPage = ({
             );
         }
     }, []);
+    const copyRoomId = () => {
+        // 임시의 textarea 생성
+        const textarea = document.createElement("textarea");
+
+        // body 요소에 존재해야 복사가 진행됨
+        document.body.appendChild(textarea);
+
+        // 복사할 특정 텍스트를 임시의 textarea에 넣어주고 모두 셀렉션 상태
+        textarea.value = userState.currentRoom.room_id;
+        textarea.select();
+
+        // 복사 후textarea 지우기
+        document.execCommand("copy");
+        document.body.removeChild(textarea);
+    };
 
     return (
         <div className="room_container" id="videos_portal">
             <VideoButtons />
-            <div className="room_label">ID: {roomId}</div>
+            <div className="room_label">
+                ID: {roomId}
+                <CopyButton onClick={copyRoomId()}>복사</CopyButton>
+            </div>
+
             {showOverlay && <Overlay />}
         </div>
     );

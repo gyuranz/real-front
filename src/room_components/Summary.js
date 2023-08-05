@@ -245,7 +245,7 @@ function Summary() {
                                     // draggable 에서 key와 draggableId는 동일해야함
                                     // 그렇지 않으면 버그 발생
                                     oneLine.text !== "" &&
-                                    oneLine.text.slice(-5) === "Hello" ? (
+                                    oneLine.text.slice(-10) === "learnHello" ? (
                                         <Draggable
                                             key={oneLine.id}
                                             draggableId={oneLine.id}
