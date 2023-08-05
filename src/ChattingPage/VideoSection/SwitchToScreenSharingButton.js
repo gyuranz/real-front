@@ -5,7 +5,7 @@ import * as webRTCHandler from "../../utils/webRTCHandler";
 import { postScreenShot } from "../../utils/api";
 import { AuthLogin } from "../../atoms";
 import { useRecoilValue } from "recoil";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 const constraints = {
     audio: false,
@@ -17,7 +17,7 @@ const SwitchToScreenSharingButton = () => {
     const [isScreenSharingActive, setIsScreenSharingActive] = useState(false);
     const [screenSharingStream, setScreenSharingStream] = useState(null);
     const userState = useRecoilValue(AuthLogin);
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     const handleScreenShareToggle = async () => {
         if (!isScreenSharingActive) {
@@ -43,11 +43,16 @@ const SwitchToScreenSharingButton = () => {
 
             sharedVideo.addEventListener("contextmenu", async function (event) {
                 event.preventDefault();
-                const track = await stream.getVideoTracks()[0];
-                const imageCapture = new ImageCapture(track.clone());
                 try {
+                    const track = await stream.getVideoTracks()[0];
+                    const imageCapture = new ImageCapture(track.clone());
+                    // const copyTrack = track.clone();
+                    // const imageCapture = new ImageCapture(copyTrack);
+
                     const bitmap = await imageCapture.grabFrame();
                     await track.clone().stop();
+                    // await copyTrack.stop();
+                    // stream.removeTrack(copyTrack);
                     const canvas = document.getElementById("screenshot");
 
                     canvas.width = bitmap.width;
@@ -76,8 +81,7 @@ const SwitchToScreenSharingButton = () => {
                     postScreenShot(userState.currentRoom.room_id, file);
                 } catch (error) {
                     console.log("❌", error);
-                    navigate("/");
-                    // console.log("❌", error.data.message);
+                    // navigate("/");
                 }
             });
         } else {
