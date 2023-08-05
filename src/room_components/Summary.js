@@ -199,30 +199,32 @@ function Summary() {
                 }
                 // https://aitolearn.s3.ap-northeast-2.amazonaws.com/
                 // for (let i = 0; )
-                if (responseData.summaryfromDB[0].img_url) {
-                    const img_url = responseData.summaryfromDB[0].img_url;
-                    // console.log(img_url);
-                    const img_object = {
-                        id: Date.now().toString(),
-                        text: img_url,
-                    };
+                console.log(responseData);
+                for (const line of responseData.summaryfromDB) {
+                    // if (responseData.summaryfromDB[0].img_url) {
+                    //     const img_url = responseData.summaryfromDB[0].img_url;
+                    //     // console.log(img_url);
+                    //     const img_object = {
+                    //         id: Date.now().toString(),
+                    //         text: img_url,
+                    //     };
 
-                    setSummaryArray((prev) => [...prev, img_object]);
-                }
+                    //     setSummaryArray((prev) => [...prev, img_object]);
+                    // }
 
-                const summaryOneLine =
-                    responseData.summaryfromDB[0].message_summary;
-                for (const item of summaryOneLine) {
-                    const item_object = {
-                        id: Date.now().toString(),
-                        text: item,
-                    };
-                    setSummaryArray((prev) => [...prev, item_object]);
+                    const summaryOneLine = line.message_summary;
+                    for (const item of summaryOneLine) {
+                        const item_object = {
+                            id: Date.now().toString(),
+                            text: item,
+                        };
+                        setSummaryArray((prev) => [...prev, item_object]);
+                    }
                 }
             } catch (error) {
                 console.log("❌", error);
 
-                navigate("/");
+                // navigate("/");
                 // console.log("❌", error.data.message);
             }
         };
