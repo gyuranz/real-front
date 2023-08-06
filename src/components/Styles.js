@@ -22,7 +22,7 @@ export const containerVariants = {
         y: 0,
         scale: 1,
         transition: {
-            // duration: 0.5,
+            duration: 0.5,
             delayChildren: 0.2,
             staggerChildren: 0.1,
         },
@@ -63,15 +63,15 @@ export const buttonStyle = css`
     padding: 20px 10px;
     font-size: 24px;
     font-weight: 600;
-    /* border-radius: 20px; */
+    border-radius: 20px;
     border: none;
 `;
 
 export const containerStyle = css`
     /* background-color: rgba(0, 0, 0, 0.2); */
     width: 300px;
-    /* border-radius: 30px; */
-    /* box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2), 0 10px 20px rgba(0, 0, 0, 0.2); */
+    border-radius: 30px;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2), 0 10px 20px rgba(0, 0, 0, 0.2);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -80,7 +80,8 @@ export const primaryColor = css`
     color: #1de9b6; // Primary (most of the UI)
 `;
 export const primaryBgColor = css`
-    background-color: #303030; // Primary background colour (dialogs, e.t.c)
+    /* background-color: #303030; // Primary background colour (dialogs, e.t.c) */
+    background-color: #ffffff;
 `;
 export const secondaryBgColor = css`
     background-color: #1de9b6; // Secondary background colour (main UI background)
@@ -92,16 +93,20 @@ export const paperItemIconColor = css`
     color: #1de9b6; // Icon colour
 `;
 export const primaryTextColor = css`
-    color: #ffffff; // Primary text colour
+    /* color: #ffffff; // Primary text colour */
+    color: #000000;
 `;
 export const secondaryTextColor = css`
-    color: rgba(255, 255, 255, 0.7); // Secondary text colour
+    /* color: rgba(255, 255, 255, 0.7); // Secondary text colour */
+    color: rgba(0, 0, 0, 0.7); // Secondary text colour
 `;
 export const disabledTextColor = css`
-    color: rgba(255, 255, 255, 0.5); // Disabled text colour
+    /* color: rgba(255, 255, 255, 0.5); // Disabled text colour */
+    color: rgba(0, 0, 0, 0.5); // Disabled text colour
 `;
 export const dividerColor = css`
-    color: rgba(255, 255, 255, 0.12); // Divider colour
+    /* color: rgba(255, 255, 255, 0.12); // Divider colour */
+    color: rgba(0, 0, 0, 0.12); // Divider colour
 `;
 export const toggleButtonColor = css`
     background-color: #1de9b6;
@@ -128,8 +133,8 @@ export const SelectedBgColor = css`
 `;
 
 export const mainBgColor = css`
-    background-color: #07dfb4;
-    background-color: #00d2d3;
+    /* background-color: #07dfb4;
+    background-color: #00d2d3; */
     background-color: #1de9b6;
 `;
 
@@ -153,13 +158,13 @@ export const Tabs = styled.div`
     margin-bottom: 10px;
 `;
 export const Tab = styled.div`
+    ${primaryTextColor}
     height: 50px;
     width: 300px;
     border-radius: 10px;
     transition: 0.3s all ease-in-out;
     font-weight: 600;
     font-size: 1.2em;
-    color: white;
     display: flex;
     flex-direction: column;
     align-items: center;

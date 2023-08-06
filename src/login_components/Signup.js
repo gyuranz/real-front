@@ -6,6 +6,7 @@ import {
     boxVariants,
     buttonStyle,
     containerStyle,
+    disabledTextColor,
     inputVariants,
     primaryTextColor,
     reverseColor,
@@ -46,14 +47,14 @@ const OneLineTwoButton = styled.div`
 const JoinButton = styled(motion.button)`
     ${buttonStyle}
     ${secondaryBgColor}
-    ${primaryTextColor}
     cursor: pointer;
+    ${disabledTextColor}
 `;
 
 const CancelButton = styled(motion.button)`
     ${buttonStyle}
     ${reverseColor}
-    ${primaryTextColor}
+    ${disabledTextColor}
     cursor: pointer;
 `;
 

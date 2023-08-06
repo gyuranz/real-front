@@ -171,10 +171,10 @@ function Main() {
                             >
                                 {click === "finished" ? (
                                     <span style={{ color: "#1de9b6" }}>
-                                        FINISHED
+                                        HISTORY
                                     </span>
                                 ) : (
-                                    <span>FINISHED</span>
+                                    <span>HISTORY</span>
                                 )}
                             </Link>
                         </Tab>

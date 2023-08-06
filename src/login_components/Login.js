@@ -6,6 +6,7 @@ import {
     boxVariants,
     buttonStyle,
     containerStyle,
+    disabledTextColor,
     inputVariants,
     mainBgColor,
     paperItemIconColor,
@@ -30,14 +31,16 @@ const Container = styled(motion.div)`
     ${containerStyle}
     box-shadow: none;
     height: 280px;
+    width: 500px;
     position: relative;
     a {
         ${paperItemIconColor}
         flex: none;
         position: absolute;
         bottom: 15px;
-        right: -45px;
+        right: 55px;
         padding: 10px;
+        font-weight: 600;
     }
 `;
 
@@ -50,7 +53,7 @@ const LoginInput = styled(motion.input)`
 const GridLoginStyle = styled.div`
     display: grid;
     grid-template-columns: 2fr 1fr;
-    width: 410px;
+    width: 415px;
     gap: 10px;
 `;
 
@@ -61,6 +64,7 @@ const LoginButton = styled(motion.button)`
     height: 145px;
     cursor: pointer;
     color: white;
+    ${disabledTextColor}
 `;
 
 const LoginWarning = styled.span`

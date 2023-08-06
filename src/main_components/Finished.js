@@ -7,8 +7,10 @@ import { styled } from "styled-components";
 import { motion } from "framer-motion/dist/framer-motion";
 import {
     buttonStyle,
+    primaryTextColor,
     scrollVariants,
     secondaryBgColor,
+    secondaryTextColor,
 } from "../components/Styles";
 import { setIdentity, setRoomId } from "../store/actions";
 
@@ -20,10 +22,12 @@ const Container = styled.div`
 
 const Room = styled(motion.div)`
     ${buttonStyle}
+    ${secondaryTextColor}
     box-shadow: none;
     display: inline-block;
     /* background-color: rgba(0, 0, 0, 0.2); */
     margin: 10px auto;
+
     text-align: center;
     font-size: 1rem;
     width: 450px;

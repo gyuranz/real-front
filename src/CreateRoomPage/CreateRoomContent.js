@@ -28,7 +28,7 @@ const Container = styled.div`
 const CreateForm = styled.form`
     height: "60vh";
     text-align: center;
-    width: 90%;
+    width: 400px;
 `;
 
 const RoomCreateButton = styled(motion.button)`
@@ -42,13 +42,13 @@ const RoomCreateButton = styled(motion.button)`
 `;
 const RoomCreateInput = styled(motion.input)`
     ${buttonStyle}
-    max-width: 400px;
+    width: 400px;
     margin-bottom: 10px;
     font-size: 1rem;
     width: 100%;
 `;
 
-const LoginWarning = styled.span`
+const LoginWarning = styled.div`
     color: red;
     font-size: 14px;
 `;

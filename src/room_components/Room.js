@@ -11,19 +11,24 @@ import {
     containerVariants,
     leftSideBoxVariants,
     mainBgColor,
+    paperCardBgColor,
     primaryBgColor,
     reverseColor,
     reverseTextColor,
 } from "../components/Styles";
 import { useNavigate, Link, Routes, Route } from "react-router-dom";
-// import {
-//     faMicrophone,
-//     faMicrophoneSlash,
-//     faVolumeHigh,
-//     faVolumeLow,
-//     faVolumeXmark,
-// } from "@fortawesome/free-solid-svg-icons";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+    faBars,
+    faComment,
+    faCommentSlash,
+    faMicrophone,
+    faMicrophoneSlash,
+    faVolumeHigh,
+    faVolumeLow,
+    faVolumeXmark,
+    faXmark,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { useForm } from "react-hook-form";
 import * as wss from "../utils/wss";
@@ -56,9 +61,8 @@ const ToggleMenu = styled.button`
     position: absolute;
     top: 20px;
     left: 20px;
-    width: 50px;
-    height: 50px;
-    border-radius: 50px;
+    border: none;
+    background-color: transparent;
 `;
 const ToggleClose = styled.div`
     position: absolute;
@@ -78,12 +82,12 @@ const BaseToggle = styled.div`
 
 const BaseContainer = styled(motion.div)`
     ${containerStyle}
-    /* width: 1800px;*/
     width: 100vw;
-    height: 90vh;
+    height: 100vh;
+    border-radius: 0;
     /* display: grid;
     grid-template-columns: 3.5fr 1fr 1.5fr; */
-    display: flex;
+    /* display: flex; */
 `;
 
 const MainContainer = styled.div`
@@ -91,44 +95,24 @@ const MainContainer = styled.div`
     background-color: transparent;
     box-shadow: none;
     width: 1400px;
-    height: 90vh;
+    height: 95vh;
     /* position: relative; */
     /* display: flex; */
     /* align-items: flex-start; */
     /* justify-content: baseline; */
     display: block;
-    border-radius: 30px 0 0 30px;
-`;
-
-const RoomList = styled(motion.div)`
-    ${containerStyle}
-    background-color: transparent;
-    box-shadow: none;
-    width: 400px;
-    height: 90vh;
-    display: block;
-    border-radius: 0 30px 30px 0;
+    margin-right: 30px;
 `;
 
 const Container = styled.div`
-    background-color: rgba(0, 0, 0, 0.6);
-    height: 80vh;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    height: 95vh;
     /* width: 1000px; */
     //! MVP 끝나고 overflow 삭제
     position: relative;
 `;
 
-const InputTextStyle = styled.div`
-    display: grid;
-    grid-template-columns: 4fr 1fr;
-`;
-
-const TextInput = styled(motion.input)`
-    ${buttonStyle}
-    width: 300px;
-    height: 6vh;
-    font-size: 1.2rem;
-`;
 const IOButton = styled.button`
     border: none;
     background-color: transparent;
@@ -145,27 +129,59 @@ const SideOpenToolBox = styled(motion.div)`
     position: relative;
 `;
 
+const RoomList = styled(motion.div)`
+    ${containerStyle}
+    box-shadow: none;
+    width: 400px;
+    height: 95vh;
+    display: block;
+    text-align: center;
+    position: relative;
+`;
+const InputTextStyle = styled.div`
+    display: grid;
+    grid-template-columns: 4fr 1fr;
+`;
+
+const TextInput = styled(motion.input)`
+    ${buttonStyle}
+    width: 300px;
+    height: 6vh;
+    font-size: 1.2rem;
+    border-radius: 0 0 0 20px;
+`;
 const TextInputButton = styled(motion.button)`
     ${buttonStyle}
     ${mainBgColor}
-    
     font-size: 1.2rem;
     /* line-height: 1.2rem; */
     width: 100px;
     height: 6vh;
     cursor: pointer;
     color: white;
+    border-radius: 0 0 20px 0;
 `;
 
 const ChatArea = styled.div`
     width: 400px;
-    height: 80vh;
+    height: 84vh;
     overflow-y: auto;
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 20px 20px 0 0;
+    transition: 0.3s ease-in-out;
 `;
 
 const ChattingBox = styled(motion.div)`
     margin: 10px 20px;
+    text-align: left;
+`;
+const ChatToggle = styled(motion.button)`
+    border: none;
+    background-color: transparent;
+    position: absolute;
+    right: -10px;
+    bottom: 0;
+    transition: 0.3s ease-in-out;
 `;
 
 const Message = styled.div`
@@ -173,8 +189,7 @@ const Message = styled.div`
     background: rgba(0, 0, 0, 0.1);
     font-size: 20px;
     font-weight: 600;
-    color: white;
-    /* max-width: 100%; */
+    width: 70%;
     padding: 5px;
     border-radius: 0.5rem;
     word-break: break-all;
@@ -247,17 +262,18 @@ function Room() {
     //! STT
     // * 서버로 부터 받은 음성 인식 결과를 처리하는 함수
     const speechRecognized = useCallback((data) => {
+        console.log("abc");
         if (data.isFinal) {
             setCurrentRecognition("...");
             //*
             setRecognitionHistory((old) => [...old, data.text]);
             setSTTMessage((prev) => [...prev, data.text]);
-            const sttMessage = {
+            const sttInfo = {
                 user_nickname: storedData.userNickname,
                 message: data.text,
                 room_id: userState.currentRoom.room_id,
             };
-            setChats((prev) => [...prev, sttMessage]);
+            setChats((prev) => [...prev, sttInfo]);
             console.log(STTMessage, "✅");
             console.log(chats, "✅");
             console.log(recognitionHistory);
@@ -467,7 +483,13 @@ function Room() {
                 onClick={() => {
                     setIsToggle((prev) => !prev);
                 }}
-            ></ToggleMenu>
+            >
+                <FontAwesomeIcon
+                    icon={faBars}
+                    size="2xl"
+                    style={{ color: "#1de9b6" }}
+                />
+            </ToggleMenu>
             {isToggle && (
                 <BaseToggle>
                     <Tabs style={{ margin: "0" }}>
@@ -566,7 +588,7 @@ function Room() {
                             setIsToggle((prev) => !prev);
                         }}
                     >
-                        X
+                        <FontAwesomeIcon icon={faXmark} size="xl" />
                     </ToggleClose>
                 </BaseToggle>
             )}
@@ -610,40 +632,81 @@ function Room() {
                 </MainContainer>
 
                 <RoomList>
-                    <ChatArea ref={chatContainerEl}>
-                        {/*//! text 메세지 나오는 부분 */}
-                        {chats.map((chat, index) => (
-                            <ChattingBox key={index}>
-                                <span style={{ color: `#1de9b6` }}>
-                                    {chat.user_nickname !==
-                                    storedData.userNickname
-                                        ? chat.user_nickname
-                                        : "ME"}
-                                </span>
-                                <Message>{chat.message}</Message>
-                            </ChattingBox>
-                        ))}
-                        {/*//! STT 메세지 나오는 부분 */}
-                        {/* {STTMessage.map((message, idx) => (
+                    {isChatToggle && (
+                        <>
+                            <ChatArea ref={chatContainerEl}>
+                                {/*//! text 메세지 나오는 부분 */}
+                                {chats.map((chat, index) => (
+                                    <ChattingBox key={index}>
+                                        {chat.user_nickname !==
+                                        storedData.userNickname ? (
+                                            <div style={{ color: `#1de9b6` }}>
+                                                {chat.user_nickname}
+                                            </div>
+                                        ) : (
+                                            <></>
+                                        )}
+                                        {chat.user_nickname !==
+                                        storedData.userNickname ? (
+                                            <Message>{chat.message}</Message>
+                                        ) : (
+                                            <Message
+                                                style={{ marginLeft: "30%" }}
+                                            >
+                                                {chat.message}
+                                            </Message>
+                                        )}
+                                    </ChattingBox>
+                                ))}
+                                {/*//! STT 메세지 나오는 부분 */}
+                                {/* {STTMessage.map((message, idx) => (
                             <ChattingBox key={idx}>
                                 <span style={{ color: `#1de9b6` }}>발표자</span>
                                 <Message>{message}</Message>
                             </ChattingBox>
                         ))} */}
-                        {/* <p>{currentRecognition}</p> */}
-                    </ChatArea>
+                                {/* <p>{currentRecognition}</p> */}
+                            </ChatArea>
 
-                    <form onSubmit={onSendMessage}>
-                        <InputTextStyle>
-                            <TextInput
-                                type="text"
-                                {...register("message")} // useForm의 register 메소드로 폼 입력과 연결
+                            <form onSubmit={onSendMessage}>
+                                <InputTextStyle>
+                                    <TextInput
+                                        type="text"
+                                        {...register("message")} // useForm의 register 메소드로 폼 입력과 연결
+                                    />
+                                    <TextInputButton type="submit">
+                                        SEND
+                                    </TextInputButton>
+                                </InputTextStyle>
+                            </form>
+                        </>
+                    )}
+
+                    <ChatToggle
+                        onClick={() => {
+                            setIsChatToggle((prev) => !prev);
+                        }}
+                    >
+                        {isChatToggle ? (
+                            <FontAwesomeIcon
+                                icon={faComment}
+                                style={{
+                                    color: "#1de9b6",
+                                    cursor: "pointer",
+                                    fontSize: "50px",
+                                }}
                             />
-                            <TextInputButton type="submit">
-                                SEND
-                            </TextInputButton>
-                        </InputTextStyle>
-                    </form>
+                        ) : (
+                            <FontAwesomeIcon
+                                icon={faCommentSlash}
+                                style={{
+                                    color: "#1de9b6",
+                                    cursor: "pointer",
+                                    fontSize: "50px",
+                                }}
+                            />
+                        )}
+                    </ChatToggle>
                 </RoomList>
             </BaseContainer>
         </>
