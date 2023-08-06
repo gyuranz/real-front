@@ -96,6 +96,7 @@ const DeleteButton = styled.button`
 //! 가져온 데이터를 배열로 바꾼후 (. 기준 혹은 다른 기준을 정해야 할듯)
 function Summary() {
     //! 추가 및 삭제는 summaryArray를 통해서 하자. useState사용으로 변경
+    const [isSave, setIsSave] = useState(false);
     const [userState, setUserState] = useRecoilState(AuthLogin);
     const [idNumber, setIdNumber] = useState(0);
     // const [summaryArray, setSummaryArray] = useRecoilState(SummaryAtom);
@@ -123,7 +124,10 @@ function Summary() {
         const inputValue = document.getElementById("inputValue");
         setSummaryArray([
             ...summaryArray,
-            { id: "id" + idNumber.toString(), text: inputValue.value },
+            {
+                id: (Date.now() + Math.random()).toString(),
+                text: inputValue.value,
+            },
         ]);
         setIdNumber((prev) => prev + 1);
         setAddText("");
@@ -164,6 +168,17 @@ function Summary() {
         setIsAdd((prev) => !prev);
     };
 
+    const updateInfo = async () => {
+        summaryArray.map(({ id, text }) =>
+            setSendSummary((prev) => [...prev, text])
+        );
+    };
+
+    const onSave = () => {
+        updateInfo();
+        setIsSave(true);
+    };
+
     const onDragEnd = ({ draggableId, destination, source }) => {
         if (!destination) return;
         setSummaryArray((oneLine) => {
@@ -178,11 +193,9 @@ function Summary() {
         });
     };
     const updateSummary = async () => {
-        summaryArray.map(({ id, text }) =>
-            setSendSummary((prev) => [...prev, text])
-        );
+        await updateInfo();
+        console.log(sendSummary, "✅");
         if (sendSummary !== []) {
-            console.log(sendSummary);
             try {
                 const response = await fetch(
                     `${process.env.REACT_APP_BACKEND_URL}/room/${userState.currentRoom.room_id}/update`,
@@ -248,7 +261,7 @@ function Summary() {
                     const summaryOneLine = line.message_summary;
                     for (const item of summaryOneLine) {
                         const item_object = {
-                            id: Date.now().toString(),
+                            id: (Date.now() + Math.random()).toString(),
                             text: item,
                         };
                         setSummaryArray((prev) => [...prev, item_object]);
@@ -356,7 +369,12 @@ function Summary() {
                     </Droppable>
                 </div>
             </DragDropContext>
-            <UpdateButton onClick={updateSummary}>UPDATE</UpdateButton>
+            {isSave ? (
+                <UpdateButton onClick={updateSummary}>UPDATE</UpdateButton>
+            ) : (
+                <UpdateButton onClick={onSave}>SAVE</UpdateButton>
+            )}
+
             <AddButton onClick={onAdd}>ADD</AddButton>
             {isAdd && (
                 <form onSubmit={onAddSubmit}>
