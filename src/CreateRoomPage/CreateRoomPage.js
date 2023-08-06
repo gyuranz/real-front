@@ -5,7 +5,7 @@ import { setIsRoomHost } from "../store/actions";
 import CreateRoomContent from "./CreateRoomContent";
 
 const CreateRoomPage = (props) => {
-    const { setIsRoomHostAction } = props;
+    const { setIsRoomHostAction, setIsRoomHost, isRoomHost } = props;
 
     setIsRoomHostAction(true);
 

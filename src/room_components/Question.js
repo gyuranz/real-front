@@ -10,11 +10,10 @@ import { postQuestion } from "../utils/api";
 import Overlay from "../ChattingPage/Overlay";
 
 const Board = styled.div`
-    height: 74.3vh;
+    height: 80vh;
+    width: 1000px;
     overflow-y: auto;
     background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-    margin: 1vh 1vh 2vh 0;
 `;
 
 const InputTextStyle = styled.div`
@@ -24,19 +23,17 @@ const InputTextStyle = styled.div`
 
 const QuestionInput = styled(motion.input)`
     ${buttonStyle}
-    width: 60vw;
+    width: 900px;
     height: 6vh;
     font-size: 1.2rem;
-    border-radius: 10px 0 0 10px;
 `;
 
 const QuestionInputButton = styled(motion.button)`
     ${buttonStyle}
     ${mainBgColor}
-    border-radius: 0 10px 10px 0;
     font-size: 1.2rem;
     /* line-height: 1.2rem; */
-    width: 5vw;
+    width: 100px;
     height: 6vh;
     cursor: pointer;
     color: white;

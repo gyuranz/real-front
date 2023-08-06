@@ -19,6 +19,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { AuthLogin } from "../atoms";
 
+const BaseContainer = styled.div`
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`;
 const Container = styled(motion.div)`
     ${containerStyle}
     box-shadow: none;
@@ -29,7 +36,7 @@ const Container = styled(motion.div)`
         flex: none;
         position: absolute;
         bottom: 15px;
-        right: 110px;
+        right: -45px;
         padding: 10px;
     }
 `;
@@ -140,47 +147,50 @@ function Login() {
     return (
         <>
             <LoginWarning>{loginError}</LoginWarning>
-            <Container variants={boxVariants} initial="start" animate="end">
-                <form onSubmit={handleSubmit(onValid)}>
-                    <GridLoginStyle>
-                        <div>
-                            <LoginInput
-                                type="text"
-                                variants={inputVariants}
-                                {...register("user_id", {
-                                    required: "please write right form",
-                                })}
-                                placeholder="ID"
-                            />
-                            <LoginWarning>
-                                {errors?.user_id?.message}
-                            </LoginWarning>
+            <BaseContainer>
+                <Container variants={boxVariants} initial="start" animate="end">
+                    <form onSubmit={handleSubmit(onValid)}>
+                        <GridLoginStyle>
+                            <div>
+                                <LoginInput
+                                    type="text"
+                                    variants={inputVariants}
+                                    {...register("user_id", {
+                                        required: "please write right form",
+                                    })}
+                                    placeholder="ID"
+                                />
+                                <LoginWarning>
+                                    {errors?.user_id?.message}
+                                </LoginWarning>
 
-                            <LoginInput
-                                type="password"
-                                variants={inputVariants}
-                                {...register("user_password", {
-                                    required: "Password is Required",
-                                    minLength: {
-                                        value: 6,
-                                        message: "Your password is too short",
-                                    },
-                                })}
-                                placeholder="PASSWORD"
-                            />
-                            <LoginWarning>
-                                {errors?.user_password?.message}
-                            </LoginWarning>
-                        </div>
+                                <LoginInput
+                                    type="password"
+                                    variants={inputVariants}
+                                    {...register("user_password", {
+                                        required: "Password is Required",
+                                        minLength: {
+                                            value: 6,
+                                            message:
+                                                "Your password is too short",
+                                        },
+                                    })}
+                                    placeholder="PASSWORD"
+                                />
+                                <LoginWarning>
+                                    {errors?.user_password?.message}
+                                </LoginWarning>
+                            </div>
 
-                        <LoginButton variants={inputVariants}>
-                            LOG IN
-                        </LoginButton>
-                        {/* <LoginWarning>{loginError}</LoginWarning> */}
-                    </GridLoginStyle>
-                </form>
-                <Link to={"/auth/signup"}>SIGN UP</Link>
-            </Container>
+                            <LoginButton variants={inputVariants}>
+                                LOG IN
+                            </LoginButton>
+                            {/* <LoginWarning>{loginError}</LoginWarning> */}
+                        </GridLoginStyle>
+                    </form>
+                    <Link to={"/auth/signup"}>SIGN UP</Link>
+                </Container>
+            </BaseContainer>
         </>
     );
 }

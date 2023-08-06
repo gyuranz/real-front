@@ -5,6 +5,8 @@ import {
     buttonStyle,
     containerStyle,
     containerVariants,
+    disabledTextColor,
+    paperCardBgColor,
     reverseColor,
 } from "../components/Styles";
 
@@ -23,42 +25,48 @@ const BaseContainer = styled(motion.div)`
     ${containerStyle}
     width: 100vw;
     height: 100vh;
-    display: grid;
-    grid-template-columns: 3.5fr 1fr 1.5fr;
+    /* display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start; */
+    /* display: grid;
+    grid-template-columns: 3.5fr 1fr 1.5fr; */
 `;
 
 const MainContainer = styled.div`
     ${containerStyle}
-    background-color: transparent;
+    /* ${paperCardBgColor} */
+    /* background-color: transparent; */
     box-shadow: none;
-    width: 66.5vw;
-    height: 90vh;
+    width: 1000px;
+    height: 100%;
     position: relative;
-    border-radius: 30px 0 0 30px;
 `;
 
 const RoomList = styled(motion.div)`
     ${containerStyle}
-    background-color: transparent;
     box-shadow: none;
-    width: 28.5vw;
-    height: 90vh;
+    width: 500px;
+    height: 100%;
     display: block;
-    border-radius: 0 30px 30px 0;
-    overflow: auto;
+    /* border-radius: 30px; */
+    overflow: none;
+    position: relative;
 `;
 
 const LogoutButton = styled(motion.div)`
-    ${buttonStyle}
-    ${reverseColor}
+    /* ${buttonStyle} */
+    /* ${paperCardBgColor} */
     padding: 10px;
     font-size: 1rem;
-    color: white;
+    ${disabledTextColor}
     font-weight: 600;
     z-index: 999;
-    position: absolute;
-    top: 20px;
-    right: 20px;
+    width: 100px;
+    /* position: absolute;
+    bottom: -220px;
+    right: 200px; */
+    text-align: center;
     cursor: pointer;
     transition: 0.3s ease-in-out;
     &:hover {
@@ -68,6 +76,9 @@ const LogoutButton = styled(motion.div)`
 
 const HelloUser = styled(motion.div)`
     font-size: 32px;
+    top: -200px;
+    right: 200px;
+    position: absolute;
 `;
 
 function Main() {
@@ -140,20 +151,15 @@ function Main() {
 
     return (
         <>
-            <LogoutButton onClick={LogoutHandler}>LOG OUT</LogoutButton>
             <BaseContainer
                 variants={containerVariants}
                 initial="start"
                 animate="end"
             >
-                <MainContainer>
-                    <HelloUser>
-                        {storedData && storedData.userNickname}님, 반가워요!
-                    </HelloUser>
-                </MainContainer>
-                {/* <VerticalLine /> */}
-
                 <RoomList>
+                    {/* <HelloUser>
+                        {storedData && storedData.userNickname}님, 반가워요!
+                    </HelloUser> */}
                     <Tabs>
                         <Tab>
                             <Link
@@ -163,7 +169,7 @@ function Main() {
                                 }}
                             >
                                 {click === "finished" ? (
-                                    <span style={{ color: "#00d2d3" }}>
+                                    <span style={{ color: "#1de9b6" }}>
                                         FINISHED
                                     </span>
                                 ) : (
@@ -179,7 +185,7 @@ function Main() {
                                 }}
                             >
                                 {click === "join" ? (
-                                    <span style={{ color: "#00d2d3" }}>
+                                    <span style={{ color: "#1de9b6" }}>
                                         JOIN
                                     </span>
                                 ) : (
@@ -187,7 +193,7 @@ function Main() {
                                 )}
                             </Link>
                         </Tab>
-                        <Tab style={{ borderRadius: "0 30px 0 0" }}>
+                        <Tab>
                             <Link
                                 to={`/${userState.userId}/create`}
                                 onClick={() => {
@@ -195,7 +201,7 @@ function Main() {
                                 }}
                             >
                                 {click === "create" ? (
-                                    <span style={{ color: "#00d2d3" }}>
+                                    <span style={{ color: "#1de9b6" }}>
                                         CREATE
                                     </span>
                                 ) : (
@@ -204,14 +210,17 @@ function Main() {
                             </Link>
                         </Tab>
                     </Tabs>
-
+                    {/* <LogoutButton onClick={LogoutHandler}>LOG OUT</LogoutButton> */}
+                </RoomList>
+                <MainContainer>
                     <Routes>
                         <Route path="finished" element={<Finished />} />
                         <Route path="join" element={<JoinRoomPage />} />
                         <Route path="create" element={<CreateRoomPage />} />
                         <Route path="*" element={<PageRoute />} />
                     </Routes>
-                </RoomList>
+                </MainContainer>
+                {/* <VerticalLine /> */}
             </BaseContainer>
         </>
     );

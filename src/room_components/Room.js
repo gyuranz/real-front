@@ -54,7 +54,8 @@ const getMediaStream = () =>
 const Container = styled.div`
     /* background-color: rgba(0, 0, 0, 0.2); */
     height: 80vh;
-    padding: 10px;
+    width: 1000px;
+    /* padding: 10px; */
     //! MVP 끝나고 overflow 삭제
     /* overflow: auto; */
     position: relative;
@@ -67,11 +68,9 @@ const InputTextStyle = styled.div`
 
 const TextInput = styled(motion.input)`
     ${buttonStyle}
-    width: 23vw;
+    width: 300px;
     height: 6vh;
-
     font-size: 1.2rem;
-    border-radius: 30px 0 0 30px;
 `;
 const IOButton = styled.button`
     border: none;
@@ -89,22 +88,20 @@ const SideOpenToolBox = styled(motion.div)`
 const TextInputButton = styled(motion.button)`
     ${buttonStyle}
     ${mainBgColor}
-    border-radius: 0 30px 30px 0;
+    
     font-size: 1.2rem;
     /* line-height: 1.2rem; */
-    width: 5vw;
+    width: 100px;
     height: 6vh;
     cursor: pointer;
     color: white;
 `;
 
 const ChatArea = styled.div`
-    width: 28vw;
+    width: 400px;
     height: 80vh;
-    margin: 1vh 1vh 2vh 0;
     overflow-y: auto;
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 20px;
+    background-color: rgba(255, 255, 255, 0.2);
 `;
 
 const ChattingBox = styled(motion.div)`
@@ -125,7 +122,7 @@ const Message = styled.div`
 
 const BaseContainer = styled(motion.div)`
     ${containerStyle}
-    width: 95vw;
+    width: 1800px;
     height: 90vh;
     display: grid;
     grid-template-columns: 3.5fr 1fr 1.5fr;
@@ -135,7 +132,7 @@ const MainContainer = styled.div`
     ${containerStyle}
     background-color: transparent;
     box-shadow: none;
-    width: 66.5vw;
+    width: 1000px;
     height: 90vh;
     /* position: relative; */
     /* display: flex; */
@@ -149,7 +146,7 @@ const RoomList = styled(motion.div)`
     ${containerStyle}
     background-color: transparent;
     box-shadow: none;
-    width: 28.5vw;
+    width: 400px;
     height: 90vh;
     display: block;
     border-radius: 0 30px 30px 0;
@@ -431,6 +428,89 @@ function Room() {
                 initial="start"
                 animate="end"
             >
+                <Tabs style={{ margin: "0" }}>
+                    <Tab>
+                        <Link
+                            to={"playground"}
+                            onClick={() => {
+                                setClick("playground");
+                            }}
+                        >
+                            {click === "playground" ? (
+                                <span style={{ color: "#1de9b6" }}>
+                                    PLAYGROUND
+                                </span>
+                            ) : (
+                                <span>PLAYGROUND</span>
+                            )}
+                        </Link>
+                    </Tab>
+
+                    <Tab>
+                        {completeStudy ? (
+                            <Link
+                                to={"summary"}
+                                onClick={() => {
+                                    setClick("summary");
+                                }}
+                            >
+                                {click === "summary" ? (
+                                    <span style={{ color: "#1de9b6" }}>
+                                        SUMMARY
+                                    </span>
+                                ) : (
+                                    <span>SUMMARY</span>
+                                )}
+                            </Link>
+                        ) : (
+                            <span style={{ color: "#828282" }}>SUMMARY</span>
+                        )}
+                    </Tab>
+
+                    <Tab>
+                        {completeStudy ? (
+                            <Link
+                                to={"question"}
+                                onClick={() => {
+                                    setClick("question");
+                                }}
+                                className={completeStudy ? "" : "disabled-link"}
+                            >
+                                {click === "question" ? (
+                                    <span style={{ color: "#1de9b6" }}>
+                                        QUESTION
+                                    </span>
+                                ) : (
+                                    <span>QUESTION</span>
+                                )}
+                            </Link>
+                        ) : (
+                            <span style={{ color: "#828282" }}>QUESTION</span>
+                        )}
+                    </Tab>
+
+                    <Tab>
+                        {completeStudy ? (
+                            <Link
+                                to={"quiz"}
+                                onClick={() => {
+                                    setClick("quiz");
+                                }}
+                                className={completeStudy ? "" : "disabled-link"}
+                            >
+                                {click === "quiz" ? (
+                                    <span style={{ color: "#1de9b6" }}>
+                                        QUIZ
+                                    </span>
+                                ) : (
+                                    <span>QUIZ</span>
+                                )}
+                            </Link>
+                        ) : (
+                            <span style={{ color: "#828282" }}>QUIZ</span>
+                        )}
+                    </Tab>
+                </Tabs>
                 <MainContainer>
                     <SideOpenToolBox variants={leftSideBoxVariants}>
                         <IOButton
@@ -452,98 +532,6 @@ function Room() {
                         </IOButton>
                     </SideOpenToolBox>
 
-                    <Tabs style={{ margin: "0" }}>
-                        <Tab style={{ borderRadius: "30px 0 0 0" }}>
-                            <Link
-                                to={"playground"}
-                                onClick={() => {
-                                    setClick("playground");
-                                }}
-                            >
-                                {click === "playground" ? (
-                                    <span style={{ color: "#00d2d3" }}>
-                                        PLAYGROUND
-                                    </span>
-                                ) : (
-                                    <span>PLAYGROUND</span>
-                                )}
-                            </Link>
-                        </Tab>
-
-                        <Tab>
-                            {completeStudy ? (
-                                <Link
-                                    to={"summary"}
-                                    onClick={() => {
-                                        setClick("summary");
-                                    }}
-                                >
-                                    {click === "summary" ? (
-                                        <span style={{ color: "#00d2d3" }}>
-                                            SUMMARY
-                                        </span>
-                                    ) : (
-                                        <span>SUMMARY</span>
-                                    )}
-                                </Link>
-                            ) : (
-                                <span style={{ color: "#828282" }}>
-                                    SUMMARY
-                                </span>
-                            )}
-                        </Tab>
-
-                        <Tab>
-                            {completeStudy ? (
-                                <Link
-                                    to={"question"}
-                                    onClick={() => {
-                                        setClick("question");
-                                    }}
-                                    className={
-                                        completeStudy ? "" : "disabled-link"
-                                    }
-                                >
-                                    {click === "question" ? (
-                                        <span style={{ color: "#00d2d3" }}>
-                                            QUESTION
-                                        </span>
-                                    ) : (
-                                        <span>QUESTION</span>
-                                    )}
-                                </Link>
-                            ) : (
-                                <span style={{ color: "#828282" }}>
-                                    QUESTION
-                                </span>
-                            )}
-                        </Tab>
-
-                        <Tab>
-                            {completeStudy ? (
-                                <Link
-                                    to={"quiz"}
-                                    onClick={() => {
-                                        setClick("quiz");
-                                    }}
-                                    className={
-                                        completeStudy ? "" : "disabled-link"
-                                    }
-                                >
-                                    {click === "quiz" ? (
-                                        <span style={{ color: "#00d2d3" }}>
-                                            QUIZ
-                                        </span>
-                                    ) : (
-                                        <span>QUIZ</span>
-                                    )}
-                                </Link>
-                            ) : (
-                                <span style={{ color: "#828282" }}>QUIZ</span>
-                            )}
-                        </Tab>
-                    </Tabs>
-
                     <Container>
                         <Routes>
                             <Route path="playground" element={<Playground />} />
@@ -562,7 +550,7 @@ function Room() {
                         {/*//! text 메세지 나오는 부분 */}
                         {chats.map((chat, index) => (
                             <ChattingBox key={index}>
-                                <span style={{ color: `#00d2d3` }}>
+                                <span style={{ color: `#1de9b6` }}>
                                     {chat.user_nickname !==
                                     storedData.userNickname
                                         ? chat.user_nickname
@@ -574,7 +562,7 @@ function Room() {
                         {/*//! STT 메세지 나오는 부분 */}
                         {STTMessage.map((message, idx) => (
                             <ChattingBox key={idx}>
-                                <span style={{ color: `#00d2d3` }}>발표자</span>
+                                <span style={{ color: `#1de9b6` }}>발표자</span>
                                 <Message>{message}</Message>
                             </ChattingBox>
                         ))}

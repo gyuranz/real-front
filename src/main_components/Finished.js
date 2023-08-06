@@ -5,23 +5,34 @@ import { useRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 import { motion } from "framer-motion/dist/framer-motion";
-import { buttonStyle, mainBgColor, scrollVariants } from "../components/Styles";
+import {
+    buttonStyle,
+    scrollVariants,
+    secondaryBgColor,
+} from "../components/Styles";
 import { setIdentity, setRoomId } from "../store/actions";
+
+const Container = styled.div`
+    width: 900px;
+    height: 80vh;
+    overflow: auto;
+`;
 
 const Room = styled(motion.div)`
     ${buttonStyle}
     box-shadow: none;
-    background-color: rgba(0, 0, 0, 0.2);
+    display: inline-block;
+    /* background-color: rgba(0, 0, 0, 0.2); */
     margin: 10px auto;
+    text-align: center;
     font-size: 1rem;
-    width: 90%;
-    max-width: 400px;
+    width: 450px;
     cursor: pointer;
     transition: 0.3s ease-in-out;
     &:hover {
         box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2), 0 10px 20px rgba(0, 0, 0, 0.2);
         /* color: #00d2d3; */
-        ${mainBgColor}
+        ${secondaryBgColor}
     }
 `;
 
@@ -82,18 +93,20 @@ function Finished(props) {
     // console.log(userState.userJoinedRoomList);
     return (
         <>
-            {userState.userJoinedRoomList.map(
-                ({ room_id, room_name, room_summary }) => (
-                    <Room
-                        variants={scrollVariants}
-                        key={room_id}
-                        onClick={onValid}
-                        id={room_id}
-                    >
-                        {room_name}
-                    </Room>
-                )
-            )}
+            <Container>
+                {userState.userJoinedRoomList.map(
+                    ({ room_id, room_name, room_summary }) => (
+                        <Room
+                            variants={scrollVariants}
+                            key={room_id}
+                            onClick={onValid}
+                            id={room_id}
+                        >
+                            {room_name}
+                        </Room>
+                    )
+                )}
+            </Container>
         </>
     );
 }

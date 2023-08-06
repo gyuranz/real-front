@@ -104,6 +104,7 @@ function Summary() {
     const [modifiedText, setModifiedText] = useState("");
     const [addText, setAddText] = useState("");
     const navigate = useNavigate();
+    const [sendSummary, setSendSummary] = useState([]);
 
     const onChange = (event) => {
         // console.log(event.target);
@@ -173,6 +174,38 @@ function Summary() {
 
             return copySummary;
         });
+    };
+    const updateSummary = async () => {
+        summaryArray.map(({ id, text }) =>
+            setSendSummary((prev) => [...prev, text])
+        );
+
+        try {
+            const response = await fetch(
+                `${process.env.REACT_APP_BACKEND_URL}/room/${userState.currentRoom.room_id}/update`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: " Bearer " + userState.token,
+                    },
+                    body: JSON.stringify({
+                        user_nickname: userState.userNickname,
+                        message_summary: sendSummary,
+                    }),
+                }
+            );
+            const responseData = await response.json();
+            if (!response.ok) {
+                throw new Error(responseData.message);
+            }
+        } catch (error) {
+            console.log("❌", error);
+            // {
+            //     user_nickname: "abcd",
+            //     message_summary: ["","","",""]
+            //     }
+        }
     };
 
     useEffect(() => {
@@ -323,7 +356,7 @@ function Summary() {
                     </Droppable>
                 </div>
             </DragDropContext>
-            <UpdateButton>UPDATE</UpdateButton>
+            <UpdateButton onClick={updateSummary}>UPDATE</UpdateButton>
             <AddButton onClick={onAdd}>ADD</AddButton>
             {isAdd && (
                 <form onSubmit={onAddSubmit}>

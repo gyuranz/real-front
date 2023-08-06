@@ -17,6 +17,14 @@ import { useRecoilState } from "recoil";
 import { AuthLogin } from "../atoms";
 import Overlay from "../ChattingPage/Overlay";
 
+const BaseContainer = styled.div`
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`;
+
 const Container = styled(motion.div)`
     ${containerStyle}
     box-shadow: none;
@@ -137,102 +145,106 @@ function Signup() {
 
     return (
         <>
-            <Container variants={boxVariants} initial="start" animate="end">
-                {/* 수정 필요!!! 로딩화면 */}
-                {/* {isLoading ? <h1>로딩 중...</h1> : null} */}
-                {isLoading && <Overlay />}
-                <form
-                    style={{ display: "flex", flexDirection: "column" }}
-                    onSubmit={handleSubmit(onValid)}
-                >
-                    <LoginWarning>{loginError}</LoginWarning>
+            <BaseContainer>
+                <Container variants={boxVariants} initial="start" animate="end">
+                    {/* 수정 필요!!! 로딩화면 */}
+                    {/* {isLoading ? <h1>로딩 중...</h1> : null} */}
+                    {isLoading && <Overlay />}
+                    <form
+                        style={{ display: "flex", flexDirection: "column" }}
+                        onSubmit={handleSubmit(onValid)}
+                    >
+                        <LoginWarning>{loginError}</LoginWarning>
 
-                    <JoinInput
-                        variants={inputVariants}
-                        {...register("user_id", {
-                            required: "ID is required",
-                            minLength: {
-                                value: 2,
-                                message: "Nickname is at least 3length",
-                            },
-                            // pattern: {
-                            //     value: /^[A-Za-z0-9._%+-]+@naver.com$/,
-                            //     message: "Only naver.com emails allowed",
-                            // },
-                        })}
-                        placeholder="ID"
-                    />
-                    <LoginWarning>{errors?.user_id?.message}</LoginWarning>
-
-                    <JoinInput
-                        variants={inputVariants}
-                        {...register("user_nickname", {
-                            required: "Nickname is required",
-                            // validate: {
-                            //     // async 를 사용해서 서버와 id 중복확인
-                            //     nobig: (value) =>
-                            //         value.includes("big")
-                            //             ? "no 'big' allowed"
-                            //             : true,
-                            //     noperson: (value) =>
-                            //         value.includes("person")
-                            //             ? "no 'person' allowed"
-                            //             : true,
-                            // },
-                            minLength: {
-                                value: 2,
-                                message: "Nickname is at least 3length",
-                            },
-                        })}
-                        placeholder="Nickname"
-                    />
-                    <LoginWarning>
-                        {errors?.user_nickname?.message}
-                    </LoginWarning>
-
-                    <JoinInput
-                        type="password"
-                        variants={inputVariants}
-                        {...register("user_password", {
-                            required: "Password is Required",
-                            minLength: {
-                                value: 6,
-                                message: "Your password is too short",
-                            },
-                        })}
-                        placeholder="Password"
-                    />
-                    <LoginWarning>
-                        {errors?.user_password?.message}
-                    </LoginWarning>
-
-                    <JoinInput
-                        type="password"
-                        variants={inputVariants}
-                        {...register("verifyPassword", {
-                            required: "Password is Required",
-                            minLength: {
-                                value: 6,
-                                message: "Your password is too short",
-                            },
-                        })}
-                        placeholder="Verify Password"
-                    />
-                    <LoginWarning>
-                        {errors?.verifyPassword?.message}
-                    </LoginWarning>
-
-                    <OneLineTwoButton>
-                        <JoinButton variants={inputVariants}>Join</JoinButton>
-                        <CancelButton
+                        <JoinInput
                             variants={inputVariants}
-                            onClick={goLogin}
-                        >
-                            Cancel
-                        </CancelButton>
-                    </OneLineTwoButton>
-                </form>
-            </Container>
+                            {...register("user_id", {
+                                required: "ID is required",
+                                minLength: {
+                                    value: 2,
+                                    message: "Nickname is at least 3length",
+                                },
+                                // pattern: {
+                                //     value: /^[A-Za-z0-9._%+-]+@naver.com$/,
+                                //     message: "Only naver.com emails allowed",
+                                // },
+                            })}
+                            placeholder="ID"
+                        />
+                        <LoginWarning>{errors?.user_id?.message}</LoginWarning>
+
+                        <JoinInput
+                            variants={inputVariants}
+                            {...register("user_nickname", {
+                                required: "Nickname is required",
+                                // validate: {
+                                //     // async 를 사용해서 서버와 id 중복확인
+                                //     nobig: (value) =>
+                                //         value.includes("big")
+                                //             ? "no 'big' allowed"
+                                //             : true,
+                                //     noperson: (value) =>
+                                //         value.includes("person")
+                                //             ? "no 'person' allowed"
+                                //             : true,
+                                // },
+                                minLength: {
+                                    value: 2,
+                                    message: "Nickname is at least 3length",
+                                },
+                            })}
+                            placeholder="Nickname"
+                        />
+                        <LoginWarning>
+                            {errors?.user_nickname?.message}
+                        </LoginWarning>
+
+                        <JoinInput
+                            type="password"
+                            variants={inputVariants}
+                            {...register("user_password", {
+                                required: "Password is Required",
+                                minLength: {
+                                    value: 6,
+                                    message: "Your password is too short",
+                                },
+                            })}
+                            placeholder="Password"
+                        />
+                        <LoginWarning>
+                            {errors?.user_password?.message}
+                        </LoginWarning>
+
+                        <JoinInput
+                            type="password"
+                            variants={inputVariants}
+                            {...register("verifyPassword", {
+                                required: "Password is Required",
+                                minLength: {
+                                    value: 6,
+                                    message: "Your password is too short",
+                                },
+                            })}
+                            placeholder="Verify Password"
+                        />
+                        <LoginWarning>
+                            {errors?.verifyPassword?.message}
+                        </LoginWarning>
+
+                        <OneLineTwoButton>
+                            <JoinButton variants={inputVariants}>
+                                Join
+                            </JoinButton>
+                            <CancelButton
+                                variants={inputVariants}
+                                onClick={goLogin}
+                            >
+                                Cancel
+                            </CancelButton>
+                        </OneLineTwoButton>
+                    </form>
+                </Container>
+            </BaseContainer>
         </>
     );
 }

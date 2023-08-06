@@ -24,7 +24,7 @@ const Question = styled.div`
 `;
 
 const Answer = styled.div`
-    color: #00d2d3;
+    color: #1de9b6;
     font-size: 1.5em;
     display: flex;
     justify-content: center;

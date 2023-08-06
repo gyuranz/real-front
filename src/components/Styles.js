@@ -68,10 +68,10 @@ export const buttonStyle = css`
 `;
 
 export const containerStyle = css`
-    background-color: rgba(0, 0, 0, 0.2);
-    width: 500px;
+    /* background-color: rgba(0, 0, 0, 0.2); */
+    width: 300px;
     /* border-radius: 30px; */
-    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2), 0 10px 20px rgba(0, 0, 0, 0.2);
+    /* box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2), 0 10px 20px rgba(0, 0, 0, 0.2); */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -130,6 +130,7 @@ export const SelectedBgColor = css`
 export const mainBgColor = css`
     background-color: #07dfb4;
     background-color: #00d2d3;
+    background-color: #1de9b6;
 `;
 
 export const reverseColor = css`
@@ -142,14 +143,19 @@ export const reverseTextColor = css`
 
 export const Tabs = styled.div`
     display: flex;
-    width: 100%;
-    height: 50px;
-    justify-content: space-around;
+    flex-direction: column;
+    /* width: 100%; */
+    width: 400px;
+    height: 100%;
+    /* justify-content: space-around; */
+    justify-content: center;
+    align-items: center;
     margin-bottom: 10px;
 `;
 export const Tab = styled.div`
     height: 50px;
-    width: 100%;
+    width: 300px;
+    border-radius: 10px;
     transition: 0.3s all ease-in-out;
     font-weight: 600;
     font-size: 1.2em;
