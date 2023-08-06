@@ -21,8 +21,8 @@ import PageRoute from "../components/PageRoute";
 
 const BaseContainer = styled(motion.div)`
     ${containerStyle}
-    width: 95vw;
-    height: 90vh;
+    width: 100vw;
+    height: 100vh;
     display: grid;
     grid-template-columns: 3.5fr 1fr 1.5fr;
 `;
@@ -57,7 +57,8 @@ const LogoutButton = styled(motion.div)`
     font-weight: 600;
     z-index: 999;
     position: absolute;
-    top: 5vh;
+    top: 20px;
+    right: 20px;
     cursor: pointer;
     transition: 0.3s ease-in-out;
     &:hover {

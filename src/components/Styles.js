@@ -63,19 +63,68 @@ export const buttonStyle = css`
     padding: 20px 10px;
     font-size: 24px;
     font-weight: 600;
-    border-radius: 20px;
-
+    /* border-radius: 20px; */
     border: none;
 `;
 
 export const containerStyle = css`
     background-color: rgba(0, 0, 0, 0.2);
     width: 500px;
-    border-radius: 30px;
+    /* border-radius: 30px; */
     box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2), 0 10px 20px rgba(0, 0, 0, 0.2);
     display: flex;
     justify-content: center;
     align-items: center;
+`;
+export const primaryColor = css`
+    color: #1de9b6; // Primary (most of the UI)
+`;
+export const primaryBgColor = css`
+    background-color: #303030; // Primary background colour (dialogs, e.t.c)
+`;
+export const secondaryBgColor = css`
+    background-color: #1de9b6; // Secondary background colour (main UI background)
+`;
+export const paperCardBgColor = css`
+    background-color: #424242; // Card background colour
+`;
+export const paperItemIconColor = css`
+    color: #1de9b6; // Icon colour
+`;
+export const primaryTextColor = css`
+    color: #ffffff; // Primary text colour
+`;
+export const secondaryTextColor = css`
+    color: rgba(255, 255, 255, 0.7); // Secondary text colour
+`;
+export const disabledTextColor = css`
+    color: rgba(255, 255, 255, 0.5); // Disabled text colour
+`;
+export const dividerColor = css`
+    color: rgba(255, 255, 255, 0.12); // Divider colour
+`;
+export const toggleButtonColor = css`
+    background-color: #1de9b6;
+`;
+export const toggleInkColor = css`
+    color: #1de9b6;
+`;
+export const toggleBarColor = css`
+    color: #1de9b6;
+`;
+
+export const headerColor = css`
+    color: #ffffff; // Card header text colour
+`;
+// Nav Menu
+export const listBoxBgColor = css`
+    background-color: #424242; // Listbox background colour
+`;
+export const listBoxColor = css`
+    color: #ffffff; // Listbox text colour
+`;
+export const SelectedBgColor = css`
+    background-color: #616161; // Listbox selected item background colour
 `;
 
 export const mainBgColor = css`

@@ -8,6 +8,11 @@ import {
     containerStyle,
     inputVariants,
     mainBgColor,
+    paperItemIconColor,
+    primaryColor,
+    reverseColor,
+    reverseTextColor,
+    secondaryBgColor,
 } from "../components/Styles";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -20,11 +25,11 @@ const Container = styled(motion.div)`
     height: 280px;
     position: relative;
     a {
+        ${paperItemIconColor}
         flex: none;
         position: absolute;
         bottom: 15px;
         right: 110px;
-        color: black;
         padding: 10px;
     }
 `;
@@ -44,7 +49,7 @@ const GridLoginStyle = styled.div`
 
 const LoginButton = styled(motion.button)`
     ${buttonStyle}
-    ${mainBgColor}
+    ${secondaryBgColor}
     width: 100px;
     height: 145px;
     cursor: pointer;
@@ -52,7 +57,7 @@ const LoginButton = styled(motion.button)`
 `;
 
 const LoginWarning = styled.span`
-    color: red;
+    ${reverseTextColor}
     font-size: 14px;
 `;
 

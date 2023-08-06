@@ -7,7 +7,10 @@ import {
     buttonStyle,
     containerStyle,
     inputVariants,
-    mainBgColor,
+    primaryTextColor,
+    reverseColor,
+    reverseTextColor,
+    secondaryBgColor,
 } from "../components/Styles";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
@@ -34,20 +37,20 @@ const OneLineTwoButton = styled.div`
 
 const JoinButton = styled(motion.button)`
     ${buttonStyle}
-    ${mainBgColor}
-    color: white;
+    ${secondaryBgColor}
+    ${primaryTextColor}
     cursor: pointer;
 `;
 
 const CancelButton = styled(motion.button)`
     ${buttonStyle}
-    background-color: #fe3411;
-    color: white;
+    ${reverseColor}
+    ${primaryTextColor}
     cursor: pointer;
 `;
 
 const LoginWarning = styled.span`
-    color: red;
+    ${reverseTextColor}
     font-size: 14px;
 `;
 
