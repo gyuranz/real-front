@@ -9,8 +9,13 @@ import VideoButtons from "./VideoSection/VideoButtons";
 import { useRecoilValue } from "recoil";
 import { AuthLogin } from "../atoms";
 import { styled } from "styled-components";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCopy } from "@fortawesome/free-solid-svg-icons";
 
-const CopyButton = styled.button``;
+const CopyButton = styled.button`
+    border: none;
+    background-color: transparent;
+`;
 
 const RoomPage = ({
     roomId,
@@ -66,7 +71,13 @@ const RoomPage = ({
             <VideoButtons />
             <div className="room_label">
                 ID: {roomId}
-                <CopyButton onClick={copyRoomId()}>복사</CopyButton>
+                <CopyButton onClick={copyRoomId()}>
+                    <FontAwesomeIcon
+                        icon={faCopy}
+                        size="xl"
+                        style={{ color: "#424242", cursor: "pointer" }}
+                    />
+                </CopyButton>
             </div>
 
             {showOverlay && <Overlay />}

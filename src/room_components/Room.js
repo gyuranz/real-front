@@ -15,6 +15,7 @@ import {
     primaryBgColor,
     reverseColor,
     reverseTextColor,
+    secondaryTextColor,
 } from "../components/Styles";
 import { useNavigate, Link, Routes, Route } from "react-router-dom";
 import {
@@ -117,10 +118,9 @@ const IOButton = styled.button`
     border: none;
     background-color: transparent;
     position: absolute;
-    color: white;
     top: 35px;
     left: 0;
-    z-index: 999;
+    z-index: 2;
     padding: 10px;
     font-size: 1.2em;
     cursor: pointer;
@@ -166,7 +166,7 @@ const ChatArea = styled.div`
     width: 400px;
     height: 84vh;
     overflow-y: auto;
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(0, 0, 0, 0.3);
     border-radius: 20px 20px 0 0;
     transition: 0.3s ease-in-out;
 `;
@@ -186,13 +186,15 @@ const ChatToggle = styled(motion.button)`
 
 const Message = styled.div`
     margin-bottom: 0.5rem;
-    background: rgba(0, 0, 0, 0.1);
-    font-size: 20px;
+    background: rgba(255, 255, 255, 1);
+    /* background-color: #ffffff; */
+    font-size: 24px;
     font-weight: 600;
     width: 70%;
     padding: 5px;
     border-radius: 0.5rem;
     word-break: break-all;
+    ${secondaryTextColor}
 `;
 
 const RoomOutButton = styled(motion.div)`
@@ -269,7 +271,7 @@ function Room() {
             setRecognitionHistory((old) => [...old, data.text]);
             setSTTMessage((prev) => [...prev, data.text]);
             const sttInfo = {
-                user_nickname: storedData.userNickname,
+                user_nickname: "",
                 message: data.text,
                 room_id: userState.currentRoom.room_id,
             };
@@ -413,7 +415,7 @@ function Room() {
         if (scrollHeight > clientHeight) {
             chatContainer.scrollTop = scrollHeight - clientHeight;
         }
-    }, [chats.length, STTMessage.length]);
+    }, [chats.length, STTMessage.length, currentRecognition]);
 
     const onSendMessage = handleSubmit((data) => {
         const { message } = data;
@@ -638,16 +640,36 @@ function Room() {
                                 {/*//! text 메세지 나오는 부분 */}
                                 {chats.map((chat, index) => (
                                     <ChattingBox key={index}>
-                                        {chat.user_nickname !==
-                                        storedData.userNickname ? (
-                                            <div style={{ color: `#1de9b6` }}>
+                                        {chat.user_nickname === "" ? (
+                                            <div
+                                                style={{
+                                                    color: `#0E6A54`,
+                                                    fontWeight: "600",
+                                                    fontSize: "20px",
+                                                }}
+                                            >
+                                                발표자
+                                            </div>
+                                        ) : chat.user_nickname !==
+                                          storedData.userNickname ? (
+                                            <div
+                                                style={{
+                                                    color: `#0E6A54`,
+                                                    fontWeight: "600",
+                                                    fontSize: "20px",
+                                                }}
+                                            >
                                                 {chat.user_nickname}
                                             </div>
                                         ) : (
                                             <></>
                                         )}
-                                        {chat.user_nickname !==
-                                        storedData.userNickname ? (
+                                        {chat.user_nickname === "" ? (
+                                            <Message style={{ width: "100%" }}>
+                                                {chat.message}
+                                            </Message>
+                                        ) : chat.user_nickname !==
+                                          storedData.userNickname ? (
                                             <Message>{chat.message}</Message>
                                         ) : (
                                             <Message
@@ -665,7 +687,13 @@ function Room() {
                                 <Message>{message}</Message>
                             </ChattingBox>
                         ))} */}
-                                {/* <p>{currentRecognition}</p> */}
+                                <Message
+                                    style={{
+                                        width: "100%",
+                                    }}
+                                >
+                                    {currentRecognition}
+                                </Message>
                             </ChatArea>
 
                             <form onSubmit={onSendMessage}>

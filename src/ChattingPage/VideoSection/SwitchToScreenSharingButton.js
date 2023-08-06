@@ -6,6 +6,11 @@ import { postScreenShot } from "../../utils/api";
 import { AuthLogin } from "../../atoms";
 import { useRecoilValue } from "recoil";
 import { styled } from "styled-components";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+    faDisplay,
+    faUsersViewfinder,
+} from "@fortawesome/free-solid-svg-icons";
 // import { useNavigate } from "react-router-dom";
 
 const constraints = {
@@ -16,6 +21,12 @@ const ScreenshareButton = styled.button`
     position: absolute;
     top: 0;
     left: 35vw;
+    border: none;
+    background-color: transparent;
+`;
+const CaptureImg = styled.img`
+    width: 30px;
+    height: 30px;
 `;
 
 const SwitchToScreenSharingButton = () => {
@@ -103,15 +114,23 @@ const SwitchToScreenSharingButton = () => {
     return (
         <>
             <ScreenshareButton onClick={screenshare}>
-                스크린쉐어
+                {/* <FontAwesomeIcon
+                    icon={faUsersViewfinder}
+                    style={{ fontSize: "40px" }}
+                /> */}
+                <CaptureImg src="/img/capture.png" alt="CAPTURE" />
             </ScreenshareButton>
-            <div className="video_button_container">
-                <img
+            <div
+                className="video_button_container"
+                onClick={handleScreenShareToggle}
+            >
+                {/* <img
                     alt="SCREEN SHARE"
                     src={SwitchImg}
                     onClick={handleScreenShareToggle}
                     className="video_button_image"
-                />
+                /> */}
+                <FontAwesomeIcon icon={faDisplay} size="xl" />
             </div>
             {isScreenSharingActive && (
                 <LocalScreenSharingPreview stream={screenSharingStream} />
