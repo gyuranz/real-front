@@ -41,6 +41,7 @@ const MainContainer = styled.div`
     width: 1000px;
     height: 100%;
     position: relative;
+    overflow: auto;
 `;
 
 const RoomList = styled(motion.div)`

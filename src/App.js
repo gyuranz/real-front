@@ -15,19 +15,21 @@ function App() {
     }, []);
 
     return (
-        <Router>
-            <Routes>
-                <Route path="/" element={<Main />} />
-                <Route path="auth/login" element={<Login />} />
-                <Route path="auth/signup" element={<Signup />} />
+        <>
+            <Router>
+                <Routes>
+                    <Route path="/" element={<Main />} />
+                    <Route path="auth/login" element={<Login />} />
+                    <Route path="auth/signup" element={<Signup />} />
 
-                <Route path=":uid/*" element={<Main />} />
+                    <Route path=":uid/*" element={<Main />} />
 
-                {/* <Route path="/room/*" element={<Room />}></Route> */}
-                <Route path="room/:room_id/*" element={<Room />} />
-                <Route path="*" element={<PageRoute />} />
-            </Routes>
-        </Router>
+                    {/* <Route path="/room/*" element={<Room />}></Route> */}
+                    <Route path="room/:room_id/*" element={<Room />} />
+                    <Route path="*" element={<PageRoute />} />
+                </Routes>
+            </Router>
+        </>
     );
 }
 

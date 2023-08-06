@@ -83,8 +83,8 @@ const SwitchToScreenSharingButton = () => {
                 const buff = await res.arrayBuffer();
 
                 const jpg = [
-                    new File([buff], `photo_${new Date()}.jpg`, {
-                        type: "image/jpeg",
+                    new File([buff], `photo_${new Date()}.png`, {
+                        type: "image/png",
                     }),
                 ];
                 const file = new FormData();

@@ -11,6 +11,7 @@ import {
     containerVariants,
     leftSideBoxVariants,
     mainBgColor,
+    primaryBgColor,
     reverseColor,
     reverseTextColor,
 } from "../components/Styles";
@@ -51,13 +52,69 @@ const getMediaStream = () =>
 
 //! STT
 
+const ToggleMenu = styled.button`
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+`;
+const ToggleClose = styled.div`
+    position: absolute;
+    top: 20px;
+    width: 50px;
+    height: 50px;
+    right: 0;
+`;
+const BaseToggle = styled.div`
+    transition: 0.5s ease-in-out;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    ${primaryBgColor}
+    z-index: 9;
+`;
+
+const BaseContainer = styled(motion.div)`
+    ${containerStyle}
+    /* width: 1800px;*/
+    width: 100vw;
+    height: 90vh;
+    /* display: grid;
+    grid-template-columns: 3.5fr 1fr 1.5fr; */
+    display: flex;
+`;
+
+const MainContainer = styled.div`
+    ${containerStyle}
+    background-color: transparent;
+    box-shadow: none;
+    width: 1400px;
+    height: 90vh;
+    /* position: relative; */
+    /* display: flex; */
+    /* align-items: flex-start; */
+    /* justify-content: baseline; */
+    display: block;
+    border-radius: 30px 0 0 30px;
+`;
+
+const RoomList = styled(motion.div)`
+    ${containerStyle}
+    background-color: transparent;
+    box-shadow: none;
+    width: 400px;
+    height: 90vh;
+    display: block;
+    border-radius: 0 30px 30px 0;
+`;
+
 const Container = styled.div`
-    /* background-color: rgba(0, 0, 0, 0.2); */
+    background-color: rgba(0, 0, 0, 0.6);
     height: 80vh;
-    width: 1000px;
-    /* padding: 10px; */
+    /* width: 1000px; */
     //! MVP 끝나고 overflow 삭제
-    /* overflow: auto; */
     position: relative;
 `;
 
@@ -76,7 +133,10 @@ const IOButton = styled.button`
     border: none;
     background-color: transparent;
     position: absolute;
-    top: -35px;
+    color: white;
+    top: 35px;
+    left: 0;
+    z-index: 999;
     padding: 10px;
     font-size: 1.2em;
     cursor: pointer;
@@ -120,38 +180,6 @@ const Message = styled.div`
     word-break: break-all;
 `;
 
-const BaseContainer = styled(motion.div)`
-    ${containerStyle}
-    width: 1800px;
-    height: 90vh;
-    display: grid;
-    grid-template-columns: 3.5fr 1fr 1.5fr;
-`;
-
-const MainContainer = styled.div`
-    ${containerStyle}
-    background-color: transparent;
-    box-shadow: none;
-    width: 1000px;
-    height: 90vh;
-    /* position: relative; */
-    /* display: flex; */
-    /* align-items: flex-start; */
-    /* justify-content: baseline; */
-    display: block;
-    border-radius: 30px 0 0 30px;
-`;
-
-const RoomList = styled(motion.div)`
-    ${containerStyle}
-    background-color: transparent;
-    box-shadow: none;
-    width: 400px;
-    height: 90vh;
-    display: block;
-    border-radius: 0 30px 30px 0;
-`;
-
 const RoomOutButton = styled(motion.div)`
     ${buttonStyle}
     ${reverseColor}
@@ -177,6 +205,8 @@ const RoomOutButton = styled(motion.div)`
 //     query: { user: JSON.stringify(storedData.userNickname) },
 // });
 function Room() {
+    const [isToggle, setIsToggle] = useState(false);
+    const [isChatToggle, setIsChatToggle] = useState(true);
     const storedData = JSON.parse(localStorage.getItem("userData"));
     const completeStudy = useRecoilValue(CompleteStudy);
     const [click, setClick] = useState("playground");
@@ -222,6 +252,14 @@ function Room() {
             //*
             setRecognitionHistory((old) => [...old, data.text]);
             setSTTMessage((prev) => [...prev, data.text]);
+            const sttMessage = {
+                user_nickname: storedData.userNickname,
+                message: data.text,
+                room_id: userState.currentRoom.room_id,
+            };
+            setChats((prev) => [...prev, sttMessage]);
+            console.log(STTMessage, "✅");
+            console.log(chats, "✅");
             console.log(recognitionHistory);
         } else setCurrentRecognition(data.text + "...");
         console.log(currentRecognition);
@@ -402,6 +440,8 @@ function Room() {
         });
 
         console.log(userState);
+        const siteUrl = window.location.origin;
+        window.location.href = `${siteUrl}/${userState.userId}/finished`;
         navigate(`/${userState.userId}`);
     };
     // console.log(userState);
@@ -423,94 +463,118 @@ function Room() {
     return (
         <>
             <RoomOutButton onClick={RoomOutHandler}>QUIT</RoomOutButton>
+            <ToggleMenu
+                onClick={() => {
+                    setIsToggle((prev) => !prev);
+                }}
+            ></ToggleMenu>
+            {isToggle && (
+                <BaseToggle>
+                    <Tabs style={{ margin: "0" }}>
+                        <Tab>
+                            <Link
+                                to={"playground"}
+                                onClick={() => {
+                                    setClick("playground");
+                                }}
+                            >
+                                {click === "playground" ? (
+                                    <span style={{ color: "#1de9b6" }}>
+                                        PLAYGROUND
+                                    </span>
+                                ) : (
+                                    <span>PLAYGROUND</span>
+                                )}
+                            </Link>
+                        </Tab>
+
+                        <Tab>
+                            {completeStudy ? (
+                                <Link
+                                    to={"summary"}
+                                    onClick={() => {
+                                        setClick("summary");
+                                    }}
+                                >
+                                    {click === "summary" ? (
+                                        <span style={{ color: "#1de9b6" }}>
+                                            SUMMARY
+                                        </span>
+                                    ) : (
+                                        <span>SUMMARY</span>
+                                    )}
+                                </Link>
+                            ) : (
+                                <span style={{ color: "#828282" }}>
+                                    SUMMARY
+                                </span>
+                            )}
+                        </Tab>
+
+                        <Tab>
+                            {completeStudy ? (
+                                <Link
+                                    to={"question"}
+                                    onClick={() => {
+                                        setClick("question");
+                                    }}
+                                    className={
+                                        completeStudy ? "" : "disabled-link"
+                                    }
+                                >
+                                    {click === "question" ? (
+                                        <span style={{ color: "#1de9b6" }}>
+                                            QUESTION
+                                        </span>
+                                    ) : (
+                                        <span>QUESTION</span>
+                                    )}
+                                </Link>
+                            ) : (
+                                <span style={{ color: "#828282" }}>
+                                    QUESTION
+                                </span>
+                            )}
+                        </Tab>
+
+                        <Tab>
+                            {completeStudy ? (
+                                <Link
+                                    to={"quiz"}
+                                    onClick={() => {
+                                        setClick("quiz");
+                                    }}
+                                    className={
+                                        completeStudy ? "" : "disabled-link"
+                                    }
+                                >
+                                    {click === "quiz" ? (
+                                        <span style={{ color: "#1de9b6" }}>
+                                            QUIZ
+                                        </span>
+                                    ) : (
+                                        <span>QUIZ</span>
+                                    )}
+                                </Link>
+                            ) : (
+                                <span style={{ color: "#828282" }}>QUIZ</span>
+                            )}
+                        </Tab>
+                    </Tabs>
+                    <ToggleClose
+                        onClick={() => {
+                            setIsToggle((prev) => !prev);
+                        }}
+                    >
+                        X
+                    </ToggleClose>
+                </BaseToggle>
+            )}
             <BaseContainer
                 variants={containerVariants}
                 initial="start"
                 animate="end"
             >
-                <Tabs style={{ margin: "0" }}>
-                    <Tab>
-                        <Link
-                            to={"playground"}
-                            onClick={() => {
-                                setClick("playground");
-                            }}
-                        >
-                            {click === "playground" ? (
-                                <span style={{ color: "#1de9b6" }}>
-                                    PLAYGROUND
-                                </span>
-                            ) : (
-                                <span>PLAYGROUND</span>
-                            )}
-                        </Link>
-                    </Tab>
-
-                    <Tab>
-                        {completeStudy ? (
-                            <Link
-                                to={"summary"}
-                                onClick={() => {
-                                    setClick("summary");
-                                }}
-                            >
-                                {click === "summary" ? (
-                                    <span style={{ color: "#1de9b6" }}>
-                                        SUMMARY
-                                    </span>
-                                ) : (
-                                    <span>SUMMARY</span>
-                                )}
-                            </Link>
-                        ) : (
-                            <span style={{ color: "#828282" }}>SUMMARY</span>
-                        )}
-                    </Tab>
-
-                    <Tab>
-                        {completeStudy ? (
-                            <Link
-                                to={"question"}
-                                onClick={() => {
-                                    setClick("question");
-                                }}
-                                className={completeStudy ? "" : "disabled-link"}
-                            >
-                                {click === "question" ? (
-                                    <span style={{ color: "#1de9b6" }}>
-                                        QUESTION
-                                    </span>
-                                ) : (
-                                    <span>QUESTION</span>
-                                )}
-                            </Link>
-                        ) : (
-                            <span style={{ color: "#828282" }}>QUESTION</span>
-                        )}
-                    </Tab>
-
-                    <Tab>
-                        {completeStudy ? (
-                            <Link
-                                to={"quiz"}
-                                onClick={() => {
-                                    setClick("quiz");
-                                }}
-                                className={completeStudy ? "" : "disabled-link"}
-                            >
-                                {click === "quiz" ? (
-                                    <span style={{ color: "#1de9b6" }}>
-                                        QUIZ
-                                    </span>
-                                ) : (
-                                    <span>QUIZ</span>
-                                )}
-                            </Link>
-                        ) : (
-                            <span style={{ color: "#828282" }}>QUIZ</span>
-                        )}
-                    </Tab>
-                </Tabs>
                 <MainContainer>
                     <SideOpenToolBox variants={leftSideBoxVariants}>
                         <IOButton
@@ -560,12 +624,12 @@ function Room() {
                             </ChattingBox>
                         ))}
                         {/*//! STT 메세지 나오는 부분 */}
-                        {STTMessage.map((message, idx) => (
+                        {/* {STTMessage.map((message, idx) => (
                             <ChattingBox key={idx}>
                                 <span style={{ color: `#1de9b6` }}>발표자</span>
                                 <Message>{message}</Message>
                             </ChattingBox>
-                        ))}
+                        ))} */}
                         {/* <p>{currentRecognition}</p> */}
                     </ChatArea>
 

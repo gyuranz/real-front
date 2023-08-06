@@ -106,6 +106,13 @@ video {
 #dummy_video_canvas {
   display: none;
 }
+div {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+div::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
+}
 
 `;
 

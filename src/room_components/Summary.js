@@ -97,6 +97,7 @@ const DeleteButton = styled.button`
 function Summary() {
     //! 추가 및 삭제는 summaryArray를 통해서 하자. useState사용으로 변경
     const [userState, setUserState] = useRecoilState(AuthLogin);
+    const [idNumber, setIdNumber] = useState(0);
     // const [summaryArray, setSummaryArray] = useRecoilState(SummaryAtom);
     const [summaryArray, setSummaryArray] = useState([]);
     const [isAdd, setIsAdd] = useState(false);
@@ -122,8 +123,9 @@ function Summary() {
         const inputValue = document.getElementById("inputValue");
         setSummaryArray([
             ...summaryArray,
-            { id: Date.now().toString(), text: inputValue.value },
+            { id: "id" + idNumber.toString(), text: inputValue.value },
         ]);
+        setIdNumber((prev) => prev + 1);
         setAddText("");
     };
 
@@ -179,32 +181,30 @@ function Summary() {
         summaryArray.map(({ id, text }) =>
             setSendSummary((prev) => [...prev, text])
         );
-
-        try {
-            const response = await fetch(
-                `${process.env.REACT_APP_BACKEND_URL}/room/${userState.currentRoom.room_id}/update`,
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: " Bearer " + userState.token,
-                    },
-                    body: JSON.stringify({
-                        user_nickname: userState.userNickname,
-                        message_summary: sendSummary,
-                    }),
+        if (sendSummary !== []) {
+            console.log(sendSummary);
+            try {
+                const response = await fetch(
+                    `${process.env.REACT_APP_BACKEND_URL}/room/${userState.currentRoom.room_id}/update`,
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: " Bearer " + userState.token,
+                        },
+                        body: JSON.stringify({
+                            user_nickname: userState.userNickname,
+                            message_summary: sendSummary,
+                        }),
+                    }
+                );
+                const responseData = await response.json();
+                if (!response.ok) {
+                    throw new Error(responseData.message);
                 }
-            );
-            const responseData = await response.json();
-            if (!response.ok) {
-                throw new Error(responseData.message);
+            } catch (error) {
+                console.log("❌", error);
             }
-        } catch (error) {
-            console.log("❌", error);
-            // {
-            //     user_nickname: "abcd",
-            //     message_summary: ["","","",""]
-            //     }
         }
     };
 
