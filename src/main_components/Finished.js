@@ -4,15 +4,53 @@ import { AuthLogin } from "../atoms";
 import { useRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
-import { motion } from "framer-motion/dist/framer-motion";
+import { motion, Variants } from "framer-motion/dist/framer-motion";
 import {
     buttonStyle,
-    primaryTextColor,
     scrollVariants,
     secondaryBgColor,
     secondaryTextColor,
 } from "../components/Styles";
 import { setIdentity, setRoomId } from "../store/actions";
+import "./Finished.css";
+
+const cardVariants = {
+    offscreen: {
+        y: 300,
+    },
+    onscreen: {
+        y: 50,
+        rotate: 10,
+        transition: {
+            type: "spring",
+            bounce: 0.4,
+            duration: 0.8,
+        },
+    },
+};
+
+function Card({ date, title, onClick, roomId }) {
+    return (
+        <motion.div
+            className="card-container"
+            initial="offscreen"
+            whileInView="onscreen"
+            viewport={{ once: true, amount: 0.8 }}
+        >
+            <img className="splash" src="/img/file.png" alt="" />
+            <motion.div
+                className="card"
+                id={roomId}
+                variants={cardVariants}
+                onClick={onClick}
+            >
+                <div>{date}</div>
+                {title}
+            </motion.div>
+            <img className="splashOpen" src="/img/fileOpen.png" alt="" />
+        </motion.div>
+    );
+}
 
 const Container = styled.div`
     width: 900px;
@@ -33,11 +71,6 @@ const Room = styled(motion.div)`
     width: 450px;
     cursor: pointer;
     transition: 0.3s ease-in-out;
-    &:hover {
-        box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2), 0 10px 20px rgba(0, 0, 0, 0.2);
-        /* color: #00d2d3; */
-        ${secondaryBgColor}
-    }
 `;
 
 function Finished(props) {
@@ -54,7 +87,7 @@ function Finished(props) {
     //     // navigate(`/room/${e.target.id}`);
     // };
     const onValid = async (e) => {
-        console.log(e.target.id);
+        console.log(e.target);
         try {
             const response = await fetch(
                 `${process.env.REACT_APP_BACKEND_URL}/${userState.userId}/finished`,
@@ -102,14 +135,24 @@ function Finished(props) {
                     ({ room_id, room_name, room_summary }) => (
                         <Room
                             variants={scrollVariants}
+                            // key={room_id}
+                            // onClick={onValid}
                             key={room_id}
-                            onClick={onValid}
-                            id={room_id}
                         >
-                            {room_name}
+                            <Card
+                                onClick={onValid}
+                                id={`${room_id}Card`}
+                                // id={room_id}
+                                date="2023.08.12."
+                                title={room_name}
+                                roomId={room_id}
+                            />
                         </Room>
                     )
                 )}
+                {/* {food.map(([emoji, hueA, hueB]) => (
+                    <Card emoji="abc" hueA="0" hueB="0" key="abc" />
+                ))} */}
             </Container>
         </>
     );
