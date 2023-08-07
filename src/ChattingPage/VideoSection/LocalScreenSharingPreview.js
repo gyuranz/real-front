@@ -4,7 +4,7 @@ import { styled } from "styled-components";
 const ScreenShare = styled.video`
     width: 80px;
     position: absolute;
-    left: 180px;
+    left: 220px;
 `;
 
 const LocalScreenSharingPreview = ({ stream }) => {

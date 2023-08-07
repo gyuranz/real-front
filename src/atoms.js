@@ -13,7 +13,6 @@ export const AuthLogin = atom({
             room_name: "",
             room_summary: "",
             room_password: "",
-            room_finished: false,
         },
     },
 });

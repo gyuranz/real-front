@@ -18,11 +18,10 @@ const constraints = {
     video: true,
 };
 const ScreenshareButton = styled.button`
-    position: absolute;
-    top: 0;
-    left: 35vw;
     border: none;
-    background-color: transparent;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #1de9b6;
 `;
 const CaptureImg = styled.img`
     width: 30px;
@@ -113,7 +112,10 @@ const SwitchToScreenSharingButton = () => {
 
     return (
         <>
-            <ScreenshareButton onClick={screenshare}>
+            <ScreenshareButton
+                onClick={screenshare}
+                className="video_button_container"
+            >
                 {/* <FontAwesomeIcon
                     icon={faUsersViewfinder}
                     style={{ fontSize: "40px" }}
@@ -130,7 +132,11 @@ const SwitchToScreenSharingButton = () => {
                     onClick={handleScreenShareToggle}
                     className="video_button_image"
                 /> */}
-                <FontAwesomeIcon icon={faDisplay} size="xl" />
+                <FontAwesomeIcon
+                    icon={faDisplay}
+                    size="xl"
+                    style={{ color: "#1de9b6" }}
+                />
             </div>
             {isScreenSharingActive && (
                 <LocalScreenSharingPreview stream={screenSharingStream} />

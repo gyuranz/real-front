@@ -109,13 +109,13 @@ function Finished(props) {
             );
             const responseData = await response.json();
 
-            setRoomIdAction(responseData.room_id);
-            setIdentityAction(userState.userId);
-            setCompleteStudy((prev) => responseData.room_finished);
             if (!response.ok) {
                 throw new Error(responseData.message);
             }
 
+            setRoomIdAction(responseData.room_id);
+            setIdentityAction(userState.userId);
+            setCompleteStudy((prev) => responseData.room_finished);
             setUserState({
                 ...userState,
                 currentRoom: {

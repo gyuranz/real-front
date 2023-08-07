@@ -11,10 +11,21 @@ import { AuthLogin } from "../atoms";
 import { styled } from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopy } from "@fortawesome/free-solid-svg-icons";
+import { motion } from "framer-motion/dist/framer-motion";
+import { primaryTextColor } from "../components/Styles";
 
 const CopyButton = styled.button`
     border: none;
     background-color: transparent;
+`;
+
+const RoomLabel = styled(motion.div)`
+    ${primaryTextColor}
+    position: absolute;
+    font-weight: 600;
+    font-size: 1.5em;
+    top: 10px;
+    right: -200px;
 `;
 
 const RoomPage = ({
@@ -69,16 +80,16 @@ const RoomPage = ({
     return (
         <div className="room_container" id="videos_portal">
             <VideoButtons />
-            <div className="room_label">
+            <RoomLabel>
                 ID: {roomId}
                 <CopyButton onClick={copyRoomId()}>
                     <FontAwesomeIcon
                         icon={faCopy}
                         size="xl"
-                        style={{ color: "#424242", cursor: "pointer" }}
+                        style={{ color: "#1de9b6", cursor: "pointer" }}
                     />
                 </CopyButton>
-            </div>
+            </RoomLabel>
 
             {showOverlay && <Overlay />}
         </div>

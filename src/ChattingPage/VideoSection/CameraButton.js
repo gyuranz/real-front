@@ -29,9 +29,17 @@ const CameraButton = () => {
                 onClick={handleCameraButtonPressed}
             /> */}
             {isLocalVideoDisabled ? (
-                <FontAwesomeIcon icon={faVideo} size="xl" />
+                <FontAwesomeIcon
+                    icon={faVideoSlash}
+                    size="xl"
+                    style={{ color: "#1de9b6" }}
+                />
             ) : (
-                <FontAwesomeIcon icon={faVideoSlash} size="xl" />
+                <FontAwesomeIcon
+                    icon={faVideo}
+                    size="xl"
+                    style={{ color: "#1de9b6" }}
+                />
             )}
         </div>
     );

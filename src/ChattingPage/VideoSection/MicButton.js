@@ -31,9 +31,17 @@ const MicButton = () => {
             /> */}
 
             {isMicMuted ? (
-                <FontAwesomeIcon icon={faMicrophoneSlash} size="xl" />
+                <FontAwesomeIcon
+                    icon={faMicrophoneSlash}
+                    size="xl"
+                    style={{ color: "#1de9b6" }}
+                />
             ) : (
-                <FontAwesomeIcon icon={faMicrophone} size="xl" />
+                <FontAwesomeIcon
+                    icon={faMicrophone}
+                    size="xl"
+                    style={{ color: "#1de9b6" }}
+                />
             )}
         </div>
     );

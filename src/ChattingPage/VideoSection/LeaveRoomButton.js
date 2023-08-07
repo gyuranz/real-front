@@ -9,10 +9,7 @@ import axios from "axios";
 const VideoButtonEnd = styled.button`
     ${buttonStyle}
     ${reverseColor}
-    position: absolute;
-    top: -5px;
-    right: 0;
-    margin: 10px 10px 0 0;
+    margin: 10px 0 10px 60px;
     padding: 10px;
     font-weight: 400;
     font-size: 16px;

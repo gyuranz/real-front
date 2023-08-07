@@ -198,9 +198,10 @@ const RoomOutButton = styled(motion.div)`
     }
 `;
 
-const ToggleContainer = styled(motion.dv)`
+const ToggleContainer = styled(motion.div)`
     height: 5vh;
     display: flex;
+    justify-content: flex-end;
 `;
 const ChatToggle = styled(motion.button)`
     border: none;

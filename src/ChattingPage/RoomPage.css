@@ -1,6 +1,10 @@
+/* video 들어오는 곳 */
 .room_container {
     display: flex;
     justify-content: center;
+}
+.video_button_container {
+    margin-right: 20px;
 }
 
 /* width */
@@ -66,22 +70,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-.video_buttons_container {
-    z-index: 5;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    left: 0;
-    top: -5px;
-}
-
-.video_button_container {
-    margin-left: 10px;
-    display: flex;
-    flex-direction: column;
 }
 
 .video_button_image {
@@ -156,18 +144,6 @@
 video {
     width: 98%;
     height: 98%;
-}
-
-.room_label {
-    color: rgba(0, 0, 0, 0.7);
-    z-index: 4;
-    padding: 15px;
-    border-radius: 20px;
-    position: absolute;
-    font-weight: 600;
-    font-size: 1.5em;
-    top: -10px;
-    left: 250px;
 }
 
 .video_track_container {
