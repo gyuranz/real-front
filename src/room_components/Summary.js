@@ -3,31 +3,38 @@ import React, { useCallback, useEffect, useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import styled from "styled-components";
 import { AuthLogin, SummaryAtom } from "../atoms";
-import { mainBgColor, reverseTextColor } from "../components/Styles";
+import {
+    mainBgColor,
+    primaryColor,
+    primaryTextColor,
+    reverseTextColor,
+} from "../components/Styles";
 import { useNavigate } from "react-router-dom";
 
 import "./Summary.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFilePen, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { motion } from "framer-motion/dist/framer-motion";
 
 const Board = styled.div`
     padding: 20px 10px;
     padding-top: 30px;
-    /* background-color: rgba(0, 0, 0, 0.2); */
     border-radius: 30px;
     min-height: 200px;
     max-height: 83vh;
     overflow: auto;
+    ${primaryTextColor}
 `;
 
 const Card = styled.div`
     font-size: 24px;
     font-weight: 400;
     margin-bottom: 5px;
-    /* background-color: rgba(0, 0, 0, 0.2); */
     padding: 3px 3px;
     position: relative;
 `;
 const Image = styled.img`
-    width: 90%;
+    width: 80%;
 `;
 const UpdateButton = styled.button`
     ${mainBgColor}
@@ -36,7 +43,6 @@ const UpdateButton = styled.button`
     width: 80px;
     height: 40px;
     line-height: 40px;
-    /* font-size: 24px; */
     font-weight: 600;
     top: 0vh;
     border-radius: 10px;
@@ -50,7 +56,6 @@ const AddButton = styled.button`
     width: 80px;
     height: 40px;
     line-height: 40px;
-    /* font-size: 24px; */
     font-weight: 600;
     top: 5vh;
     border-radius: 10px;
@@ -75,21 +80,44 @@ const AddInput = styled.input`
     border: none;
 `;
 
-const ModifyButton = styled.button`
-    position: absolute;
-    background-color: transparent;
-    border: none;
-    top: 0;
-    right: 70px;
-    font-size: 1em;
+const OneLineDiv = styled(motion.div)`
+    &:hover {
+        ${primaryColor}
+    }
+    &:hover ~ .hoverOver {
+        opacity: 1;
+    }
 `;
-const DeleteButton = styled.button`
+
+const ModifyImage = styled.img`
     position: absolute;
     background-color: transparent;
     border: none;
     top: 0;
-    right: 0;
-    font-size: 1em;
+    right: 50px;
+    width: 50px;
+    height: 50px;
+    color: white;
+    opacity: 0;
+    &:hover {
+        opacity: 1;
+    }
+    transition: 0.8s ease-in-out;
+`;
+const DeleteImage = styled.img`
+    position: absolute;
+    background-color: transparent;
+    border: none;
+    top: 0;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    color: white;
+    opacity: 0;
+    &:hover {
+        opacity: 1;
+    }
+    transition: 0.8s ease-in-out;
 `;
 
 //! summay 클릭시 fetch로 summary 데이터를 가져옴.
@@ -324,20 +352,25 @@ function Summary() {
                                                         {...provided.draggableProps}
                                                         {...provided.dragHandleProps}
                                                     >
-                                                        <div id={oneLine.id}>
+                                                        <OneLineDiv
+                                                            id={oneLine.id}
+                                                        >
                                                             {oneLine.text}
-                                                        </div>
-                                                        <ModifyButton
+                                                        </OneLineDiv>
+
+                                                        <ModifyImage
+                                                            className="hoverOver"
+                                                            src="/img/modify.png"
                                                             id={`${oneLine.id}Modify`}
                                                             onClick={onModify}
-                                                        >
-                                                            modify
-                                                        </ModifyButton>
-                                                        <DeleteButton
+                                                        />
+                                                        <DeleteImage
+                                                            className="hoverOver"
+                                                            src="/img/delete.png"
+                                                            id={`${oneLine.id}Modify`}
                                                             onClick={onDelete}
-                                                        >
-                                                            delete
-                                                        </DeleteButton>
+                                                        />
+
                                                         {isModify ===
                                                             `${oneLine.id}Modify` && (
                                                             <form

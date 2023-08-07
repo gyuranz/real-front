@@ -4,18 +4,17 @@ import { AuthLogin, CompleteStudy } from "../atoms";
 import { motion } from "framer-motion/dist/framer-motion";
 import { styled } from "styled-components";
 import {
-    Tab,
-    Tabs,
     buttonStyle,
     containerStyle,
     containerVariants,
     disabledTextColor,
-    leftSideBoxVariants,
+    listBoxBgColor,
     mainBgColor,
     paperCardBgColor,
     primaryBgColor,
-    reverseColor,
+    primaryTextColor,
     reverseTextColor,
+    secondaryBgColor,
     secondaryTextColor,
 } from "../components/Styles";
 import { useNavigate, Link, Routes, Route } from "react-router-dom";
@@ -23,13 +22,7 @@ import {
     faBars,
     faComment,
     faCommentSlash,
-    faMicrophone,
-    faMicrophoneSlash,
     faRightFromBracket,
-    faVolumeHigh,
-    faVolumeLow,
-    faVolumeXmark,
-    faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -60,21 +53,21 @@ const getMediaStream = () =>
 
 //! STT
 
-const ToggleClose = styled.div`
-    position: absolute;
-    top: 20px;
-    width: 50px;
-    height: 50px;
-    right: 0;
-`;
-const BaseToggle = styled.div`
-    transition: 0.5s ease-in-out;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    ${primaryBgColor}
-    z-index: 9;
-`;
+// const ToggleClose = styled.div`
+//     position: absolute;
+//     top: 20px;
+//     width: 50px;
+//     height: 50px;
+//     right: 0;
+// `;
+// const BaseToggle = styled.div`
+//     transition: 0.5s ease-in-out;
+//     position: absolute;
+//     top: 0;
+//     bottom: 0;
+//     ${primaryBgColor}
+//     z-index: 9;
+// `;
 
 const BaseContainer = styled(motion.div)`
     ${containerStyle}
@@ -92,10 +85,6 @@ const MainContainer = styled.div`
     box-shadow: none;
     width: 1400px;
     height: 95vh;
-    /* position: relative; */
-    /* display: flex; */
-    /* align-items: flex-start; */
-    /* justify-content: baseline; */
     display: block;
     margin-right: 30px;
 `;
@@ -111,17 +100,17 @@ const Container = styled.div`
 
 const IOButton = styled.button`
     border: none;
-    background-color: transparent;
-    position: absolute;
-    top: 35px;
-    left: 0;
-    z-index: 2;
-    padding: 10px;
-    font-size: 1.2em;
+    padding: 16px;
+    font-size: 24px;
+    ${secondaryBgColor}
     cursor: pointer;
+    border-radius: 30px;
 `;
 const SideOpenToolBox = styled(motion.div)`
-    position: relative;
+    z-index: 2;
+    position: absolute;
+    bottom: 2.5vh;
+    left: 26%;
 `;
 
 const RoomList = styled(motion.div)`
@@ -161,9 +150,9 @@ const ChatArea = styled.div`
     width: 400px;
     height: 84vh;
     overflow-y: auto;
-    background-color: rgba(0, 0, 0, 0.3);
     border-radius: 20px 20px 0 0;
     transition: 0.3s ease-in-out;
+    ${paperCardBgColor}
 `;
 
 const ChattingBox = styled(motion.div)`
@@ -172,25 +161,22 @@ const ChattingBox = styled(motion.div)`
 `;
 
 const Message = styled.div`
+    background-color: rgba(0, 0, 0, 0.3);
     margin-bottom: 0.5rem;
-    background: rgba(255, 255, 255, 1);
-    /* background-color: #ffffff; */
-    font-size: 24px;
+    font-size: 28px;
     font-weight: 600;
     width: 70%;
     padding: 5px;
     border-radius: 0.5rem;
     word-break: break-all;
-    ${secondaryTextColor}
+    ${primaryTextColor}
 `;
 
 const RoomOutButton = styled(motion.div)`
+    z-index: 0;
     ${buttonStyle}
     ${disabledTextColor}
     box-shadow: none;
-    position: absolute;
-    bottom: 3vh;
-    right: 2.5vw;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
     &:hover {
@@ -206,13 +192,63 @@ const ToggleContainer = styled(motion.div)`
 const ChatToggle = styled(motion.button)`
     border: none;
     background-color: transparent;
-
+    position: relative;
+    left: 250px;
+    z-index: 2;
+    font-size: 36px;
     transition: 0.3s ease-in-out;
+    cursor: pointer;
 `;
-const ToggleMenu = styled(motion.button)`
-    border: none;
+const itemVariants = {
+    open: {
+        opacity: 1,
+        y: 0,
+        transition: { type: "spring", stiffness: 300, damping: 24 },
+    },
+    closed: { opacity: 0, y: 20, transition: { duration: 0.2 } },
+};
+
+const Ul = styled(motion.ul)`
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    margin: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding-top: 50px;
+`;
+
+const Li = styled(motion.li)`
+    transition: 0.3s ease-in-out;
+    display: block;
+    list-style: none;
+    margin: 0;
+    padding: 10px;
+    width: 300px;
+    font-size: 24px;
+    font-weight: 600;
+    ${primaryTextColor}
+    &:hover {
+        background-color: #ffffff;
+        color: #424242;
+        scale: 1.3;
+    }
+    &:last-child {
+        scale: 1;
+        background-color: inherit;
+    }
+`;
+const MotionBtn = styled(motion.button)`
+    /* -webkit-appearance: button; */
     background-color: transparent;
+    border: none;
+    padding: 10px 20px;
+    font-size: 36px;
+    cursor: pointer;
+    position: relative;
+    left: 120px;
+    top: -3px;
 `;
+
 //! 소켓 api 꼭 같이 수정해주기
 
 // const current_room_id = window.location.pathname.split("/")[2];
@@ -316,6 +352,7 @@ function Room() {
     useEffect(() => {
         // 이벤트 핸들러 등록
         wss.socket.on("receive_audio_text", speechRecognized);
+        console.log("✅");
 
         // cleanup function: 컴포넌트가 언마운트 될 때 실행
         return () => {
@@ -484,24 +521,31 @@ function Room() {
                 animate="end"
             >
                 <MainContainer>
-                    <SideOpenToolBox variants={leftSideBoxVariants}>
-                        <IOButton
-                            className={
-                                isRecording ? "btn-danger" : "btn-outline-light"
-                            }
-                            onClick={connect}
-                            disabled={isRecording}
-                        >
-                            Start
-                        </IOButton>
-                        <IOButton
-                            className="btn-outline-light"
-                            onClick={disconnect}
-                            disabled={!isRecording}
-                            style={{ left: "60px" }}
-                        >
-                            Stop
-                        </IOButton>
+                    <SideOpenToolBox>
+                        {completeStudy || (
+                            <>
+                                <IOButton
+                                    className={
+                                        isRecording
+                                            ? "btn-danger"
+                                            : "btn-outline-light"
+                                    }
+                                    onClick={connect}
+                                    disabled={isRecording}
+                                    style={{ borderRadius: "30px 0 0 30px" }}
+                                >
+                                    Start
+                                </IOButton>
+                                <IOButton
+                                    className="btn-outline-light"
+                                    onClick={disconnect}
+                                    disabled={!isRecording}
+                                    style={{ borderRadius: " 0 30px 30px 0" }}
+                                >
+                                    Stop
+                                </IOButton>
+                            </>
+                        )}
                     </SideOpenToolBox>
 
                     <Container>
@@ -520,6 +564,7 @@ function Room() {
                 <RoomList>
                     <ToggleContainer>
                         <ChatToggle
+                            whileTap={{ scale: 0.97 }}
                             onClick={() => {
                                 setIsChatToggle((prev) => !prev);
                             }}
@@ -527,162 +572,173 @@ function Room() {
                             {isChatToggle ? (
                                 <FontAwesomeIcon
                                     icon={faComment}
-                                    style={{
-                                        color: "#1de9b6",
-                                        cursor: "pointer",
-                                        fontSize: "4vh",
-                                    }}
+                                    style={{ color: "#1de9b6" }}
                                 />
                             ) : (
                                 <FontAwesomeIcon
                                     icon={faCommentSlash}
-                                    style={{
-                                        color: "#1de9b6",
-                                        cursor: "pointer",
-                                        fontSize: "4vh",
-                                    }}
+                                    style={{ color: "#1de9b6" }}
                                 />
                             )}
                         </ChatToggle>
-                        <ToggleMenu
-                            onClick={() => {
-                                setIsToggle((prev) => !prev);
-                            }}
+                        <motion.nav
+                            initial={false}
+                            animate={isToggle ? "open" : "closed"}
                         >
-                            <FontAwesomeIcon
-                                icon={faBars}
-                                fontSize="4vh"
-                                style={{ color: "#1de9b6" }}
-                            />
-                        </ToggleMenu>
-                        {isToggle && (
-                            <BaseToggle>
-                                <Tabs style={{ margin: "0" }}>
-                                    <Tab>
+                            <MotionBtn
+                                whileTap={{ scale: 0.97 }}
+                                onClick={() => {
+                                    setIsToggle(!isToggle);
+                                    setIsChatToggle((prev) => !prev);
+                                }}
+                                style={{}}
+                            >
+                                <FontAwesomeIcon
+                                    icon={faBars}
+                                    color="#1de9b6"
+                                />
+                            </MotionBtn>
+                            <Ul
+                                variants={{
+                                    open: {
+                                        clipPath:
+                                            "inset(0% 0% 0% 0% round 10px)",
+                                        transition: {
+                                            type: "spring",
+                                            bounce: 0,
+                                            duration: 0.7,
+                                            delayChildren: 0.3,
+                                            staggerChildren: 0.05,
+                                        },
+                                    },
+                                    closed: {
+                                        clipPath:
+                                            "inset(10% 50% 90% 50% round 10px)",
+                                        transition: {
+                                            type: "spring",
+                                            bounce: 0,
+                                            duration: 0.3,
+                                        },
+                                    },
+                                }}
+                                style={{
+                                    pointerEvents: isToggle ? "auto" : "none",
+                                }}
+                            >
+                                <Li variants={itemVariants}>
+                                    <Link
+                                        to={"playground"}
+                                        onClick={() => {
+                                            setClick("playground");
+                                        }}
+                                    >
+                                        {click === "playground" ? (
+                                            <span style={{ color: "#1de9b6" }}>
+                                                PLAYGROUND
+                                            </span>
+                                        ) : (
+                                            <span>PLAYGROUND</span>
+                                        )}
+                                    </Link>
+                                </Li>
+                                <Li variants={itemVariants}>
+                                    {completeStudy ? (
                                         <Link
-                                            to={"playground"}
+                                            to={"summary"}
                                             onClick={() => {
-                                                setClick("playground");
+                                                setClick("summary");
                                             }}
                                         >
-                                            {click === "playground" ? (
+                                            {click === "summary" ? (
                                                 <span
-                                                    style={{ color: "#1de9b6" }}
+                                                    style={{
+                                                        color: "#1de9b6",
+                                                    }}
                                                 >
-                                                    PLAYGROUND
+                                                    SUMMARY
                                                 </span>
                                             ) : (
-                                                <span>PLAYGROUND</span>
+                                                <span>SUMMARY</span>
                                             )}
                                         </Link>
-                                    </Tab>
-
-                                    <Tab>
-                                        {completeStudy ? (
-                                            <Link
-                                                to={"summary"}
-                                                onClick={() => {
-                                                    setClick("summary");
-                                                }}
-                                            >
-                                                {click === "summary" ? (
-                                                    <span
-                                                        style={{
-                                                            color: "#1de9b6",
-                                                        }}
-                                                    >
-                                                        SUMMARY
-                                                    </span>
-                                                ) : (
-                                                    <span>SUMMARY</span>
-                                                )}
-                                            </Link>
-                                        ) : (
-                                            <span style={{ color: "#828282" }}>
-                                                SUMMARY
-                                            </span>
-                                        )}
-                                    </Tab>
-
-                                    <Tab>
-                                        {completeStudy ? (
-                                            <Link
-                                                to={"question"}
-                                                onClick={() => {
-                                                    setClick("question");
-                                                }}
-                                                className={
-                                                    completeStudy
-                                                        ? ""
-                                                        : "disabled-link"
-                                                }
-                                            >
-                                                {click === "question" ? (
-                                                    <span
-                                                        style={{
-                                                            color: "#1de9b6",
-                                                        }}
-                                                    >
-                                                        QUESTION
-                                                    </span>
-                                                ) : (
-                                                    <span>QUESTION</span>
-                                                )}
-                                            </Link>
-                                        ) : (
-                                            <span style={{ color: "#828282" }}>
-                                                QUESTION
-                                            </span>
-                                        )}
-                                    </Tab>
-
-                                    <Tab>
-                                        {completeStudy ? (
-                                            <Link
-                                                to={"quiz"}
-                                                onClick={() => {
-                                                    setClick("quiz");
-                                                }}
-                                                className={
-                                                    completeStudy
-                                                        ? ""
-                                                        : "disabled-link"
-                                                }
-                                            >
-                                                {click === "quiz" ? (
-                                                    <span
-                                                        style={{
-                                                            color: "#1de9b6",
-                                                        }}
-                                                    >
-                                                        QUIZ
-                                                    </span>
-                                                ) : (
-                                                    <span>QUIZ</span>
-                                                )}
-                                            </Link>
-                                        ) : (
-                                            <span style={{ color: "#828282" }}>
-                                                QUIZ
-                                            </span>
-                                        )}
-                                    </Tab>
-                                </Tabs>
-                                <RoomOutButton onClick={RoomOutHandler}>
-                                    <FontAwesomeIcon
-                                        icon={faRightFromBracket}
-                                        fontSize={"30px"}
-                                    />
-                                </RoomOutButton>
-                                <ToggleClose
-                                    onClick={() => {
-                                        setIsToggle((prev) => !prev);
-                                    }}
-                                >
-                                    <FontAwesomeIcon icon={faXmark} size="xl" />
-                                </ToggleClose>
-                            </BaseToggle>
-                        )}
+                                    ) : (
+                                        <span style={{ color: "#828282" }}>
+                                            SUMMARY
+                                        </span>
+                                    )}
+                                </Li>
+                                <Li variants={itemVariants}>
+                                    {completeStudy ? (
+                                        <Link
+                                            to={"question"}
+                                            onClick={() => {
+                                                setClick("question");
+                                            }}
+                                            className={
+                                                completeStudy
+                                                    ? ""
+                                                    : "disabled-link"
+                                            }
+                                        >
+                                            {click === "question" ? (
+                                                <span
+                                                    style={{
+                                                        color: "#1de9b6",
+                                                    }}
+                                                >
+                                                    QUESTION
+                                                </span>
+                                            ) : (
+                                                <span>QUESTION</span>
+                                            )}
+                                        </Link>
+                                    ) : (
+                                        <span style={{ color: "#828282" }}>
+                                            QUESTION
+                                        </span>
+                                    )}
+                                </Li>
+                                <Li variants={itemVariants}>
+                                    {completeStudy ? (
+                                        <Link
+                                            to={"quiz"}
+                                            onClick={() => {
+                                                setClick("quiz");
+                                            }}
+                                            className={
+                                                completeStudy
+                                                    ? ""
+                                                    : "disabled-link"
+                                            }
+                                        >
+                                            {click === "quiz" ? (
+                                                <span
+                                                    style={{
+                                                        color: "#1de9b6",
+                                                    }}
+                                                >
+                                                    QUIZ
+                                                </span>
+                                            ) : (
+                                                <span>QUIZ</span>
+                                            )}
+                                        </Link>
+                                    ) : (
+                                        <span style={{ color: "#828282" }}>
+                                            QUIZ
+                                        </span>
+                                    )}
+                                </Li>
+                                <Li variants={itemVariants}>
+                                    <RoomOutButton onClick={RoomOutHandler}>
+                                        <FontAwesomeIcon
+                                            icon={faRightFromBracket}
+                                            fontSize={"30px"}
+                                        />
+                                    </RoomOutButton>
+                                </Li>
+                            </Ul>
+                        </motion.nav>
                     </ToggleContainer>
                     {isChatToggle && (
                         <>
@@ -715,7 +771,12 @@ function Room() {
                                             <></>
                                         )}
                                         {chat.user_nickname === "" ? (
-                                            <Message style={{ width: "100%" }}>
+                                            <Message
+                                                style={{
+                                                    width: "100%",
+                                                    backgroundColor: "#424242",
+                                                }}
+                                            >
                                                 {chat.message}
                                             </Message>
                                         ) : chat.user_nickname !==
@@ -723,7 +784,11 @@ function Room() {
                                             <Message>{chat.message}</Message>
                                         ) : (
                                             <Message
-                                                style={{ marginLeft: "30%" }}
+                                                style={{
+                                                    marginLeft: "30%",
+                                                    backgroundColor: "#FFD43B",
+                                                    color: "#000000",
+                                                }}
                                             >
                                                 {chat.message}
                                             </Message>

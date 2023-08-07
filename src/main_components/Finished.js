@@ -37,7 +37,7 @@ const FinishedDate = styled.div`
 
 const Container = styled.div`
     width: 900px;
-    height: 80vh;
+    height: 90vh;
     overflow: auto;
 `;
 

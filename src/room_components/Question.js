@@ -10,31 +10,28 @@ import { postQuestion } from "../utils/api";
 import Overlay from "../ChattingPage/Overlay";
 
 const Board = styled.div`
-    height: 80vh;
-    width: 1000px;
+    height: 87vh;
+    width: 1400px;
     overflow-y: auto;
     background-color: rgba(255, 255, 255, 0.1);
-`;
-
-const InputTextStyle = styled.div`
-    display: grid;
-    grid-template-columns: 4fr 1fr;
+    border-radius: 20px 20px 0 0;
 `;
 
 const QuestionInput = styled(motion.input)`
     ${buttonStyle}
-    width: 900px;
-    height: 6vh;
-    font-size: 1.2rem;
+    width: 1200px;
+    height: 70px;
+    font-size: 1.4em;
+    border-radius: 0 0 0 20px;
 `;
 
 const QuestionInputButton = styled(motion.button)`
     ${buttonStyle}
     ${mainBgColor}
-    font-size: 1.2rem;
-    /* line-height: 1.2rem; */
-    width: 100px;
-    height: 6vh;
+    border-radius: 0 0 20px 0;
+    font-size: 1.4rem;
+    width: 200px;
+    height: 70px;
     cursor: pointer;
     color: white;
 `;
@@ -42,15 +39,16 @@ const ChattingBox = styled(motion.div)`
     margin: 10px 20px;
 `;
 const Message = styled.div`
-    margin-bottom: 0.5rem;
+    margin: 3px 0 10px 0;
     background: rgba(0, 0, 0, 0.1);
-    font-size: 20px;
+    font-size: 32px;
     font-weight: 600;
     color: white;
     /* max-width: 100%; */
-    padding: 5px;
+    padding: 7px;
     border-radius: 0.5rem;
     word-break: break-all;
+    display: inline-block;
 `;
 
 function Question() {
@@ -86,25 +84,42 @@ function Question() {
                 {isLoading && <Overlay />}
                 {qna.map((reply, index) => (
                     <ChattingBox key={index}>
-                        <span style={{ color: `#00d2d3` }}>
-                            {reply.user_nickname}
-                        </span>
+                        {reply.user_nickname === "토란이" ? (
+                            <div
+                                style={{
+                                    color: `#ffd43b`,
+                                    fontSize: "24px",
+                                    fontWeight: "600",
+                                }}
+                            >
+                                {reply.user_nickname}
+                            </div>
+                        ) : (
+                            <div
+                                style={{
+                                    color: `#1de9b6`,
+                                    fontSize: "24px",
+                                    fontWeight: "600",
+                                }}
+                            >
+                                {reply.user_nickname}
+                            </div>
+                        )}
+
                         <Message>{reply.message}</Message>
                     </ChattingBox>
                 ))}
             </Board>
 
             <form onSubmit={handleSubmit(onSendQuestion)}>
-                <InputTextStyle>
-                    <QuestionInput
-                        type="text"
-                        {...register("question")} // useForm의 register 메소드로 폼 입력과 연결
-                        placeholder="궁금한 건 무엇이든 물어보세요."
-                    />
-                    <QuestionInputButton type="submit">
-                        질문하기
-                    </QuestionInputButton>
-                </InputTextStyle>
+                <QuestionInput
+                    type="text"
+                    {...register("question")} // useForm의 register 메소드로 폼 입력과 연결
+                    placeholder="궁금한 건 무엇이든 물어보세요.   스터디하신 내용을 기반으로 저 토란이가! 답변드려요~"
+                />
+                <QuestionInputButton type="submit">
+                    질문하기
+                </QuestionInputButton>
             </form>
         </>
     );

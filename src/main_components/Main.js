@@ -6,6 +6,7 @@ import {
     containerStyle,
     containerVariants,
     disabledTextColor,
+    menuVariants,
     paperCardBgColor,
     primaryBgColor,
     reverseColor,
@@ -155,11 +156,11 @@ function Main() {
     return (
         <>
             <BaseContainer
-                variants={containerVariants}
-                initial="start"
-                animate="end"
+            // variants={containerVariants}
+            // initial="start"
+            // animate="end"
             >
-                <RoomList>
+                <RoomList variants={menuVariants} initial="start" animate="end">
                     {/* <HelloUser>
                         {storedData && storedData.userNickname}님, 반가워요!
                     </HelloUser> */}
@@ -215,7 +216,11 @@ function Main() {
                     </Tabs>
                     {/* <LogoutButton onClick={LogoutHandler}>LOG OUT</LogoutButton> */}
                 </RoomList>
-                <MainContainer>
+                <MainContainer
+                    variants={containerVariants}
+                    initial="start"
+                    animate="end"
+                >
                     <Routes>
                         <Route path="finished" element={<Finished />} />
                         <Route path="join" element={<JoinRoomPage />} />

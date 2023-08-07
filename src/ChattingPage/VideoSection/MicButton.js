@@ -20,7 +20,7 @@ const MicButton = () => {
     return (
         <div
             className="video_button_container"
-            style={{ marginLeft: "20px" }}
+            style={{ marginLeft: "50px" }}
             onClick={handleMicButtonPressed}
         >
             {/* <img

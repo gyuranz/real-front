@@ -4,13 +4,14 @@ import { getQuiz } from "../utils/api";
 import { AuthLogin } from "../atoms";
 import { useRecoilValue } from "recoil";
 import Overlay from "../ChattingPage/Overlay";
+import { primaryColor, primaryTextColor } from "../components/Styles";
 
 const Board = styled.div`
-    height: 74.3vh;
-    overflow-y: auto;
     background-color: rgba(255, 255, 255, 0.1);
+    ${primaryTextColor}
+    height: 95vh;
+    overflow-y: auto;
     border-radius: 10px;
-    margin: 1vh 1vh 2vh 0;
     display: grid;
     grid-template-columns: 4fr 1fr;
     justify-content: center;
@@ -24,7 +25,7 @@ const Question = styled.div`
 `;
 
 const Answer = styled.div`
-    color: #1de9b6;
+    ${primaryColor}
     font-size: 1.5em;
     display: flex;
     justify-content: center;

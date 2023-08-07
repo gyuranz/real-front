@@ -16,6 +16,21 @@ export const boxVariants = {
     },
 };
 
+export const menuVariants = {
+    start: { y: -500 },
+    end: {
+        y: 0,
+        scale: 1,
+        transition: {
+            type: "spring",
+            duration: 0.8,
+            bounce: 0.5,
+            // delayChildren: 0.2,
+            // staggerChildren: 0.1,
+        },
+    },
+};
+
 export const containerVariants = {
     start: { y: 100 },
     end: {
@@ -28,7 +43,6 @@ export const containerVariants = {
         },
     },
 };
-
 export const inputVariants = {
     start: {
         opacity: 0,
@@ -47,10 +61,10 @@ export const scrollVariants = {
         opacity: 1,
     },
 };
-export const leftSideBoxVariants = {
+export const sideBoxVariants = {
     start: {
         opacity: 0,
-        x: -300,
+        y: 300,
     },
     end: {
         opacity: 1,
@@ -149,10 +163,8 @@ export const reverseTextColor = css`
 export const Tabs = styled.div`
     display: flex;
     flex-direction: column;
-    /* width: 100%; */
     width: 400px;
     height: 100%;
-    /* justify-content: space-around; */
     justify-content: center;
     align-items: center;
     margin-bottom: 10px;
