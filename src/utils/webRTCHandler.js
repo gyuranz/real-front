@@ -297,12 +297,3 @@ export const sendMessageUsingDataChannel = (messageContent) => {
         peers[socketId].send(stringifiedMessageData);
     }
 };
-
-// 스냅샷을 찍는 함수
-// async function takeSnapshot() {
-//     const track = videoElement.srcObject.getVideoTracks()[0]
-//     const imageCapture = new ImageCapture(track)
-//     const image = await imageCapture.grabFrame()
-//     // ...
-
-//   }

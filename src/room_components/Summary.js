@@ -1,9 +1,10 @@
 import { useRecoilState } from "recoil";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import styled from "styled-components";
-import { AuthLogin, SummaryAtom } from "../atoms";
+import { AuthLogin } from "../atoms";
 import {
+    disabledTextColor,
     mainBgColor,
     primaryColor,
     primaryTextColor,
@@ -11,9 +12,6 @@ import {
 } from "../components/Styles";
 import { useNavigate } from "react-router-dom";
 
-import "./Summary.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFilePen, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { motion } from "framer-motion/dist/framer-motion";
 
 const Board = styled.div`
@@ -65,11 +63,13 @@ const AddButton = styled.button`
 
 const ModifiedInput = styled.input`
     width: 100%;
-    height: auto;
+    height: fit-content;
     padding: 10px;
     font-size: 1em;
     background-color: transparent;
     border: none;
+    overflow: auto;
+    ${primaryColor}
 `;
 const AddInput = styled.input`
     width: 100%;
@@ -81,8 +81,9 @@ const AddInput = styled.input`
 `;
 
 const OneLineDiv = styled(motion.div)`
+    transition: 0.3s ease-in-out;
     &:hover {
-        ${primaryColor}
+        ${disabledTextColor}
     }
     &:hover ~ .hoverOver {
         opacity: 1;
@@ -95,9 +96,8 @@ const ModifyImage = styled.img`
     border: none;
     top: 0;
     right: 50px;
-    width: 50px;
-    height: 50px;
-    color: white;
+    width: 30px;
+    height: 30px;
     opacity: 0;
     &:hover {
         opacity: 1;
@@ -110,9 +110,8 @@ const DeleteImage = styled.img`
     border: none;
     top: 0;
     right: 10px;
-    width: 40px;
-    height: 40px;
-    color: white;
+    width: 30px;
+    height: 30px;
     opacity: 0;
     &:hover {
         opacity: 1;
@@ -123,17 +122,17 @@ const DeleteImage = styled.img`
 //! summay 클릭시 fetch로 summary 데이터를 가져옴.
 //! 가져온 데이터를 배열로 바꾼후 (. 기준 혹은 다른 기준을 정해야 할듯)
 function Summary() {
+    // const navigate = useNavigate();
+    // const [summaryArray, setSummaryArray] = useRecoilState(SummaryAtom);
     //! 추가 및 삭제는 summaryArray를 통해서 하자. useState사용으로 변경
     const [isSave, setIsSave] = useState(false);
     const [userState, setUserState] = useRecoilState(AuthLogin);
     const [idNumber, setIdNumber] = useState(0);
-    // const [summaryArray, setSummaryArray] = useRecoilState(SummaryAtom);
     const [summaryArray, setSummaryArray] = useState([]);
     const [isAdd, setIsAdd] = useState(false);
     const [isModify, setIsModify] = useState("");
     const [modifiedText, setModifiedText] = useState("");
     const [addText, setAddText] = useState("");
-    const navigate = useNavigate();
     const [sendSummary, setSendSummary] = useState([]);
 
     const onChange = (event) => {
@@ -360,13 +359,13 @@ function Summary() {
 
                                                         <ModifyImage
                                                             className="hoverOver"
-                                                            src="/img/modify.png"
+                                                            src="/img/modify_main.png"
                                                             id={`${oneLine.id}Modify`}
                                                             onClick={onModify}
                                                         />
                                                         <DeleteImage
                                                             className="hoverOver"
-                                                            src="/img/delete.png"
+                                                            src="/img/delete_main.png"
                                                             id={`${oneLine.id}Modify`}
                                                             onClick={onDelete}
                                                         />

@@ -21,7 +21,7 @@ const ScreenshareButton = styled.button`
     border: none;
     padding: 10px;
     border-radius: 10px;
-    background-color: #1de9b6;
+    background-color: transparent;
 `;
 const CaptureImg = styled.img`
     width: 30px;
@@ -120,7 +120,7 @@ const SwitchToScreenSharingButton = () => {
                     icon={faUsersViewfinder}
                     style={{ fontSize: "40px" }}
                 /> */}
-                <CaptureImg src="/img/capture.png" alt="CAPTURE" />
+                <CaptureImg src="/img/capture_main.png" alt="CAPTURE" />
             </ScreenshareButton>
             <div
                 className="video_button_container"

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { AuthLogin, CompleteStudy } from "../atoms";
 import { useRecoilState } from "recoil";
@@ -13,6 +13,7 @@ import {
 } from "../components/Styles";
 import { setIdentity, setRoomId } from "../store/actions";
 import "./Finished.css";
+import Overlay from "../ChattingPage/Overlay";
 
 const cardVariants = {
     offscreen: {
@@ -82,6 +83,7 @@ function Finished(props) {
     const navigate = useNavigate();
     const [userState, setUserState] = useRecoilState(AuthLogin);
     const [completeStudy, setCompleteStudy] = useRecoilState(CompleteStudy);
+    const [isLoading, setIsLoading] = useState(false);
 
     // const moveToRoom = (e) => {
     //     console.log(e.target.id);
@@ -137,6 +139,7 @@ function Finished(props) {
     return (
         <>
             <Container>
+                {isLoading && <Overlay />}
                 {userState.userJoinedRoomList.map(
                     ({ room_id, room_name, room_summary }) => (
                         <Room variants={scrollVariants} key={room_id}>

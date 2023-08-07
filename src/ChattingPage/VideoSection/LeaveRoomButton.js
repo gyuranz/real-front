@@ -1,10 +1,11 @@
-import React, { memo } from "react";
+import React, { memo, useState } from "react";
 // import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 import { buttonStyle, reverseColor } from "../../components/Styles";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { AuthLogin, CompleteStudy } from "../../atoms";
 import axios from "axios";
+import Overlay from "../Overlay";
 
 const VideoButtonEnd = styled.button`
     ${buttonStyle}
@@ -35,6 +36,7 @@ const studyFinished = async (room_id, setCompleteStudy) => {
 };
 
 const LeaveRoomButton = () => {
+    const [isLoading, setIsLoading] = useState(false);
     const [completeStudy, setCompleteStudy] = useRecoilState(CompleteStudy);
     // const storedData = JSON.parse(localStorage.getItem("userData"));
     // const navigate = useNavigate();
@@ -57,16 +59,18 @@ const LeaveRoomButton = () => {
         //     const siteUrl = window.location.origin;
         //     window.location.href = `${siteUrl}`;
         // }
-
+        setIsLoading(true);
         studyFinished(userState.currentRoom.room_id, setCompleteStudy);
+        setIsLoading(false);
     };
     console.log(window.location.origin);
 
     return (
         <>
+            {isLoading && <Overlay />}
             {completeStudy || (
                 <VideoButtonEnd onClick={handleRoomFinished}>
-                    FINISH
+                    {isLoading ? "LOADING..." : "FINISH"}
                 </VideoButtonEnd>
             )}
         </>
