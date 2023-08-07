@@ -80,8 +80,8 @@ export const primaryColor = css`
     color: #1de9b6; // Primary (most of the UI)
 `;
 export const primaryBgColor = css`
-    /* background-color: #303030; // Primary background colour (dialogs, e.t.c) */
-    background-color: #ffffff;
+    background-color: #303030; // Primary background colour (dialogs, e.t.c)
+    /* background-color: #ffffff; */
 `;
 export const secondaryBgColor = css`
     background-color: #1de9b6; // Secondary background colour (main UI background)
@@ -93,20 +93,20 @@ export const paperItemIconColor = css`
     color: #1de9b6; // Icon colour
 `;
 export const primaryTextColor = css`
-    /* color: #ffffff; // Primary text colour */
-    color: #000000;
+    color: #ffffff; // Primary text colour
+    /* color: #000000; */
 `;
 export const secondaryTextColor = css`
-    /* color: rgba(255, 255, 255, 0.7); // Secondary text colour */
-    color: rgba(0, 0, 0, 0.7); // Secondary text colour
+    color: rgba(255, 255, 255, 0.7); // Secondary text colour
+    /* color: rgba(0, 0, 0, 0.7); // Secondary text colour */
 `;
 export const disabledTextColor = css`
-    /* color: rgba(255, 255, 255, 0.5); // Disabled text colour */
-    color: rgba(0, 0, 0, 0.5); // Disabled text colour
+    color: rgba(255, 255, 255, 0.5); // Disabled text colour
+    /* color: rgba(0, 0, 0, 0.5); // Disabled text colour */
 `;
 export const dividerColor = css`
-    /* color: rgba(255, 255, 255, 0.12); // Divider colour */
-    color: rgba(0, 0, 0, 0.12); // Divider colour
+    color: rgba(255, 255, 255, 0.12); // Divider colour
+    /* color: rgba(0, 0, 0, 0.12); // Divider colour */
 `;
 export const toggleButtonColor = css`
     background-color: #1de9b6;

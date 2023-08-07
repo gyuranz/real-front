@@ -63,8 +63,7 @@ const LoginButton = styled(motion.button)`
     width: 100px;
     height: 145px;
     cursor: pointer;
-    color: white;
-    ${disabledTextColor}
+    color: rgba(0, 0, 0, 0.5);
 `;
 
 const LoginWarning = styled.span`

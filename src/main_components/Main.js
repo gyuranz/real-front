@@ -7,6 +7,7 @@ import {
     containerVariants,
     disabledTextColor,
     paperCardBgColor,
+    primaryBgColor,
     reverseColor,
 } from "../components/Styles";
 
@@ -23,6 +24,7 @@ import PageRoute from "../components/PageRoute";
 
 const BaseContainer = styled(motion.div)`
     ${containerStyle}
+    ${primaryBgColor}
     width: 100vw;
     height: 100vh;
     /* display: flex;

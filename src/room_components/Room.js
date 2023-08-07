@@ -9,6 +9,7 @@ import {
     buttonStyle,
     containerStyle,
     containerVariants,
+    disabledTextColor,
     leftSideBoxVariants,
     mainBgColor,
     paperCardBgColor,
@@ -24,6 +25,7 @@ import {
     faCommentSlash,
     faMicrophone,
     faMicrophoneSlash,
+    faRightFromBracket,
     faVolumeHigh,
     faVolumeLow,
     faVolumeXmark,
@@ -58,13 +60,6 @@ const getMediaStream = () =>
 
 //! STT
 
-const ToggleMenu = styled.button`
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    border: none;
-    background-color: transparent;
-`;
 const ToggleClose = styled.div`
     position: absolute;
     top: 20px;
@@ -175,14 +170,6 @@ const ChattingBox = styled(motion.div)`
     margin: 10px 20px;
     text-align: left;
 `;
-const ChatToggle = styled(motion.button)`
-    border: none;
-    background-color: transparent;
-    position: absolute;
-    right: -10px;
-    bottom: 0;
-    transition: 0.3s ease-in-out;
-`;
 
 const Message = styled.div`
     margin-bottom: 0.5rem;
@@ -199,21 +186,31 @@ const Message = styled.div`
 
 const RoomOutButton = styled(motion.div)`
     ${buttonStyle}
-    ${reverseColor}
-    color:white;
-    padding: 10px;
-    border-radius: 10px;
-    font-size: 1.2rem;
-    z-index: 999;
+    ${disabledTextColor}
+    box-shadow: none;
     position: absolute;
-    top: 5vh;
+    bottom: 3vh;
     right: 2.5vw;
     cursor: pointer;
+    transition: all 0.3s ease-in-out;
     &:hover {
         ${reverseTextColor}
-        background-color: white;
     }
-    transition: all 0.3s ease-in-out;
+`;
+
+const ToggleContainer = styled(motion.dv)`
+    height: 5vh;
+    display: flex;
+`;
+const ChatToggle = styled(motion.button)`
+    border: none;
+    background-color: transparent;
+
+    transition: 0.3s ease-in-out;
+`;
+const ToggleMenu = styled(motion.button)`
+    border: none;
+    background-color: transparent;
 `;
 //! 소켓 api 꼭 같이 수정해주기
 
@@ -480,120 +477,6 @@ function Room() {
 
     return (
         <>
-            <RoomOutButton onClick={RoomOutHandler}>QUIT</RoomOutButton>
-            <ToggleMenu
-                onClick={() => {
-                    setIsToggle((prev) => !prev);
-                }}
-            >
-                <FontAwesomeIcon
-                    icon={faBars}
-                    size="2xl"
-                    style={{ color: "#1de9b6" }}
-                />
-            </ToggleMenu>
-            {isToggle && (
-                <BaseToggle>
-                    <Tabs style={{ margin: "0" }}>
-                        <Tab>
-                            <Link
-                                to={"playground"}
-                                onClick={() => {
-                                    setClick("playground");
-                                }}
-                            >
-                                {click === "playground" ? (
-                                    <span style={{ color: "#1de9b6" }}>
-                                        PLAYGROUND
-                                    </span>
-                                ) : (
-                                    <span>PLAYGROUND</span>
-                                )}
-                            </Link>
-                        </Tab>
-
-                        <Tab>
-                            {completeStudy ? (
-                                <Link
-                                    to={"summary"}
-                                    onClick={() => {
-                                        setClick("summary");
-                                    }}
-                                >
-                                    {click === "summary" ? (
-                                        <span style={{ color: "#1de9b6" }}>
-                                            SUMMARY
-                                        </span>
-                                    ) : (
-                                        <span>SUMMARY</span>
-                                    )}
-                                </Link>
-                            ) : (
-                                <span style={{ color: "#828282" }}>
-                                    SUMMARY
-                                </span>
-                            )}
-                        </Tab>
-
-                        <Tab>
-                            {completeStudy ? (
-                                <Link
-                                    to={"question"}
-                                    onClick={() => {
-                                        setClick("question");
-                                    }}
-                                    className={
-                                        completeStudy ? "" : "disabled-link"
-                                    }
-                                >
-                                    {click === "question" ? (
-                                        <span style={{ color: "#1de9b6" }}>
-                                            QUESTION
-                                        </span>
-                                    ) : (
-                                        <span>QUESTION</span>
-                                    )}
-                                </Link>
-                            ) : (
-                                <span style={{ color: "#828282" }}>
-                                    QUESTION
-                                </span>
-                            )}
-                        </Tab>
-
-                        <Tab>
-                            {completeStudy ? (
-                                <Link
-                                    to={"quiz"}
-                                    onClick={() => {
-                                        setClick("quiz");
-                                    }}
-                                    className={
-                                        completeStudy ? "" : "disabled-link"
-                                    }
-                                >
-                                    {click === "quiz" ? (
-                                        <span style={{ color: "#1de9b6" }}>
-                                            QUIZ
-                                        </span>
-                                    ) : (
-                                        <span>QUIZ</span>
-                                    )}
-                                </Link>
-                            ) : (
-                                <span style={{ color: "#828282" }}>QUIZ</span>
-                            )}
-                        </Tab>
-                    </Tabs>
-                    <ToggleClose
-                        onClick={() => {
-                            setIsToggle((prev) => !prev);
-                        }}
-                    >
-                        <FontAwesomeIcon icon={faXmark} size="xl" />
-                    </ToggleClose>
-                </BaseToggle>
-            )}
             <BaseContainer
                 variants={containerVariants}
                 initial="start"
@@ -634,6 +517,172 @@ function Room() {
                 </MainContainer>
 
                 <RoomList>
+                    <ToggleContainer>
+                        <ChatToggle
+                            onClick={() => {
+                                setIsChatToggle((prev) => !prev);
+                            }}
+                        >
+                            {isChatToggle ? (
+                                <FontAwesomeIcon
+                                    icon={faComment}
+                                    style={{
+                                        color: "#1de9b6",
+                                        cursor: "pointer",
+                                        fontSize: "4vh",
+                                    }}
+                                />
+                            ) : (
+                                <FontAwesomeIcon
+                                    icon={faCommentSlash}
+                                    style={{
+                                        color: "#1de9b6",
+                                        cursor: "pointer",
+                                        fontSize: "4vh",
+                                    }}
+                                />
+                            )}
+                        </ChatToggle>
+                        <ToggleMenu
+                            onClick={() => {
+                                setIsToggle((prev) => !prev);
+                            }}
+                        >
+                            <FontAwesomeIcon
+                                icon={faBars}
+                                fontSize="4vh"
+                                style={{ color: "#1de9b6" }}
+                            />
+                        </ToggleMenu>
+                        {isToggle && (
+                            <BaseToggle>
+                                <Tabs style={{ margin: "0" }}>
+                                    <Tab>
+                                        <Link
+                                            to={"playground"}
+                                            onClick={() => {
+                                                setClick("playground");
+                                            }}
+                                        >
+                                            {click === "playground" ? (
+                                                <span
+                                                    style={{ color: "#1de9b6" }}
+                                                >
+                                                    PLAYGROUND
+                                                </span>
+                                            ) : (
+                                                <span>PLAYGROUND</span>
+                                            )}
+                                        </Link>
+                                    </Tab>
+
+                                    <Tab>
+                                        {completeStudy ? (
+                                            <Link
+                                                to={"summary"}
+                                                onClick={() => {
+                                                    setClick("summary");
+                                                }}
+                                            >
+                                                {click === "summary" ? (
+                                                    <span
+                                                        style={{
+                                                            color: "#1de9b6",
+                                                        }}
+                                                    >
+                                                        SUMMARY
+                                                    </span>
+                                                ) : (
+                                                    <span>SUMMARY</span>
+                                                )}
+                                            </Link>
+                                        ) : (
+                                            <span style={{ color: "#828282" }}>
+                                                SUMMARY
+                                            </span>
+                                        )}
+                                    </Tab>
+
+                                    <Tab>
+                                        {completeStudy ? (
+                                            <Link
+                                                to={"question"}
+                                                onClick={() => {
+                                                    setClick("question");
+                                                }}
+                                                className={
+                                                    completeStudy
+                                                        ? ""
+                                                        : "disabled-link"
+                                                }
+                                            >
+                                                {click === "question" ? (
+                                                    <span
+                                                        style={{
+                                                            color: "#1de9b6",
+                                                        }}
+                                                    >
+                                                        QUESTION
+                                                    </span>
+                                                ) : (
+                                                    <span>QUESTION</span>
+                                                )}
+                                            </Link>
+                                        ) : (
+                                            <span style={{ color: "#828282" }}>
+                                                QUESTION
+                                            </span>
+                                        )}
+                                    </Tab>
+
+                                    <Tab>
+                                        {completeStudy ? (
+                                            <Link
+                                                to={"quiz"}
+                                                onClick={() => {
+                                                    setClick("quiz");
+                                                }}
+                                                className={
+                                                    completeStudy
+                                                        ? ""
+                                                        : "disabled-link"
+                                                }
+                                            >
+                                                {click === "quiz" ? (
+                                                    <span
+                                                        style={{
+                                                            color: "#1de9b6",
+                                                        }}
+                                                    >
+                                                        QUIZ
+                                                    </span>
+                                                ) : (
+                                                    <span>QUIZ</span>
+                                                )}
+                                            </Link>
+                                        ) : (
+                                            <span style={{ color: "#828282" }}>
+                                                QUIZ
+                                            </span>
+                                        )}
+                                    </Tab>
+                                </Tabs>
+                                <RoomOutButton onClick={RoomOutHandler}>
+                                    <FontAwesomeIcon
+                                        icon={faRightFromBracket}
+                                        fontSize={"30px"}
+                                    />
+                                </RoomOutButton>
+                                <ToggleClose
+                                    onClick={() => {
+                                        setIsToggle((prev) => !prev);
+                                    }}
+                                >
+                                    <FontAwesomeIcon icon={faXmark} size="xl" />
+                                </ToggleClose>
+                            </BaseToggle>
+                        )}
+                    </ToggleContainer>
                     {isChatToggle && (
                         <>
                             <ChatArea ref={chatContainerEl}>
@@ -709,32 +758,6 @@ function Room() {
                             </form>
                         </>
                     )}
-
-                    <ChatToggle
-                        onClick={() => {
-                            setIsChatToggle((prev) => !prev);
-                        }}
-                    >
-                        {isChatToggle ? (
-                            <FontAwesomeIcon
-                                icon={faComment}
-                                style={{
-                                    color: "#1de9b6",
-                                    cursor: "pointer",
-                                    fontSize: "50px",
-                                }}
-                            />
-                        ) : (
-                            <FontAwesomeIcon
-                                icon={faCommentSlash}
-                                style={{
-                                    color: "#1de9b6",
-                                    cursor: "pointer",
-                                    fontSize: "50px",
-                                }}
-                            />
-                        )}
-                    </ChatToggle>
                 </RoomList>
             </BaseContainer>
         </>

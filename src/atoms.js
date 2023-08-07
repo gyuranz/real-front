@@ -13,6 +13,7 @@ export const AuthLogin = atom({
             room_name: "",
             room_summary: "",
             room_password: "",
+            room_finished: false,
         },
     },
 });
@@ -27,8 +28,8 @@ export const Chats = atom({
 });
 
 export const CompleteStudy = atom({
-    key: "ComplateStudy",
-    default: true,
+    key: "CompleteStudy",
+    default: false,
 });
 
 export const AlarmAtom = atom({

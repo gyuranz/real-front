@@ -48,13 +48,13 @@ const JoinButton = styled(motion.button)`
     ${buttonStyle}
     ${secondaryBgColor}
     cursor: pointer;
-    ${disabledTextColor}
+    color: rgba(0, 0, 0, 0.5);
 `;
 
 const CancelButton = styled(motion.button)`
     ${buttonStyle}
     ${reverseColor}
-    ${disabledTextColor}
+    color: rgba(0, 0, 0, 0.5);
     cursor: pointer;
 `;
 

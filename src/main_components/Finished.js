@@ -7,8 +7,8 @@ import { styled } from "styled-components";
 import { motion, Variants } from "framer-motion/dist/framer-motion";
 import {
     buttonStyle,
+    disabledTextColor,
     scrollVariants,
-    secondaryBgColor,
     secondaryTextColor,
 } from "../components/Styles";
 import { setIdentity, setRoomId } from "../store/actions";
@@ -29,6 +29,31 @@ const cardVariants = {
     },
 };
 
+const FinishedDate = styled.div`
+    font-size: 24px;
+    margin-left: 100px;
+    color: rgba(0, 0, 0, 0.5);
+`;
+
+const Container = styled.div`
+    width: 900px;
+    height: 80vh;
+    overflow: auto;
+`;
+
+const Room = styled(motion.div)`
+    ${buttonStyle}
+    /* ${secondaryTextColor} */
+    color: rgba(0, 0, 0, 0.7);
+    box-shadow: none;
+    display: inline-block;
+    margin: 10px auto;
+    text-align: center;
+    font-size: 1rem;
+    width: 450px;
+    transition: 0.3s ease-in-out;
+`;
+
 function Card({ date, title, onClick, roomId }) {
     return (
         <motion.div
@@ -44,34 +69,13 @@ function Card({ date, title, onClick, roomId }) {
                 variants={cardVariants}
                 onClick={onClick}
             >
-                <div>{date}</div>
+                <FinishedDate>{date}</FinishedDate>
                 {title}
             </motion.div>
             <img className="splashOpen" src="/img/fileOpen.png" alt="" />
         </motion.div>
     );
 }
-
-const Container = styled.div`
-    width: 900px;
-    height: 80vh;
-    overflow: auto;
-`;
-
-const Room = styled(motion.div)`
-    ${buttonStyle}
-    ${secondaryTextColor}
-    box-shadow: none;
-    display: inline-block;
-    /* background-color: rgba(0, 0, 0, 0.2); */
-    margin: 10px auto;
-
-    text-align: center;
-    font-size: 1rem;
-    width: 450px;
-    cursor: pointer;
-    transition: 0.3s ease-in-out;
-`;
 
 function Finished(props) {
     const { setIdentityAction, setRoomIdAction } = props;
@@ -117,6 +121,7 @@ function Finished(props) {
                     room_name: responseData.room_name,
                     room_summary: responseData.room_summary,
                     room_password: responseData.room_password,
+                    // room_finished: responseData.room_finished
                 },
             });
 
@@ -133,16 +138,10 @@ function Finished(props) {
             <Container>
                 {userState.userJoinedRoomList.map(
                     ({ room_id, room_name, room_summary }) => (
-                        <Room
-                            variants={scrollVariants}
-                            // key={room_id}
-                            // onClick={onValid}
-                            key={room_id}
-                        >
+                        <Room variants={scrollVariants} key={room_id}>
                             <Card
                                 onClick={onValid}
                                 id={`${room_id}Card`}
-                                // id={room_id}
                                 date="2023.08.12."
                                 title={room_name}
                                 roomId={room_id}
@@ -150,9 +149,6 @@ function Finished(props) {
                         </Room>
                     )
                 )}
-                {/* {food.map(([emoji, hueA, hueB]) => (
-                    <Card emoji="abc" hueA="0" hueB="0" key="abc" />
-                ))} */}
             </Container>
         </>
     );
