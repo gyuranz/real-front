@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { AuthLogin } from "../atoms";
+import { AuthLogin, CompleteStudy } from "../atoms";
 import { useRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
@@ -81,6 +81,7 @@ function Finished(props) {
     const { setIdentityAction, setRoomIdAction } = props;
     const navigate = useNavigate();
     const [userState, setUserState] = useRecoilState(AuthLogin);
+    const [completeStudy, setCompleteStudy] = useRecoilState(CompleteStudy);
 
     // const moveToRoom = (e) => {
     //     console.log(e.target.id);
@@ -110,6 +111,7 @@ function Finished(props) {
 
             setRoomIdAction(responseData.room_id);
             setIdentityAction(userState.userId);
+            setCompleteStudy((prev) => responseData.room_finished);
             if (!response.ok) {
                 throw new Error(responseData.message);
             }
@@ -121,7 +123,6 @@ function Finished(props) {
                     room_name: responseData.room_name,
                     room_summary: responseData.room_summary,
                     room_password: responseData.room_password,
-                    // room_finished: responseData.room_finished
                 },
             });
 
