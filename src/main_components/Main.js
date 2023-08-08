@@ -44,7 +44,7 @@ const MainContainer = styled.div`
 const RoomList = styled(motion.div)`
     ${containerStyle}
     box-shadow: none;
-    width: 500px;
+    width: 460px;
     height: 100%;
     display: block;
     /* border-radius: 30px; */

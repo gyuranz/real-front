@@ -51,7 +51,7 @@ const Room = styled(motion.div)`
     margin: 10px auto;
     text-align: center;
     font-size: 1rem;
-    width: 450px;
+    width: 430px;
     transition: 0.3s ease-in-out;
 `;
 
@@ -87,7 +87,7 @@ function Finished(props) {
     const [userState, setUserState] = useRecoilState(AuthLogin);
     const [completeStudy, setCompleteStudy] = useRecoilState(CompleteStudy);
     const [isLoading, setIsLoading] = useState(false);
-
+    console.log(userState.userJoinedRoomList);
     // const moveToRoom = (e) => {
     //     console.log(e.target.id);
     //     // post로 정보 보내줌. 보내주는 것은 없고 url로 백에서 찾아줄 것으로 판단함
@@ -144,12 +144,14 @@ function Finished(props) {
             <Container>
                 {isLoading && <Overlay />}
                 {userState.userJoinedRoomList.map(
-                    ({ room_id, room_name, room_summary }) => (
+                    ({ room_id, room_name, room_summary, room_createAt }) => (
                         <Room variants={scrollVariants} key={room_id}>
                             <Card
                                 onClick={onValid}
                                 id={`${room_id}Card`}
-                                date="2023.08.12."
+                                date={
+                                    room_createAt && room_createAt.slice(0, 10)
+                                }
                                 title={room_name}
                                 roomId={room_id}
                             />

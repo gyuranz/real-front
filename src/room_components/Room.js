@@ -176,7 +176,7 @@ const Message = styled.div`
 const RoomOutButton = styled(motion.div)`
     z-index: 0;
     ${buttonStyle}
-    ${disabledTextColor}
+    ${paperCardBgColor}
     box-shadow: none;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
