@@ -65,6 +65,9 @@ function Card({ date, title, onClick, roomId }) {
         >
             <img className="splash" src="/img/file.png" alt="" />
             <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.9 }}
+                transition={{ type: "spring", stiffness: 400, damping: 17 }}
                 className="card"
                 id={roomId}
                 variants={cardVariants}

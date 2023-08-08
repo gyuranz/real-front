@@ -14,9 +14,10 @@ import { faCopy } from "@fortawesome/free-solid-svg-icons";
 import { motion } from "framer-motion/dist/framer-motion";
 import { primaryTextColor } from "../components/Styles";
 
-const CopyButton = styled.button`
+const CopyButton = styled(motion.button)`
     border: none;
     background-color: transparent;
+    cursor: pointer;
 `;
 
 const RoomLabel = styled(motion.div)`
@@ -26,6 +27,7 @@ const RoomLabel = styled(motion.div)`
     font-size: 1.5em;
     top: 10px;
     right: -200px;
+    z-index: 100;
 `;
 
 const RoomPage = ({
@@ -82,11 +84,16 @@ const RoomPage = ({
             <VideoButtons />
             <RoomLabel>
                 ID: {roomId}
-                <CopyButton onClick={copyRoomId()}>
+                <CopyButton
+                    onClick={copyRoomId()}
+                    whileHover={{ scale: 1.2 }}
+                    whileTap={{ scale: 0.9 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                >
                     <FontAwesomeIcon
                         icon={faCopy}
                         size="xl"
-                        style={{ color: "#1de9b6", cursor: "pointer" }}
+                        style={{ color: "#ffc700", cursor: "pointer" }}
                     />
                 </CopyButton>
             </RoomLabel>

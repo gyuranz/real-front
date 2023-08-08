@@ -97,7 +97,7 @@ function Question() {
                         ) : (
                             <div
                                 style={{
-                                    color: `#1de9b6`,
+                                    color: `#ffc700`,
                                     fontSize: "24px",
                                     fontWeight: "600",
                                 }}

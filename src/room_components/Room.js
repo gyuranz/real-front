@@ -87,6 +87,7 @@ const MainContainer = styled.div`
     height: 95vh;
     display: block;
     margin-right: 30px;
+    position: relative;
 `;
 
 const Container = styled.div`
@@ -109,8 +110,8 @@ const IOButton = styled.button`
 const SideOpenToolBox = styled(motion.div)`
     z-index: 2;
     position: absolute;
-    bottom: 2.5vh;
-    left: 26%;
+    bottom: 0;
+    left: 33%;
 `;
 
 const RoomList = styled(motion.div)`
@@ -196,7 +197,6 @@ const ChatToggle = styled(motion.button)`
     left: 250px;
     z-index: 2;
     font-size: 36px;
-    transition: 0.3s ease-in-out;
     cursor: pointer;
 `;
 const itemVariants = {
@@ -222,8 +222,8 @@ const Li = styled(motion.li)`
     display: block;
     list-style: none;
     margin: 0;
-    padding: 10px;
-    width: 300px;
+    padding: 30px;
+    width: 400px;
     font-size: 24px;
     font-weight: 600;
     ${primaryTextColor}
@@ -233,6 +233,7 @@ const Li = styled(motion.li)`
         scale: 1.3;
     }
     &:last-child {
+        padding: 0px;
         scale: 1;
         background-color: inherit;
     }
@@ -564,20 +565,26 @@ function Room() {
                 <RoomList>
                     <ToggleContainer>
                         <ChatToggle
-                            whileTap={{ scale: 0.97 }}
                             onClick={() => {
                                 setIsChatToggle((prev) => !prev);
+                            }}
+                            whileHover={{ scale: 1.2 }}
+                            whileTap={{ scale: 0.9 }}
+                            transition={{
+                                type: "spring",
+                                stiffness: 400,
+                                damping: 17,
                             }}
                         >
                             {isChatToggle ? (
                                 <FontAwesomeIcon
                                     icon={faComment}
-                                    style={{ color: "#1de9b6" }}
+                                    style={{ color: "#ffc700" }}
                                 />
                             ) : (
                                 <FontAwesomeIcon
                                     icon={faCommentSlash}
-                                    style={{ color: "#1de9b6" }}
+                                    style={{ color: "#ffc700" }}
                                 />
                             )}
                         </ChatToggle>
@@ -586,16 +593,21 @@ function Room() {
                             animate={isToggle ? "open" : "closed"}
                         >
                             <MotionBtn
-                                whileTap={{ scale: 0.97 }}
                                 onClick={() => {
                                     setIsToggle(!isToggle);
                                     setIsChatToggle((prev) => !prev);
                                 }}
-                                style={{}}
+                                whileHover={{ scale: 1.2 }}
+                                whileTap={{ scale: 0.9 }}
+                                transition={{
+                                    type: "spring",
+                                    stiffness: 400,
+                                    damping: 17,
+                                }}
                             >
                                 <FontAwesomeIcon
                                     icon={faBars}
-                                    color="#1de9b6"
+                                    color="#ffc700"
                                 />
                             </MotionBtn>
                             <Ul
@@ -633,7 +645,7 @@ function Room() {
                                         }}
                                     >
                                         {click === "playground" ? (
-                                            <span style={{ color: "#1de9b6" }}>
+                                            <span style={{ color: "#ffc700" }}>
                                                 PLAYGROUND
                                             </span>
                                         ) : (
@@ -652,7 +664,7 @@ function Room() {
                                             {click === "summary" ? (
                                                 <span
                                                     style={{
-                                                        color: "#1de9b6",
+                                                        color: "#ffc700",
                                                     }}
                                                 >
                                                     SUMMARY
@@ -683,18 +695,18 @@ function Room() {
                                             {click === "question" ? (
                                                 <span
                                                     style={{
-                                                        color: "#1de9b6",
+                                                        color: "#ffc700",
                                                     }}
                                                 >
-                                                    QUESTION
+                                                    ASK to 토란
                                                 </span>
                                             ) : (
-                                                <span>QUESTION</span>
+                                                <span>ASK to 토란</span>
                                             )}
                                         </Link>
                                     ) : (
                                         <span style={{ color: "#828282" }}>
-                                            QUESTION
+                                            ASK to 토란
                                         </span>
                                     )}
                                 </Li>
@@ -714,17 +726,42 @@ function Room() {
                                             {click === "quiz" ? (
                                                 <span
                                                     style={{
-                                                        color: "#1de9b6",
+                                                        color: "#ffc700",
                                                     }}
                                                 >
+                                                    <span
+                                                        style={{
+                                                            fontSize: "32px",
+                                                            color: "#ffcf22",
+                                                        }}
+                                                    >
+                                                        OX
+                                                    </span>
                                                     QUIZ
                                                 </span>
                                             ) : (
-                                                <span>QUIZ</span>
+                                                <span>
+                                                    <span
+                                                        style={{
+                                                            fontSize: "32px",
+                                                            color: "#ffcf22",
+                                                        }}
+                                                    >
+                                                        O X
+                                                    </span>
+                                                    QUIZ
+                                                </span>
                                             )}
                                         </Link>
                                     ) : (
                                         <span style={{ color: "#828282" }}>
+                                            <span
+                                                style={{
+                                                    fontSize: "32px",
+                                                }}
+                                            >
+                                                OX
+                                            </span>
                                             QUIZ
                                         </span>
                                     )}
@@ -798,7 +835,7 @@ function Room() {
                                 {/*//! STT 메세지 나오는 부분 */}
                                 {/* {STTMessage.map((message, idx) => (
                             <ChattingBox key={idx}>
-                                <span style={{ color: `#1de9b6` }}>발표자</span>
+                                <span style={{ color: `#ffc700` }}>발표자</span>
                                 <Message>{message}</Message>
                             </ChattingBox>
                         ))} */}

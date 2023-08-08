@@ -2,6 +2,7 @@
 .room_container {
     display: flex;
     justify-content: center;
+    height: 95vh;
 }
 .video_button_container {
     margin-right: 20px;
@@ -37,12 +38,12 @@
     align-items: center;
     position: absolute;
     z-index: 100;
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(0, 0, 0, 0.1);
 }
 
 .loader {
-    border: 16px solid #f3f3f3; /* Light grey */
-    border-top: 16px solid #0052c9; /* Blue */
+    border: 16px solid #303030;
+    border-top: 16px solid #ffc700;
     border-radius: 50%;
     width: 120px;
     height: 120px;

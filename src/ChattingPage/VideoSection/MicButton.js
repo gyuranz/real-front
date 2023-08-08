@@ -7,6 +7,7 @@ import {
     faMicrophone,
     faMicrophoneSlash,
 } from "@fortawesome/free-solid-svg-icons";
+import { motion } from "framer-motion/dist/framer-motion";
 
 const MicButton = () => {
     const [isMicMuted, setIsMicMuted] = useState(true);
@@ -18,10 +19,13 @@ const MicButton = () => {
     };
 
     return (
-        <div
+        <motion.div
             className="video_button_container"
             style={{ marginLeft: "50px" }}
             onClick={handleMicButtonPressed}
+            whileHover={{ scale: 1.2 }}
+            whileTap={{ scale: 0.9 }}
+            transition={{ type: "spring", stiffness: 400, damping: 17 }}
         >
             {/* <img
                 alt="MIC button"
@@ -34,16 +38,16 @@ const MicButton = () => {
                 <FontAwesomeIcon
                     icon={faMicrophoneSlash}
                     size="xl"
-                    style={{ color: "#1de9b6" }}
+                    style={{ color: "#ffc700", cursor: "pointer" }}
                 />
             ) : (
                 <FontAwesomeIcon
                     icon={faMicrophone}
                     size="xl"
-                    style={{ color: "#1de9b6" }}
+                    style={{ color: "#ffc700", cursor: "pointer" }}
                 />
             )}
-        </div>
+        </motion.div>
     );
 };
 

@@ -1,4 +1,4 @@
-// import { motion } from "framer-motion/dist/framer-motion";
+import { motion } from "framer-motion/dist/framer-motion";
 import styled, { css } from "styled-components";
 
 export const boxVariants = {
@@ -6,6 +6,22 @@ export const boxVariants = {
     end: {
         opacity: 1,
         scale: 1,
+        transition: {
+            type: "spring",
+            duration: 2,
+            bounce: 0.65,
+            delayChildren: 0.3,
+            staggerChildren: 0.1,
+        },
+    },
+};
+
+export const logoVariants = {
+    start: { opacity: 0, scale: 0.5, y: 500 },
+    end: {
+        opacity: 1,
+        scale: 1,
+        y: 0,
         transition: {
             type: "spring",
             duration: 2,
@@ -74,10 +90,11 @@ export const sideBoxVariants = {
 
 export const buttonStyle = css`
     box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2), 0 10px 20px rgba(0, 0, 0, 0.2);
-    padding: 20px 10px;
+    padding: 20px;
     font-size: 24px;
     font-weight: 600;
     border-radius: 20px;
+
     border: none;
 `;
 
@@ -91,45 +108,45 @@ export const containerStyle = css`
     align-items: center;
 `;
 export const primaryColor = css`
-    color: #1de9b6; // Primary (most of the UI)
+    color: #ffcf22; // Primary (most of the UI)
 `;
 export const primaryBgColor = css`
     background-color: #303030; // Primary background colour (dialogs, e.t.c)
     /* background-color: #ffffff; */
 `;
 export const secondaryBgColor = css`
-    background-color: #1de9b6; // Secondary background colour (main UI background)
+    background-color: #ffc700; // Secondary background colour (main UI background)
 `;
 export const paperCardBgColor = css`
     background-color: #424242; // Card background colour
 `;
 export const paperItemIconColor = css`
-    color: #1de9b6; // Icon colour
+    color: #ffcf22; // Icon colour
 `;
 export const primaryTextColor = css`
     color: #ffffff; // Primary text colour
     /* color: #000000; */
 `;
 export const secondaryTextColor = css`
-    color: rgba(255, 255, 255, 0.7); // Secondary text colour
-    /* color: rgba(0, 0, 0, 0.7); // Secondary text colour */
+    /* color: rgba(255, 255, 255, 0.7); // Secondary text colour */
+    color: rgba(0, 0, 0, 0.7); // Secondary text colour
 `;
 export const disabledTextColor = css`
-    color: rgba(255, 255, 255, 0.5); // Disabled text colour
-    /* color: rgba(0, 0, 0, 0.5); // Disabled text colour */
+    /* color: rgba(255, 255, 255, 0.5); // Disabled text colour */
+    color: rgba(0, 0, 0, 0.5); // Disabled text colour
 `;
 export const dividerColor = css`
-    color: rgba(255, 255, 255, 0.12); // Divider colour
-    /* color: rgba(0, 0, 0, 0.12); // Divider colour */
+    /* color: rgba(255, 255, 255, 0.12); // Divider colour */
+    color: rgba(0, 0, 0, 0.12); // Divider colour
 `;
 export const toggleButtonColor = css`
-    background-color: #1de9b6;
+    background-color: #ffc700;
 `;
 export const toggleInkColor = css`
-    color: #1de9b6;
+    color: #ffcf22;
 `;
 export const toggleBarColor = css`
-    color: #1de9b6;
+    color: #ffc700;
 `;
 
 export const headerColor = css`
@@ -149,7 +166,7 @@ export const SelectedBgColor = css`
 export const mainBgColor = css`
     /* background-color: #07dfb4;
     background-color: #00d2d3; */
-    background-color: #1de9b6;
+    background-color: #ffc700;
 `;
 
 export const reverseColor = css`
@@ -160,7 +177,7 @@ export const reverseTextColor = css`
     color: #fe3411;
 `;
 
-export const Tabs = styled.div`
+export const Tabs = styled(motion.div)`
     display: flex;
     flex-direction: column;
     width: 400px;
@@ -169,22 +186,17 @@ export const Tabs = styled.div`
     align-items: center;
     margin-bottom: 10px;
 `;
-export const Tab = styled.div`
+export const Tab = styled(motion.div)`
     ${primaryTextColor}
     height: 50px;
     width: 300px;
     border-radius: 10px;
-    transition: 0.3s all ease-in-out;
     font-weight: 600;
     font-size: 1.2em;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    &:hover {
-        box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2), 0 10px 20px rgba(0, 0, 0, 0.2);
-        font-size: 1.4em;
-    }
     a {
         padding: 20px;
     }

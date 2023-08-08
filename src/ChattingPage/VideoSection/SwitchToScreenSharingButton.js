@@ -11,21 +11,21 @@ import {
     faDisplay,
     faUsersViewfinder,
 } from "@fortawesome/free-solid-svg-icons";
+import { motion } from "framer-motion/dist/framer-motion";
 // import { useNavigate } from "react-router-dom";
 
 const constraints = {
     audio: false,
     video: true,
 };
-const ScreenshareButton = styled.button`
+const ScreenshareButton = styled(motion.div)`
     border: none;
-    padding: 10px;
-    border-radius: 10px;
-    background-color: transparent;
+    padding: 3px;
 `;
-const CaptureImg = styled.img`
+const CaptureImg = styled(motion.img)`
     width: 30px;
     height: 30px;
+    cursor: pointer;
 `;
 
 const SwitchToScreenSharingButton = () => {
@@ -120,23 +120,29 @@ const SwitchToScreenSharingButton = () => {
                     icon={faUsersViewfinder}
                     style={{ fontSize: "40px" }}
                 /> */}
-                <CaptureImg src="/img/capture_main.png" alt="CAPTURE" />
+                <CaptureImg
+                    src="/img/capture_main.png"
+                    alt="CAPTURE"
+                    whileHover={{ scale: 1.2 }}
+                    whileTap={{ scale: 0.9 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                />
             </ScreenshareButton>
             <div
                 className="video_button_container"
                 onClick={handleScreenShareToggle}
             >
-                {/* <img
-                    alt="SCREEN SHARE"
-                    src={SwitchImg}
-                    onClick={handleScreenShareToggle}
-                    className="video_button_image"
-                /> */}
-                <FontAwesomeIcon
-                    icon={faDisplay}
-                    size="xl"
-                    style={{ color: "#1de9b6" }}
-                />
+                <ScreenshareButton
+                    whileHover={{ scale: 1.2 }}
+                    whileTap={{ scale: 0.9 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                >
+                    <FontAwesomeIcon
+                        icon={faDisplay}
+                        size="xl"
+                        style={{ color: "#ffc700", cursor: "pointer" }}
+                    />
+                </ScreenshareButton>
             </div>
             {isScreenSharingActive && (
                 <LocalScreenSharingPreview stream={screenSharingStream} />

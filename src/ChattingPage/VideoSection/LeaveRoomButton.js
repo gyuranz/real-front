@@ -6,8 +6,9 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { AuthLogin, CompleteStudy } from "../../atoms";
 import axios from "axios";
 import Overlay from "../Overlay";
+import { motion } from "framer-motion/dist/framer-motion";
 
-const VideoButtonEnd = styled.button`
+const VideoButtonEnd = styled(motion.button)`
     ${buttonStyle}
     ${reverseColor}
     margin: 10px 0 10px 60px;
@@ -69,7 +70,12 @@ const LeaveRoomButton = () => {
         <>
             {isLoading && <Overlay />}
             {completeStudy || (
-                <VideoButtonEnd onClick={handleRoomFinished}>
+                <VideoButtonEnd
+                    onClick={handleRoomFinished}
+                    whileHover={{ scale: 1.2 }}
+                    whileTap={{ scale: 0.9 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                >
                     {isLoading ? "LOADING..." : "FINISH"}
                 </VideoButtonEnd>
             )}

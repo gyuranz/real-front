@@ -8,17 +8,37 @@ import {
     containerStyle,
     disabledTextColor,
     inputVariants,
-    mainBgColor,
-    paperItemIconColor,
-    primaryColor,
-    reverseColor,
+    logoVariants,
     reverseTextColor,
     secondaryBgColor,
+    secondaryTextColor,
 } from "../components/Styles";
 import { Link, useNavigate } from "react-router-dom";
 
 import { useRecoilState } from "recoil";
 import { AuthLogin } from "../atoms";
+
+const TextLogo = styled.div`
+    font-size: 160px;
+    color: #303030;
+`;
+
+const ImageLogo = styled(motion.div)`
+    width: 300px;
+    height: 300px;
+    position: relative;
+    bottom: -100px;
+`;
+const CircleBg = styled(motion.div)`
+    /* z-index: -1; */
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    border-radius: 50%;
+    ${secondaryBgColor}
+`;
 
 const BaseContainer = styled.div`
     width: 100vw;
@@ -26,6 +46,7 @@ const BaseContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    /* background-color: #ffc700; */
 `;
 const Container = styled(motion.div)`
     ${containerStyle}
@@ -33,11 +54,14 @@ const Container = styled(motion.div)`
     height: 280px;
     width: 500px;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
     a {
-        ${paperItemIconColor}
+        ${secondaryTextColor}
         flex: none;
         position: absolute;
-        bottom: 15px;
+        bottom: -30px;
         right: 55px;
         padding: 10px;
         font-weight: 600;
@@ -63,7 +87,7 @@ const LoginButton = styled(motion.button)`
     width: 100px;
     height: 145px;
     cursor: pointer;
-    color: rgba(0, 0, 0, 0.5);
+    ${disabledTextColor}
 `;
 
 const LoginWarning = styled.span`
@@ -149,9 +173,30 @@ function Login() {
 
     return (
         <>
-            <LoginWarning>{loginError}</LoginWarning>
+            <CircleBg
+                initial={{ scale: 0, opacity: 0 }}
+                transition={{ duration: 2, delay: 1.9 }}
+                animate={{
+                    borderRaduis: 10,
+                    opacity: 1,
+                    scale: 90,
+                }}
+            ></CircleBg>
             <BaseContainer>
                 <Container variants={boxVariants} initial="start" animate="end">
+                    <ImageLogo
+                        variants={logoVariants}
+                        initial="start"
+                        animate="end"
+                    >
+                        <img
+                            width={300}
+                            height={300}
+                            alt="계란"
+                            src="/img/gyuranz.gif"
+                        ></img>
+                    </ImageLogo>
+                    <TextLogo>AItoLearn</TextLogo>
                     <form onSubmit={handleSubmit(onValid)}>
                         <GridLoginStyle>
                             <div>
@@ -188,6 +233,7 @@ function Login() {
                             <LoginButton variants={inputVariants}>
                                 LOG IN
                             </LoginButton>
+                            <LoginWarning>{loginError}</LoginWarning>
                             {/* <LoginWarning>{loginError}</LoginWarning> */}
                         </GridLoginStyle>
                     </form>

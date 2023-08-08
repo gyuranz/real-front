@@ -358,12 +358,14 @@ function Summary() {
                                                         </OneLineDiv>
 
                                                         <ModifyImage
+                                                            alt="MODIFY"
                                                             className="hoverOver"
                                                             src="/img/modify_main.png"
                                                             id={`${oneLine.id}Modify`}
                                                             onClick={onModify}
                                                         />
                                                         <DeleteImage
+                                                            alt="DELETE"
                                                             className="hoverOver"
                                                             src="/img/delete_main.png"
                                                             id={`${oneLine.id}Modify`}

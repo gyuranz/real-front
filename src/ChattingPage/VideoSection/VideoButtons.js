@@ -16,7 +16,7 @@ const VideoButtonsConainter = styled(motion.div)`
     left: 40%;
     height: 60px;
     border-radius: 30px;
-    border: 3px solid #1de9b6;
+    border: 3px solid #ffc700;
     width: 440px;
 `;
 

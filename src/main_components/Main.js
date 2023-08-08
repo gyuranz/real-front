@@ -28,12 +28,6 @@ const BaseContainer = styled(motion.div)`
     ${primaryBgColor}
     width: 100vw;
     height: 100vh;
-    /* display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start; */
-    /* display: grid;
-    grid-template-columns: 3.5fr 1fr 1.5fr; */
 `;
 
 const MainContainer = styled.div`
@@ -59,20 +53,17 @@ const RoomList = styled(motion.div)`
 `;
 
 const LogoutButton = styled(motion.div)`
-    /* ${buttonStyle} */
-    /* ${paperCardBgColor} */
     padding: 10px;
     font-size: 1rem;
     ${disabledTextColor}
     font-weight: 600;
-    z-index: 999;
     width: 100px;
-    /* position: absolute;
-    bottom: -220px;
-    right: 200px; */
     text-align: center;
     cursor: pointer;
     transition: 0.3s ease-in-out;
+    position: absolute;
+    top: 10px;
+    right: 10px;
     &:hover {
         scale: 1.1;
     }
@@ -165,7 +156,15 @@ function Main() {
                         {storedData && storedData.userNickname}님, 반가워요!
                     </HelloUser> */}
                     <Tabs>
-                        <Tab>
+                        <Tab
+                            whileHover={{ scale: 1.2 }}
+                            whileTap={{ scale: 0.9 }}
+                            transition={{
+                                type: "spring",
+                                stiffness: 400,
+                                damping: 17,
+                            }}
+                        >
                             <Link
                                 to={`/${userState.userId}/finished`}
                                 onClick={() => {
@@ -173,7 +172,7 @@ function Main() {
                                 }}
                             >
                                 {click === "finished" ? (
-                                    <span style={{ color: "#1de9b6" }}>
+                                    <span style={{ color: "#ffc700" }}>
                                         HISTORY
                                     </span>
                                 ) : (
@@ -181,7 +180,15 @@ function Main() {
                                 )}
                             </Link>
                         </Tab>
-                        <Tab>
+                        <Tab
+                            whileHover={{ scale: 1.2 }}
+                            whileTap={{ scale: 0.9 }}
+                            transition={{
+                                type: "spring",
+                                stiffness: 400,
+                                damping: 17,
+                            }}
+                        >
                             <Link
                                 to={`/${userState.userId}/join`}
                                 onClick={() => {
@@ -189,7 +196,7 @@ function Main() {
                                 }}
                             >
                                 {click === "join" ? (
-                                    <span style={{ color: "#1de9b6" }}>
+                                    <span style={{ color: "#ffc700" }}>
                                         JOIN
                                     </span>
                                 ) : (
@@ -197,7 +204,15 @@ function Main() {
                                 )}
                             </Link>
                         </Tab>
-                        <Tab>
+                        <Tab
+                            whileHover={{ scale: 1.2 }}
+                            whileTap={{ scale: 0.9 }}
+                            transition={{
+                                type: "spring",
+                                stiffness: 400,
+                                damping: 17,
+                            }}
+                        >
                             <Link
                                 to={`/${userState.userId}/create`}
                                 onClick={() => {
@@ -205,7 +220,7 @@ function Main() {
                                 }}
                             >
                                 {click === "create" ? (
-                                    <span style={{ color: "#1de9b6" }}>
+                                    <span style={{ color: "#ffc700" }}>
                                         CREATE
                                     </span>
                                 ) : (
@@ -214,7 +229,6 @@ function Main() {
                             </Link>
                         </Tab>
                     </Tabs>
-                    {/* <LogoutButton onClick={LogoutHandler}>LOG OUT</LogoutButton> */}
                 </RoomList>
                 <MainContainer
                     variants={containerVariants}
@@ -230,6 +244,7 @@ function Main() {
                 </MainContainer>
                 {/* <VerticalLine /> */}
             </BaseContainer>
+            <LogoutButton onClick={LogoutHandler}>LOG OUT</LogoutButton>
         </>
     );
 }

@@ -5,6 +5,7 @@ import CameraButtonImgOff from "../../resources/images/cameraOff.svg";
 import * as webRTCHandler from "../../utils/webRTCHandler";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faVideo, faVideoSlash } from "@fortawesome/free-solid-svg-icons";
+import { motion } from "framer-motion/dist/framer-motion";
 
 const CameraButton = () => {
     const [isLocalVideoDisabled, setIsLocalVideoDisabled] = useState(false);
@@ -16,9 +17,12 @@ const CameraButton = () => {
     };
 
     return (
-        <div
+        <motion.div
             className="video_button_container"
             onClick={handleCameraButtonPressed}
+            whileHover={{ scale: 1.2 }}
+            whileTap={{ scale: 0.9 }}
+            transition={{ type: "spring", stiffness: 400, damping: 17 }}
         >
             {/* <img
                 alt="VIDEO"
@@ -32,16 +36,16 @@ const CameraButton = () => {
                 <FontAwesomeIcon
                     icon={faVideoSlash}
                     size="xl"
-                    style={{ color: "#1de9b6" }}
+                    style={{ color: "#ffc700", cursor: "pointer" }}
                 />
             ) : (
                 <FontAwesomeIcon
                     icon={faVideo}
                     size="xl"
-                    style={{ color: "#1de9b6" }}
+                    style={{ color: "#ffc700", cursor: "pointer" }}
                 />
             )}
-        </div>
+        </motion.div>
     );
 };
 

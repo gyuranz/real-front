@@ -3,7 +3,7 @@ import CheckImg from "../resources/images/check.png";
 
 import { styled } from "styled-components";
 import { motion } from "framer-motion/dist/framer-motion";
-import { inputVariants } from "../components/Styles";
+import { inputVariants, primaryTextColor } from "../components/Styles";
 
 const CheckboxContainer = styled(motion.div)`
     display: flex;
@@ -26,6 +26,7 @@ const CheckBoxConnection = styled.div`
 const CheckboxP = styled.p`
     font-weight: 400;
     margin-left: 15px;
+    ${primaryTextColor}
 `;
 
 const CheckboxImg = styled.img`
