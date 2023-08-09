@@ -11,6 +11,7 @@ function Logo() {
                     padding: "0",
                     marginLeft: "auto",
                     marginRight: "auto",
+                    marginBottom: "300px",
                     height: "min-content",
                     stroke: "#ffc700",
                 }}
@@ -21,7 +22,7 @@ function Logo() {
                         height: "100%",
                         scale: "2",
                     }}
-                    viewBox="0 0 530 100"
+                    viewBox="0 0 530 200"
                     xmlns="http://www.w3.org/2000/svg"
                 >
                     <motion.path

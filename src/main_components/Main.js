@@ -36,7 +36,7 @@ const MainContainer = styled.div`
     /* ${paperCardBgColor} */
     /* background-color: transparent; */
     box-shadow: none;
-    width: 1000px;
+    width: 900px;
     height: 100%;
     position: relative;
     overflow: auto;
@@ -45,9 +45,9 @@ const MainContainer = styled.div`
 const RoomList = styled(motion.div)`
     ${containerStyle}
     box-shadow: none;
-    width: 460px;
+    width: 660px;
     height: 100%;
-    display: block;
+    /* display: block; */
     /* border-radius: 30px; */
     overflow: none;
     position: relative;
