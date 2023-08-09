@@ -22,6 +22,7 @@ import Finished from "./Finished";
 import JoinRoomPage from "../JoinRoomPage/JoinRoomPage";
 import CreateRoomPage from "../CreateRoomPage/CreateRoomPage";
 import PageRoute from "../components/PageRoute";
+import Logo from "./Logo";
 
 const BaseContainer = styled(motion.div)`
     ${containerStyle}
@@ -152,10 +153,10 @@ function Main() {
             // animate="end"
             >
                 <RoomList variants={menuVariants} initial="start" animate="end">
-                    {/* <HelloUser>
-                        {storedData && storedData.userNickname}님, 반가워요!
-                    </HelloUser> */}
                     <Tabs>
+                        <Tab style={{ height: "200px" }}>
+                            <Logo />
+                        </Tab>
                         <Tab
                             whileHover={{ scale: 1.2 }}
                             whileTap={{ scale: 0.9 }}
