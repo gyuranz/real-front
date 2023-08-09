@@ -9,6 +9,7 @@ import {
     primaryColor,
     primaryTextColor,
     reverseTextColor,
+    sideBoxVariants,
 } from "../components/Styles";
 import { useNavigate } from "react-router-dom";
 
@@ -46,29 +47,31 @@ const UpdateButton = styled(motion.button)`
     font-weight: 600;
     font-size: 22px;
     bottom: 0px;
-    border-radius: 27.5px;
+    border-radius: 0 27.5px 27.5px 0;
     right: 0;
     border: none;
     cursor: pointer;
+    z-index: 2;
 `;
 const AddButton = styled(motion.button)`
-    ${reverseTextColor}
+    ${primaryColor}
+    background-color: black;
     position: absolute;
     text-align: center;
     width: 55px;
     height: 55px;
     line-height: 55px;
-    font-size: 30px;
-    font-weight: 600;
+    font-size: 36px;
+    font-weight: 900;
     bottom: 0;
-    border-radius: 30px;
+    border-radius: 30px 0 0 30px;
     right: 100px;
     border: none;
     z-index: 1;
     cursor: pointer;
 `;
 
-const AddInput = styled.input`
+const AddInput = styled(motion.input)`
     position: absolute;
     bottom: 0;
     width: 1300px;
@@ -471,8 +474,16 @@ function Summary() {
             )}
 
             {isAdd && (
-                <form onSubmit={onAddSubmit}>
+                <form
+                    onSubmit={onAddSubmit}
+                    // variants={sideBoxVariants}
+                    // initial="start"
+                    // animate="end"
+                >
                     <AddInput
+                        // variants={sideBoxVariants}
+                        // initial="start"
+                        // animate="end"
                         placeholder="추가할 내용을 입력해주세요."
                         id="inputValue"
                         value={addText}

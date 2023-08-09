@@ -5,6 +5,7 @@ import { AuthLogin } from "../atoms";
 import { useRecoilValue } from "recoil";
 import Overlay from "../ChattingPage/Overlay";
 import { primaryColor, primaryTextColor } from "../components/Styles";
+import "./Quiz.css";
 
 const Board = styled.div`
     background-color: rgba(255, 255, 255, 0.1);
@@ -30,7 +31,6 @@ const Answer = styled.div`
     display: flex;
     justify-content: center;
     span {
-        cursor: pointer;
         transition: 0.3s ease-in-out;
         line-height: 50px;
         text-align: center;
@@ -39,9 +39,25 @@ const Answer = styled.div`
         width: 100px;
         height: 50px;
         border-radius: 10px;
-        background-color: rgba(0, 0, 0, 0.2);
         font-weight: 400;
     }
+`;
+
+const OX = styled.div`
+    display: inline-block;
+    margin-left: 30px;
+    color: #303030;
+    font-size: 40px;
+    font-weight: 900;
+    cursor: pointer;
+    &:hover {
+        ${primaryColor}
+        scale: 1.2;
+    }
+    &:active {
+        scale: 0.8;
+    }
+    transition: 0.2s ease-in-out;
 `;
 
 function Quiz() {
@@ -62,7 +78,20 @@ function Quiz() {
     console.log("✅", quiz);
 
     const showAnswer = (event) => {
+        const Oanswer = event.target.parentElement.children[0];
+        const Xanswer = event.target.parentElement.children[1];
+        const answer = event.target.parentElement.children[2];
+        const isCorrect = answer.innerText.search(event.target.innerText); // 정답 + , 오답 -
+        Oanswer.style.display = "none";
+        Xanswer.style.display = "none";
         event.target.style = "color:inherit";
+
+        const answerText = document.createElement("span");
+        if (isCorrect === -1) {
+            answer.style = "color: #fe3411";
+            event.target.style = "color: #424242";
+        }
+        answerText.classList.add("answerText");
     };
     return (
         <>
@@ -73,9 +102,13 @@ function Quiz() {
                           index % 2 === 0 ? (
                               <Question key={index}>{quiz}</Question>
                           ) : (
-                              <Answer key={index} onClick={showAnswer}>
-                                  <span id={`answer${index}`}>{quiz}</span>
-                              </Answer>
+                              <div>
+                                  <Answer key={index}>
+                                      <OX onClick={showAnswer}>O</OX>
+                                      <OX onClick={showAnswer}>X</OX>
+                                      <span id={`answer${index}`}>{quiz}</span>
+                                  </Answer>
+                              </div>
                           )
                       )
                     : "로딩중..."}

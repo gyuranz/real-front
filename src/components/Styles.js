@@ -79,12 +79,14 @@ export const scrollVariants = {
 };
 export const sideBoxVariants = {
     start: {
-        opacity: 0,
-        y: 300,
+        x: 1000,
     },
     end: {
-        opacity: 1,
-        x: 0,
+        x: 1000,
+        scale: 1.2,
+        transition: {
+            duration: 0.5,
+        },
     },
 };
 
