@@ -18,6 +18,8 @@ const CopyButton = styled(motion.button)`
     border: none;
     background-color: transparent;
     cursor: pointer;
+    padding: 10px;
+    /* z-index: 300; */
 `;
 
 const RoomLabel = styled(motion.div)`
@@ -72,6 +74,7 @@ const RoomPage = ({
 
         // 복사할 특정 텍스트를 임시의 textarea에 넣어주고 모두 셀렉션 상태
         textarea.value = userState.currentRoom.room_id;
+        console.log(textarea.value);
         textarea.select();
 
         // 복사 후textarea 지우기
@@ -85,10 +88,10 @@ const RoomPage = ({
             <RoomLabel>
                 ID: {roomId}
                 <CopyButton
-                    onClick={copyRoomId()}
                     whileHover={{ scale: 1.2 }}
                     whileTap={{ scale: 0.9 }}
                     transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                    onClick={copyRoomId()}
                 >
                     <FontAwesomeIcon
                         icon={faCopy}

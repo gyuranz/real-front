@@ -74,16 +74,14 @@ const BaseContainer = styled(motion.div)`
     width: 100vw;
     height: 100vh;
     border-radius: 0;
-    /* display: grid;
-    grid-template-columns: 3.5fr 1fr 1.5fr; */
-    /* display: flex; */
 `;
 
 const MainContainer = styled.div`
     ${containerStyle}
-    background-color: transparent;
     box-shadow: none;
-    width: 1400px;
+    //! 1400px
+    /* width: 1200px; */
+    width: ${(props) => (props.finished ? "1400px" : "1200px")};
     height: 95vh;
     display: block;
     margin-right: 30px;
@@ -91,11 +89,12 @@ const MainContainer = styled.div`
 `;
 
 const Container = styled.div`
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: #454545;
     border-radius: 20px;
     height: 95vh;
-    /* width: 1000px; */
-    //! MVP 끝나고 overflow 삭제
+    //! 1400px
+    /* width: 1200px; */
+    width: ${(props) => (props.finished ? "1400px" : "1200px")};
     position: relative;
 `;
 
@@ -108,7 +107,7 @@ const IOButton = styled.button`
     border-radius: 30px;
 `;
 const SideOpenToolBox = styled(motion.div)`
-    z-index: 2;
+    z-index: 11;
     position: absolute;
     bottom: 0;
     left: 33%;
@@ -117,7 +116,9 @@ const SideOpenToolBox = styled(motion.div)`
 const RoomList = styled(motion.div)`
     ${containerStyle}
     box-shadow: none;
-    width: 400px;
+    //! 400px
+    /* width: 600px; */
+    width: ${(props) => (props.finished ? "400px" : "600px")};
     height: 95vh;
     display: block;
     text-align: center;
@@ -130,7 +131,9 @@ const InputTextStyle = styled.div`
 
 const TextInput = styled(motion.input)`
     ${buttonStyle}
-    width: 300px;
+    //! 300px
+    /* width: 500px; */
+    width: ${(props) => (props.finished ? "300px" : "500px")};
     height: 6vh;
     font-size: 1.2rem;
     border-radius: 0 0 0 20px;
@@ -148,7 +151,9 @@ const TextInputButton = styled(motion.button)`
 `;
 
 const ChatArea = styled.div`
-    width: 400px;
+    //! 400px
+    /* width: 600px; */
+    width: ${(props) => (props.finished ? "400px" : "600px")};
     height: 84vh;
     overflow-y: auto;
     border-radius: 20px 20px 0 0;
@@ -166,7 +171,7 @@ const Message = styled.div`
     margin-bottom: 0.5rem;
     font-size: 28px;
     font-weight: 600;
-    width: 70%;
+    width: 100%;
     padding: 5px;
     border-radius: 0.5rem;
     word-break: break-all;
@@ -176,7 +181,6 @@ const Message = styled.div`
 const RoomOutButton = styled(motion.div)`
     z-index: 0;
     ${buttonStyle}
-    ${paperCardBgColor}
     box-shadow: none;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
@@ -194,7 +198,7 @@ const ChatToggle = styled(motion.button)`
     border: none;
     background-color: transparent;
     position: relative;
-    left: 250px;
+    left: 340px;
     z-index: 2;
     font-size: 36px;
     cursor: pointer;
@@ -237,6 +241,9 @@ const Li = styled(motion.li)`
         scale: 1;
         background-color: inherit;
     }
+    a {
+        padding: 30px;
+    }
 `;
 const MotionBtn = styled(motion.button)`
     /* -webkit-appearance: button; */
@@ -246,8 +253,8 @@ const MotionBtn = styled(motion.button)`
     font-size: 36px;
     cursor: pointer;
     position: relative;
-    left: 120px;
-    top: -3px;
+    left: 170px;
+    top: -5px;
 `;
 
 //! 소켓 api 꼭 같이 수정해주기
@@ -306,7 +313,7 @@ function Room() {
             setRecognitionHistory((old) => [...old, data.text]);
             setSTTMessage((prev) => [...prev, data.text]);
             const sttInfo = {
-                user_nickname: "",
+                user_nickname: data.user_nickname + "(STT)",
                 message: data.text,
                 room_id: userState.currentRoom.room_id,
             };
@@ -521,7 +528,7 @@ function Room() {
                 initial="start"
                 animate="end"
             >
-                <MainContainer>
+                <MainContainer finished={completeStudy}>
                     <SideOpenToolBox>
                         {completeStudy || (
                             <>
@@ -549,7 +556,7 @@ function Room() {
                         )}
                     </SideOpenToolBox>
 
-                    <Container>
+                    <Container finished={completeStudy}>
                         <Routes>
                             <Route path="playground" element={<Playground />} />
                             <Route path="summary" element={<Summary />} />
@@ -562,7 +569,7 @@ function Room() {
                     </Container>
                 </MainContainer>
 
-                <RoomList>
+                <RoomList finished={completeStudy}>
                     <ToggleContainer>
                         <ChatToggle
                             onClick={() => {
@@ -779,25 +786,28 @@ function Room() {
                     </ToggleContainer>
                     {isChatToggle && (
                         <>
-                            <ChatArea ref={chatContainerEl}>
+                            <ChatArea
+                                ref={chatContainerEl}
+                                finished={completeStudy}
+                            >
                                 {/*//! text 메세지 나오는 부분 */}
                                 {chats.map((chat, index) => (
                                     <ChattingBox key={index}>
                                         {chat.user_nickname === "" ? (
                                             <div
                                                 style={{
-                                                    color: `#0E6A54`,
+                                                    color: `#ffc700`,
                                                     fontWeight: "600",
                                                     fontSize: "20px",
                                                 }}
                                             >
-                                                발표자
+                                                발표자(STT)
                                             </div>
                                         ) : chat.user_nickname !==
                                           storedData.userNickname ? (
                                             <div
                                                 style={{
-                                                    color: `#0E6A54`,
+                                                    color: `#ffc700`,
                                                     fontWeight: "600",
                                                     fontSize: "20px",
                                                 }}
@@ -810,7 +820,6 @@ function Room() {
                                         {chat.user_nickname === "" ? (
                                             <Message
                                                 style={{
-                                                    width: "100%",
                                                     backgroundColor: "#424242",
                                                 }}
                                             >
@@ -823,6 +832,7 @@ function Room() {
                                             <Message
                                                 style={{
                                                     marginLeft: "30%",
+                                                    width: "70%",
                                                     backgroundColor: "#FFD43B",
                                                     color: "#000000",
                                                 }}
@@ -851,6 +861,7 @@ function Room() {
                             <form onSubmit={onSendMessage}>
                                 <InputTextStyle>
                                     <TextInput
+                                        finished={completeStudy}
                                         type="text"
                                         {...register("message")} // useForm의 register 메소드로 폼 입력과 연결
                                     />

@@ -13,13 +13,15 @@ import {
 import { useNavigate } from "react-router-dom";
 
 import { motion } from "framer-motion/dist/framer-motion";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
 
 const Board = styled.div`
     padding: 20px 10px;
     padding-top: 30px;
     border-radius: 30px;
-    min-height: 200px;
-    max-height: 83vh;
+    min-height: 400px;
+    max-height: 90vh;
     overflow: auto;
     ${primaryTextColor}
 `;
@@ -34,31 +36,48 @@ const Card = styled.div`
 const Image = styled.img`
     width: 80%;
 `;
-const UpdateButton = styled.button`
+const UpdateButton = styled(motion.button)`
     ${mainBgColor}
     position: absolute;
     text-align: center;
-    width: 80px;
-    height: 40px;
-    line-height: 40px;
+    width: 100px;
+    height: 55px;
+    line-height: 55px;
     font-weight: 600;
-    top: 0vh;
-    border-radius: 10px;
-    right: 1vw;
+    font-size: 22px;
+    bottom: 0px;
+    border-radius: 27.5px;
+    right: 0;
     border: none;
+    cursor: pointer;
 `;
-const AddButton = styled.button`
+const AddButton = styled(motion.button)`
     ${reverseTextColor}
     position: absolute;
     text-align: center;
-    width: 80px;
-    height: 40px;
-    line-height: 40px;
+    width: 55px;
+    height: 55px;
+    line-height: 55px;
+    font-size: 30px;
     font-weight: 600;
-    top: 5vh;
-    border-radius: 10px;
-    right: 1vw;
+    bottom: 0;
+    border-radius: 30px;
+    right: 100px;
     border: none;
+    z-index: 1;
+    cursor: pointer;
+`;
+
+const AddInput = styled.input`
+    position: absolute;
+    bottom: 0;
+    width: 1300px;
+    height: 55px;
+    padding: 10px 24px;
+    font-size: 24px;
+    background-color: white;
+    border: none;
+    border-radius: 30px;
 `;
 
 const ModifiedInput = styled.input`
@@ -71,19 +90,11 @@ const ModifiedInput = styled.input`
     overflow: auto;
     ${primaryColor}
 `;
-const AddInput = styled.input`
-    width: 100%;
-    height: auto;
-    padding: 10px;
-    font-size: 1em;
-    background-color: white;
-    border: none;
-`;
 
 const OneLineDiv = styled(motion.div)`
     transition: 0.3s ease-in-out;
     &:hover {
-        ${disabledTextColor}
+        ${primaryColor}
     }
     &:hover ~ .hoverOver {
         opacity: 1;
@@ -242,6 +253,7 @@ function Summary() {
                 if (!response.ok) {
                     throw new Error(responseData.message);
                 }
+                setIsSave(false);
             } catch (error) {
                 console.log("❌", error);
             }
@@ -404,15 +416,64 @@ function Summary() {
                 </div>
             </DragDropContext>
             {isSave ? (
-                <UpdateButton onClick={updateSummary}>UPDATE</UpdateButton>
+                <UpdateButton
+                    onClick={updateSummary}
+                    whileHover={{ scale: 1.2 }}
+                    whileTap={{ scale: 0.9 }}
+                    transition={{
+                        type: "spring",
+                        stiffness: 400,
+                        damping: 17,
+                    }}
+                >
+                    UPDATE
+                </UpdateButton>
             ) : (
-                <UpdateButton onClick={onSave}>SAVE</UpdateButton>
+                <UpdateButton
+                    onClick={onSave}
+                    whileHover={{ scale: 1.2 }}
+                    whileTap={{ scale: 0.9 }}
+                    transition={{
+                        type: "spring",
+                        stiffness: 400,
+                        damping: 17,
+                    }}
+                >
+                    SAVE
+                </UpdateButton>
+            )}
+            {isAdd ? (
+                <AddButton
+                    onClick={onAdd}
+                    whileHover={{ scale: 1 }}
+                    whileTap={{ scale: 0.8 }}
+                    transition={{
+                        type: "spring",
+                        stiffness: 400,
+                        damping: 17,
+                    }}
+                >
+                    <FontAwesomeIcon icon={faXmark} />
+                </AddButton>
+            ) : (
+                <AddButton
+                    onClick={onAdd}
+                    whileHover={{ scale: 1 }}
+                    whileTap={{ scale: 0.8 }}
+                    transition={{
+                        type: "spring",
+                        stiffness: 400,
+                        damping: 17,
+                    }}
+                >
+                    <FontAwesomeIcon icon={faPlus} />
+                </AddButton>
             )}
 
-            <AddButton onClick={onAdd}>ADD</AddButton>
             {isAdd && (
                 <form onSubmit={onAddSubmit}>
                     <AddInput
+                        placeholder="추가할 내용을 입력해주세요."
                         id="inputValue"
                         value={addText}
                         onChange={onAddChange}

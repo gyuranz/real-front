@@ -17,7 +17,7 @@ export const boxVariants = {
 };
 
 export const logoVariants = {
-    start: { opacity: 0, scale: 0.5, y: 500 },
+    start: { opacity: 0, scale: 0.5, y: -300 },
     end: {
         opacity: 1,
         scale: 1,

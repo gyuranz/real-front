@@ -2,9 +2,9 @@ import React, { useRef, useEffect } from "react";
 import { styled } from "styled-components";
 
 const ScreenShare = styled.video`
-    width: 80px;
+    width: 70px;
     position: absolute;
-    left: 220px;
+    left: 260px;
 `;
 
 const LocalScreenSharingPreview = ({ stream }) => {

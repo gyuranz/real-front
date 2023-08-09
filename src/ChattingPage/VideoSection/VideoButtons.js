@@ -18,6 +18,7 @@ const VideoButtonsConainter = styled(motion.div)`
     border-radius: 30px;
     border: 3px solid #ffc700;
     width: 440px;
+    z-index: 3;
 `;
 
 const VideoButtons = (props) => {

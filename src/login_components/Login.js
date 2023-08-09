@@ -24,10 +24,11 @@ const TextLogo = styled.div`
 `;
 
 const ImageLogo = styled(motion.div)`
-    width: 300px;
-    height: 300px;
+    /* width: 300px; */
+    /* height: 300px; */
     position: relative;
-    bottom: -100px;
+    bottom: -500px;
+    z-index: -1;
 `;
 const CircleBg = styled(motion.div)`
     /* z-index: -1; */
@@ -173,7 +174,7 @@ function Login() {
 
     return (
         <>
-            <CircleBg
+            {/* <CircleBg
                 initial={{ scale: 0, opacity: 0 }}
                 transition={{ duration: 2, delay: 1.9 }}
                 animate={{
@@ -181,7 +182,7 @@ function Login() {
                     opacity: 1,
                     scale: 90,
                 }}
-            ></CircleBg>
+            ></CircleBg> */}
             <BaseContainer>
                 <Container variants={boxVariants} initial="start" animate="end">
                     <ImageLogo
@@ -190,13 +191,13 @@ function Login() {
                         animate="end"
                     >
                         <img
-                            width={300}
-                            height={300}
+                            width={1000}
+                            height={1000}
                             alt="계란"
-                            src="/img/gyuranz.gif"
+                            src="/img/gyuranz2.gif"
                         ></img>
                     </ImageLogo>
-                    <TextLogo>AItoLearn</TextLogo>
+                    {/* <TextLogo>AItoLearn</TextLogo> */}
                     <form onSubmit={handleSubmit(onValid)}>
                         <GridLoginStyle>
                             <div>

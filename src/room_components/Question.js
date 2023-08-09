@@ -10,7 +10,7 @@ import { postQuestion } from "../utils/api";
 import Overlay from "../ChattingPage/Overlay";
 
 const Board = styled.div`
-    height: 87vh;
+    height: 88.5vh;
     width: 1400px;
     overflow-y: auto;
     background-color: rgba(255, 255, 255, 0.1);
@@ -115,7 +115,7 @@ function Question() {
                 <QuestionInput
                     type="text"
                     {...register("question")} // useForm의 register 메소드로 폼 입력과 연결
-                    placeholder="궁금한 건 무엇이든 물어보세요.   스터디하신 내용을 기반으로 저 토란이가! 답변드려요~"
+                    placeholder="공부 중에 궁금했던 내용은 무엇이든 물어보세요~  저 토란이가 다 기억하고 있답니다!!"
                 />
                 <QuestionInputButton type="submit">
                     질문하기

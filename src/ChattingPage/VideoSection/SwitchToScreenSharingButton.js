@@ -20,12 +20,13 @@ const constraints = {
 };
 const ScreenshareButton = styled(motion.div)`
     border: none;
-    padding: 3px;
+    padding: 2px;
 `;
 const CaptureImg = styled(motion.img)`
     width: 30px;
     height: 30px;
     cursor: pointer;
+    margin-top: 6px;
 `;
 
 const SwitchToScreenSharingButton = () => {
@@ -120,13 +121,21 @@ const SwitchToScreenSharingButton = () => {
                     icon={faUsersViewfinder}
                     style={{ fontSize: "40px" }}
                 /> */}
-                <CaptureImg
-                    src="/img/capture_main.png"
-                    alt="CAPTURE"
-                    whileHover={{ scale: 1.2 }}
-                    whileTap={{ scale: 0.9 }}
-                    transition={{ type: "spring", stiffness: 400, damping: 17 }}
-                />
+                {screenSharingStream ? (
+                    <CaptureImg
+                        src="/img/capture_main.png"
+                        alt="CAPTURE"
+                        whileHover={{ scale: 1.2 }}
+                        whileTap={{ scale: 0.9 }}
+                        transition={{
+                            type: "spring",
+                            stiffness: 400,
+                            damping: 17,
+                        }}
+                    />
+                ) : (
+                    <CaptureImg src="/img/capture_black.png" alt="CAPTURE" />
+                )}
             </ScreenshareButton>
             <div
                 className="video_button_container"
