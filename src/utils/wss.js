@@ -31,9 +31,15 @@ export const connectWithSocketIOServer = () => {
     });
 
     socket.on("conn-prepare", (data) => {
-        const { connUserSocketId } = data;
+        const { connUserSocketId, connUserNickname } = data;
+        console.log(connUserNickname);
 
-        webRTCHandler.prepareNewPeerConnection(connUserSocketId, false);
+        webRTCHandler.prepareNewPeerConnection(
+            connUserSocketId,
+            connUserNickname,
+            false
+        );
+        console.log(connUserNickname, "✅✅✅");
 
         // inform the user which just join the room that we have prepared for incoming connection
         socket.emit("conn-init", { connUserSocketId: connUserSocketId });
@@ -44,8 +50,13 @@ export const connectWithSocketIOServer = () => {
     });
 
     socket.on("conn-init", (data) => {
-        const { connUserSocketId } = data;
-        webRTCHandler.prepareNewPeerConnection(connUserSocketId, true);
+        const { connUserSocketId, connUserNickname } = data;
+        console.log(connUserNickname, "✅✅✅✅✅");
+        webRTCHandler.prepareNewPeerConnection(
+            connUserSocketId,
+            connUserNickname,
+            true
+        );
     });
 
     socket.on("user-disconnected", (data) => {
@@ -68,23 +79,25 @@ export const textMessageSender = ({ user_nickname, message, room_id }) => {
     });
 };
 
-export const createNewRoom = (identity, onlyAudio, sixRoomId) => {
+export const createNewRoom = (identity, onlyAudio, sixRoomId, userNickname) => {
     // emit an event to server that we would like to create new room
     const data = {
         identity,
         onlyAudio,
         sixRoomId,
+        userNickname,
     };
 
     socket.emit("create-new-room", data);
 };
 
-export const joinRoom = (identity, roomId, onlyAudio) => {
+export const joinRoom = (identity, roomId, onlyAudio, userNickname) => {
     //emit an event to server that we would to join a room
     const data = {
         roomId,
         identity,
         onlyAudio,
+        userNickname,
     };
 
     socket.emit("join-room", data);

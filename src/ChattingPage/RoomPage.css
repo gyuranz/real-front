@@ -150,6 +150,7 @@ video {
 .video_track_container {
     /* background-color: #ffc700; */
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 100%;
@@ -158,6 +159,8 @@ video {
     max-width: 40vw;
     transition: 0.3s ease-in-out;
     padding: 20px;
+    color: #ffc700;
+    font-size: 32px;
 }
 .video_track_container video {
     /* border: 3px solid #ffc700; */

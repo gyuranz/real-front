@@ -24,7 +24,8 @@ export const getLocalPreviewAndInitRoomConnection = async (
     identity,
     roomId = null,
     onlyAudio,
-    sixRoomId
+    sixRoomId,
+    userNickname
 ) => {
     await fetchTURNCredentials();
 
@@ -38,14 +39,19 @@ export const getLocalPreviewAndInitRoomConnection = async (
             //!
             // localStream.getVideoTracks()[0].enabled = false;
             localStream.getAudioTracks()[0].enabled = false;
-            showLocalVideoPreview(localStream);
+            showLocalVideoPreview(localStream, userNickname);
 
             // dispatch an action to hide overlay
             store.dispatch(setShowOverlay(false));
 
             isRoomHost
-                ? wss.createNewRoom(identity, onlyAudio, sixRoomId)
-                : wss.joinRoom(identity, roomId, onlyAudio);
+                ? wss.createNewRoom(
+                      identity,
+                      onlyAudio,
+                      sixRoomId,
+                      userNickname
+                  )
+                : wss.joinRoom(identity, roomId, onlyAudio, userNickname);
         })
         .catch((err) => {
             console.log(
@@ -84,7 +90,11 @@ const getConfiguration = () => {
 
 const messengerChannel = "messenger";
 
-export const prepareNewPeerConnection = (connUserSocketId, isInitiator) => {
+export const prepareNewPeerConnection = (
+    connUserSocketId,
+    connUserNickname,
+    isInitiator
+) => {
     const configuration = getConfiguration();
 
     peers[connUserSocketId] = new Peer({
@@ -108,7 +118,7 @@ export const prepareNewPeerConnection = (connUserSocketId, isInitiator) => {
     peers[connUserSocketId].on("stream", (stream) => {
         console.log("new stream came");
 
-        addStream(stream, connUserSocketId);
+        addStream(stream, connUserSocketId, connUserNickname);
         streams = [...streams, stream];
     });
 
@@ -146,12 +156,16 @@ export const removePeerConnection = (data) => {
 };
 
 ////////////////////////////////// UI Videos //////////////////////////////////
-const showLocalVideoPreview = (stream) => {
+const showLocalVideoPreview = (stream, userNickname) => {
     const videosContainer = document.getElementById("videos_portal");
     videosContainer.classList.add("videos_portal_styles");
     const videoContainer = document.createElement("div");
     videoContainer.classList.add("video_track_container");
     const videoElement = document.createElement("video");
+
+    const nicknameDiv = document.createElement("div");
+    nicknameDiv.innerText = userNickname;
+
     videoElement.autoplay = true;
     videoElement.muted = true;
     videoElement.srcObject = stream;
@@ -162,6 +176,7 @@ const showLocalVideoPreview = (stream) => {
     };
 
     videoContainer.appendChild(videoElement);
+    videoContainer.append(nicknameDiv);
 
     if (store.getState().connectOnlyWithAudio) {
         videoContainer.appendChild(getAudioOnlyLabel());
@@ -170,11 +185,15 @@ const showLocalVideoPreview = (stream) => {
     videosContainer.appendChild(videoContainer);
 };
 
-const addStream = (stream, connUserSocketId) => {
+const addStream = (stream, connUserSocketId, connUserNickname) => {
+    console.log(connUserNickname, "✅");
     //display incoming stream
     const videosContainer = document.getElementById("videos_portal");
     const videoContainer = document.createElement("div");
     videoContainer.id = connUserSocketId;
+
+    const nicknameDiv = document.createElement("div");
+    nicknameDiv.innerText = connUserNickname;
 
     videoContainer.classList.add("video_track_container");
     const videoElement = document.createElement("video");
@@ -196,6 +215,7 @@ const addStream = (stream, connUserSocketId) => {
     });
 
     videoContainer.appendChild(videoElement);
+    videoContainer.append(nicknameDiv);
 
     // check if other user connected only with audio
     const participants = store.getState().participants;

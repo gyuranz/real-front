@@ -50,6 +50,7 @@ const RoomPage = ({
         // });
         //! 룸 아이디 소켓으로 보내줌
         const sixRoomId = userState.currentRoom.room_id;
+        const userNickname = userState.userNickname;
 
         if (!isRoomHost && !roomId) {
             const siteUrl = window.location.origin;
@@ -61,7 +62,8 @@ const RoomPage = ({
                 identity,
                 roomId,
                 connectOnlyWithAudio,
-                sixRoomId
+                sixRoomId,
+                userNickname
             );
         }
     }, []);
