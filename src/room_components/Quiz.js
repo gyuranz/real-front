@@ -32,7 +32,7 @@ const Answer = styled.div`
     justify-content: center;
     span {
         transition: 0.3s ease-in-out;
-        line-height: 50px;
+        line-height: 70px;
         text-align: center;
         display: block;
         color: transparent;
@@ -40,6 +40,8 @@ const Answer = styled.div`
         height: 50px;
         border-radius: 10px;
         font-weight: 400;
+        font-size: 40px;
+        margin-left: 20px;
     }
 `;
 
@@ -47,7 +49,7 @@ const OX = styled.div`
     display: inline-block;
     margin-left: 30px;
     color: #303030;
-    font-size: 40px;
+    font-size: 60px;
     font-weight: 900;
     cursor: pointer;
     &:hover {

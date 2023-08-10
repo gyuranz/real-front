@@ -505,21 +505,6 @@ function Room() {
         window.location.href = `${siteUrl}/${userState.userId}/finished`;
         navigate(`/${userState.userId}`);
     };
-    // console.log(userState);
-    //! 현재 접속한 방이 유저가(db) 들어온 방에 있는지 확인
-    // const current_room = useParams();
-
-    // const room = userState.userJoinedRoomList.filter(
-    //     (room) => room.room_id === current_room.room_id
-    // );
-    // // console.log(room[0]);
-    // useEffect(() => {
-    //     setUserState({
-    //         ...userState,
-    //         currentRoom: room[0],
-    //     });
-    // }, []);
-    // console.log(userState);
 
     return (
         <>

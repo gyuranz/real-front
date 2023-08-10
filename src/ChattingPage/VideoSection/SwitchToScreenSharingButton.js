@@ -66,7 +66,7 @@ const SwitchToScreenSharingButton = () => {
         }
     };
     //! capture ~ alt(18) + a(65)
-    console.log("✅", stream);
+    // console.log("✅", stream);
 
     // sharedVideo.addEventListener("contextmenu", async function (event) {
     async function screenshare() {

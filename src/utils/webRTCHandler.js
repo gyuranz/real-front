@@ -116,7 +116,7 @@ export const prepareNewPeerConnection = (
     });
 
     peers[connUserSocketId].on("stream", (stream) => {
-        console.log("new stream came");
+        console.log("new stream came", connUserNickname);
 
         addStream(stream, connUserSocketId, connUserNickname);
         streams = [...streams, stream];
@@ -186,14 +186,13 @@ const showLocalVideoPreview = (stream, userNickname) => {
 };
 
 const addStream = (stream, connUserSocketId, connUserNickname) => {
-    console.log(connUserNickname, "✅");
     //display incoming stream
     const videosContainer = document.getElementById("videos_portal");
     const videoContainer = document.createElement("div");
     videoContainer.id = connUserSocketId;
 
-    const nicknameDiv = document.createElement("div");
-    nicknameDiv.innerText = connUserNickname;
+    const connUserNicknameDiv = document.createElement("div");
+    connUserNicknameDiv.innerText = connUserNickname;
 
     videoContainer.classList.add("video_track_container");
     const videoElement = document.createElement("video");
@@ -215,7 +214,7 @@ const addStream = (stream, connUserSocketId, connUserNickname) => {
     });
 
     videoContainer.appendChild(videoElement);
-    videoContainer.append(nicknameDiv);
+    videoContainer.append(connUserNicknameDiv);
 
     // check if other user connected only with audio
     const participants = store.getState().participants;

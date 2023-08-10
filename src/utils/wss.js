@@ -39,10 +39,12 @@ export const connectWithSocketIOServer = () => {
             connUserNickname,
             false
         );
-        console.log(connUserNickname, "✅✅✅");
 
         // inform the user which just join the room that we have prepared for incoming connection
-        socket.emit("conn-init", { connUserSocketId: connUserSocketId });
+        socket.emit("conn-init", {
+            connUserSocketId: connUserSocketId,
+            connUserNickname,
+        });
     });
 
     socket.on("conn-signal", (data) => {
@@ -51,7 +53,6 @@ export const connectWithSocketIOServer = () => {
 
     socket.on("conn-init", (data) => {
         const { connUserSocketId, connUserNickname } = data;
-        console.log(connUserNickname, "✅✅✅✅✅");
         webRTCHandler.prepareNewPeerConnection(
             connUserSocketId,
             connUserNickname,
@@ -62,13 +63,6 @@ export const connectWithSocketIOServer = () => {
     socket.on("user-disconnected", (data) => {
         webRTCHandler.removePeerConnection(data);
     });
-
-    socket.on("message", (data) => {
-        // setChats((prevChats) => [...prevChats, chat]);
-    });
-    // socket.on("direct-message", (data) => {
-    //     appendNewMessageToChatHistory(data);
-    // });
 };
 
 export const textMessageSender = ({ user_nickname, message, room_id }) => {
@@ -87,6 +81,7 @@ export const createNewRoom = (identity, onlyAudio, sixRoomId, userNickname) => {
         sixRoomId,
         userNickname,
     };
+    console.log("you are a host");
 
     socket.emit("create-new-room", data);
 };
@@ -99,6 +94,7 @@ export const joinRoom = (identity, roomId, onlyAudio, userNickname) => {
         onlyAudio,
         userNickname,
     };
+    console.log("you are a joiner");
 
     socket.emit("join-room", data);
 };
