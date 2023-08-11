@@ -1,21 +1,19 @@
-import { useRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import React, { useEffect, useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import styled from "styled-components";
 import { AuthLogin } from "../atoms";
 import {
-    disabledTextColor,
     mainBgColor,
     primaryColor,
     primaryTextColor,
-    reverseTextColor,
-    sideBoxVariants,
 } from "../components/Styles";
-import { useNavigate } from "react-router-dom";
 
 import { motion } from "framer-motion/dist/framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
+import jsPDF from "jspdf";
+import { _fonts } from "./gothic";
 
 const Board = styled.div`
     padding: 20px 10px;
@@ -33,9 +31,25 @@ const Card = styled.div`
     margin-bottom: 5px;
     padding: 3px 3px;
     position: relative;
+    width: 1270px;
 `;
 const Image = styled.img`
-    width: 80%;
+    width: 100%;
+`;
+const PDFButton = styled(motion.button)`
+    ${mainBgColor}
+    position: absolute;
+    text-align: center;
+    width: 100px;
+    height: 55px;
+    line-height: 55px;
+    font-weight: 600;
+    font-size: 22px;
+    bottom: 110px;
+    right: 0;
+    border: none;
+    cursor: pointer;
+    z-index: 2;
 `;
 const UpdateButton = styled(motion.button)`
     ${mainBgColor}
@@ -46,28 +60,24 @@ const UpdateButton = styled(motion.button)`
     line-height: 55px;
     font-weight: 600;
     font-size: 22px;
-    bottom: 0px;
-    border-radius: 0 27.5px 27.5px 0;
+    bottom: 55px;
     right: 0;
     border: none;
     cursor: pointer;
-    z-index: 2;
 `;
 const AddButton = styled(motion.button)`
     ${primaryColor}
     background-color: black;
     position: absolute;
     text-align: center;
-    width: 55px;
+    width: 100px;
     height: 55px;
     line-height: 55px;
     font-size: 36px;
     font-weight: 900;
     bottom: 0;
-    border-radius: 30px 0 0 30px;
-    right: 100px;
+    right: 0px;
     border: none;
-    z-index: 1;
     cursor: pointer;
 `;
 
@@ -80,7 +90,6 @@ const AddInput = styled(motion.input)`
     font-size: 24px;
     background-color: white;
     border: none;
-    border-radius: 30px;
 `;
 
 const ModifiedInput = styled.input`
@@ -140,7 +149,7 @@ function Summary() {
     // const [summaryArray, setSummaryArray] = useRecoilState(SummaryAtom);
     //! 추가 및 삭제는 summaryArray를 통해서 하자. useState사용으로 변경
     const [isSave, setIsSave] = useState(false);
-    const [userState, setUserState] = useRecoilState(AuthLogin);
+    const userState = useRecoilValue(AuthLogin);
     const [idNumber, setIdNumber] = useState(0);
     const [summaryArray, setSummaryArray] = useState([]);
     const [isAdd, setIsAdd] = useState(false);
@@ -261,6 +270,41 @@ function Summary() {
                 console.log("❌", error);
             }
         }
+    };
+
+    const makePDF = async () => {
+        let startX = 10;
+        let startY = 10;
+        let x = 0;
+        const doc = new jsPDF("p", "mm", "a4");
+        doc.addFileToVFS("gothic.ttf", _fonts);
+        doc.addFont("gothic.ttf", "gothic", "normal");
+        doc.setFont("gothic");
+        doc.setFontSize(8);
+
+        summaryArray.forEach(async (oneLine) => {
+            if (oneLine.text.slice(-10) === "learnHello") {
+                startY = 10;
+                if (x !== 0) {
+                    doc.addPage();
+                }
+                x += 1;
+                doc.addImage(
+                    `https://aitolearn.s3.ap-northeast-2.amazonaws.com/${oneLine.text}`,
+                    "jpeg",
+                    startX,
+                    startY,
+                    200,
+                    150
+                ); // start x, start y, width, height
+                startY += 160;
+            } else {
+                console.log(oneLine);
+                doc.text(startX, startY, oneLine.text); // start x, start y, content
+                startY += 7;
+            }
+        });
+        doc.save("AItoLearn.pdf");
     };
 
     useEffect(() => {
@@ -418,11 +462,23 @@ function Summary() {
                     </Droppable>
                 </div>
             </DragDropContext>
+            <PDFButton
+                onClick={makePDF}
+                // whileHover={{ scale: 1.2 }}
+                whileTap={{ scale: 0.8 }}
+                transition={{
+                    type: "spring",
+                    stiffness: 400,
+                    damping: 17,
+                }}
+            >
+                PDF
+            </PDFButton>
             {isSave ? (
                 <UpdateButton
                     onClick={updateSummary}
-                    whileHover={{ scale: 1.2 }}
-                    whileTap={{ scale: 0.9 }}
+                    // whileHover={{ scale: 1.2 }}
+                    whileTap={{ scale: 0.8 }}
                     transition={{
                         type: "spring",
                         stiffness: 400,
@@ -434,8 +490,8 @@ function Summary() {
             ) : (
                 <UpdateButton
                     onClick={onSave}
-                    whileHover={{ scale: 1.2 }}
-                    whileTap={{ scale: 0.9 }}
+                    // whileHover={{ scale: 1.2 }}
+                    whileTap={{ scale: 0.8 }}
                     transition={{
                         type: "spring",
                         stiffness: 400,
